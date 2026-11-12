@@ -12,11 +12,9 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/');
 <section class="hero">
   <svg class="corner corner-tl" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M0 0L0 26" stroke="#d4a574" stroke-width="0.6" opacity="0.45"/><path d="M0 0L26 0" stroke="#d4a574" stroke-width="0.6" opacity="0.45"/></svg>
   <svg class="corner corner-br" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M0 0L0 26" stroke="#d4a574" stroke-width="0.6" opacity="0.45"/><path d="M0 0L26 0" stroke="#d4a574" stroke-width="0.6" opacity="0.45"/></svg>
-  <h1 class="hero-word" aria-label="蕃汉.">
-    <img class="hero-img" src="/images/wenshi.webp" alt="蕃汉" width="658" height="273" decoding="async">
-  </h1>
-  <p class="hero-latin">TANGUT LAB</p>
-  <p class="hero-strike">汉字 → 西夏文对应关系查询 · 免费公益工具</p>
+  <h1 class="hero-word" aria-label="<?= h(BRAND) ?>."><?= h(BRAND) ?><span class="dot">.</span></h1>
+  <p class="hero-latin"><?= h(SITE_NAME) ?></p>
+  <p class="hero-strike"><?= h(BRAND_TAGLINE) ?></p>
   <dl class="hero-meta">
     <div><dt>数据版本</dt><dd><?= h($dv) ?></dd></div>
     <div><dt>全量汉字</dt><dd><?= (int) ($stats['hanzi'] ?? 0) ?></dd></div>

@@ -47,7 +47,7 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
 <header class="site-header">
   <div class="register">
     <div class="container register-inner mono">
-      <span class="rp">[ 蕃汉 TANGUT LAB ]</span>
+      <span class="rp">[ <?= h(SITE_NAME) ?> ]</span>
       <span><span class="sep">///</span> 全量索引 · P0–P3</span>
       <span><span class="sep">///</span> <?= h($dv) ?></span>
       <span><span class="sep">///</span> 39.9°N 116.4°E</span>
@@ -56,8 +56,7 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
   </div>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="返回首页">
-      <span class="brand-mark" aria-hidden="true">蕃汉<em>.</em></span>
-      <span class="brand-sub">汉字 → 西夏文对应关系查询</span>
+      <span class="brand-mark" aria-hidden="true"><?= h(BRAND) ?><em>.</em></span>
     </a>
     <nav class="nav" aria-label="主导航">
       <a href="/" class="nav-link">查询</a>
