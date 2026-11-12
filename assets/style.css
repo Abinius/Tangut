@@ -751,15 +751,18 @@
   .focus-item { border: 1px solid rgba(0,0,0,.12); border-radius: 10px; padding: .6rem .7rem; }
   .focus-item b { display: block; font-size: .92rem; }
   .focus-item span { display: block; color: var(--ink-soft); font-size: .78rem; margin-top: .15rem; }
-  .structure { width: 100%; border-collapse: collapse; margin: .7rem 0; font-size: .88rem; }
-  .structure th, .structure td { border: 1px solid rgba(0,0,0,.12); padding: .5rem .6rem; text-align: left; }
-  .structure th { background: rgba(0,0,0,.04); }
-  .structure .tangut { font-family: var(--tangut); font-size: 1.25rem; line-height: 1.2; }
+  .structure { width: 100%; border-collapse: collapse; margin: .9rem 0; font-size: .92rem; }
+  .structure th, .structure td { border: none; padding: .6rem .5rem; text-align: center; }
+  .structure th { background: none; color: var(--ink-soft); font-weight: 500; }
+  .structure .glyph { font-family: var(--tangut); font-size: 2.6rem; line-height: 1.2; display: inline-block; }
+  .structure .tangut { font-family: var(--tangut); font-size: 2.6rem; line-height: 1.2; }
   .structure .tangut.none { font-family: var(--grotesk); font-size: .85rem; color: var(--ink-soft); }
-  .formula { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .6rem; margin: .8rem 0; }
-  .formula .f { border: 1px solid rgba(0,0,0,.12); border-radius: 10px; padding: .5rem .7rem; text-align: center; }
-  .formula .glyph { font-family: var(--tangut); font-size: 2.2rem; line-height: 1.1; display: block; }
-  .formula .exp { font-size: .78rem; color: var(--ink-soft); }
+  .formula { display: flex; flex-wrap: wrap; gap: .8rem; margin: .9rem 0; justify-content: center; align-items: center; }
+  .formula .f-row { padding: .2rem .5rem; text-align: center; }
+  .formula .f { border: none; padding: .2rem .5rem; text-align: center; }
+  .formula .glyph { font-family: var(--tangut); font-size: 2.8rem; line-height: 1.1; display: inline-block; vertical-align: middle; }
+  .formula .eq { font-size: 1.2rem; color: var(--ink-soft); vertical-align: middle; }
+  .formula .exp { font-size: .82rem; color: var(--ink-soft); }
   .thesis-hr {
     border: 0; border-top: 1px solid var(--hairline); margin: 0.4rem 0;
   }

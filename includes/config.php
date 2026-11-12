@@ -40,7 +40,7 @@ function h(?string $s): string
     return htmlspecialchars((string) $s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
-define('SITE_URL', rtrim(cfg('SITE_URL', 'https://tangutlab.org'), '/'));
+define('SITE_URL', rtrim(cfg('SITE_URL', 'https://voue.cn'), '/'));
 define('BRAND', cfg('BRAND', 'TANGUT'));
 define('BRAND_TAGLINE', cfg('BRAND_TAGLINE', '汉字 → 西夏文对应关系查询'));
 define('SITE_NAME', cfg('SITE_NAME', 'TANGUT Lab'));
