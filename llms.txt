@@ -1,0 +1,26 @@
+# 蕃汉 TANGUT Lab
+
+> 汉字 → 西夏文对应关系查询（免费公益工具）。多候选为常态；tier 为自动分层近似（P0 释义即该字 / P1 首义项 / P2 释义含该字 / P3 同音替代）。
+
+## 数据版本
+- data_version: 2026.11.0（API / 开放数据包 / npm 包三端一致）
+
+## API（REST，Cloudflare Workers）
+- `GET /api/v1/lookup?char=X` — 单字查询
+- `GET /api/v1/lookup?text=XYZ` — 整串查询（逐字）
+- `GET /api/v1/character/{lfw_id}` — 字头详情
+- 自描述：`GET /api/v1`
+- 限流：单 IP 60 次/分钟
+
+## MCP（Model Context Protocol，/mcp Streamable HTTP）
+- `lookup_hanzi` — 汉字 → 西夏文候选（多候选为常态，须转述义项差异）
+- `get_tangut_character` — 西夏字/码位 → 详情
+- `export_name_seal` — 姓名 → 竖排印章式 SVG data URI
+- npm：`npx tangutlab-mcp`（stdio，数据内嵌）
+
+## 开放数据包
+- `/data/tangutlab_data_2026.11.0.json` — 全量映射 JSON（data_version 一致）
+
+## 免责与许可
+- 西夏文与汉字非一一对应，多候选为常态；tier 为自动分层近似
+- 数据 tangutdata (MIT)；释义版权归原出版社，引用须注明出处

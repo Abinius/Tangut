@@ -1,0 +1,36 @@
+# 蕃汉 TANGUT Lab · Apache 伪静态 + 缓存 + MIME
+# 上传到站点根目录（与 index.php 同级）
+
+DirectoryIndex index.php
+Options -Indexes
+
+# 字体/图片 MIME（部分服务器默认缺失，会导致字形不显示）
+AddType font/woff2 .woff2
+AddType image/webp .webp
+AddType application/json .json
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 汉字详情页 /x-青/ 或 /x-青 → x.php?h=青
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^x-([^/]+)/?$ x.php?h=$1 [L,QSA,B]
+
+  # /about → about.php
+  RewriteRule ^about/?$ about.php [L]
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/webp "access plus 30 days"
+  ExpiresByType image/png "access plus 30 days"
+  ExpiresByType text/css "access plus 7 days"
+  ExpiresByType application/json "access plus 1 hour"
+</IfModule>
+
+# 不缓存 .env（敏感配置）
+<FilesMatch "^\.env">
+  Require all denied
+</FilesMatch>

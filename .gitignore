@@ -1,0 +1,12 @@
+# 环境配置（含域名/备案等本地信息，不入库；部署时复制 .env.example → .env）
+.env
+.env.*.local
+!.env.example
+
+# 临时 / 日志
+*.tmp
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
