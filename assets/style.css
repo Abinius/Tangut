@@ -629,7 +629,7 @@
   @media (max-width: 768px) {
     .lookup-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
     .retrieve-systems { grid-template-columns: repeat(2, 1fr); }
-    .radical-grid { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); gap: 0.4rem; }
+    .radical-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
     .stroke-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 0.4rem; }
     .nav { gap: 1rem; }
     .nav-link { font-size: 10.5px; letter-spacing: 0.1em; gap: 0.3rem; }
@@ -654,7 +654,7 @@
     .gloss { font-size: 0.9rem; line-height: 1.6; }
     .lookup-grid { grid-template-columns: 1fr; gap: 0.5rem; }
     .lookup-card { padding: 1rem 0.8rem; }
-    .radical-grid { grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: 0.3rem; }
+    .radical-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.3rem; }
     .radical-cell { padding: 0.5rem 0.2rem; }
     .radical-glyph { font-size: 24px; }
     .stroke-grid { grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); }
@@ -678,8 +678,9 @@
   }
 
   /* ── 检字页（/radical/ /stroke/）────────────────────── */
+  /* 分组卡网格：PC 一行 6 个，手机一行 3 个（各检字/文献页复用） */
   .radical-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: 0.5rem; margin-top: 1rem;
   }
   .radical-cell {
