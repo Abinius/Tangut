@@ -33,9 +33,9 @@ if ($system === '' || !isset($systems[$system])) {
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> 声韵</p>
     <p class="status done">三体系：同音 / 文海 / 韵类</p>
-    <section class="overview-grid">
+    <section class="overview-grid overview-grid-3">
         <?php foreach ($systems as $sk => $sv): ?>
-        <article class="row tier-P0">
+        <article class="row tier-P0 overview-mini">
             <div class="cell">
                 <div class="meta">
                     <span class="tier"><?= h($sv['label']) ?></span>
