@@ -1,0 +1,523 @@
+{
+  "index_type": "field_nonempty_report",
+  "data_version": "2026.11.0",
+  "total_characters": 6090,
+  "total_fields": 75,
+  "core_gate": {
+    "threshold": 95,
+    "fields": {
+      "字": {
+        "rate": 100.0,
+        "gate": ">=95%",
+        "pass": true
+      },
+      "释义": {
+        "rate": 99.9,
+        "gate": ">=95%",
+        "pass": true
+      },
+      "GHC": {
+        "rate": 98.8,
+        "gate": ">=95%",
+        "pass": true
+      },
+      "LFW": {
+        "rate": 99.9,
+        "gate": ">=95%",
+        "pass": true
+      },
+      "No.": {
+        "rate": 99.9,
+        "gate": ">=95%",
+        "pass": true
+      }
+    },
+    "all_pass": true
+  },
+  "groups": {
+    "编号": {
+      "field_count": 8,
+      "avg_rate": 92.4,
+      "fields": [
+        "LFW",
+        "LFW 1997",
+        "No.",
+        "Sofronov序號",
+        "夏俄英漢詞典序號",
+        "韓小忙序號",
+        "西夏文詞典",
+        "西田 1966"
+      ]
+    },
+    "拟音": {
+      "field_count": 7,
+      "avg_rate": 90.4,
+      "fields": [
+        "GHC",
+        "GX",
+        "Kychanov2006",
+        "Miyake2019",
+        "Nishida1966",
+        "Sofronov1968",
+        "上标声调"
+      ]
+    },
+    "音韵": {
+      "field_count": 43,
+      "avg_rate": 66.4,
+      "fields": [
+        "同音",
+        "韵类",
+        "声调",
+        "声調",
+        "声調韻",
+        "小韵",
+        "声母",
+        "等",
+        "声符",
+        "Cₚ",
+        "Cᵢ",
+        "Cₘ",
+        "V₁",
+        "V₂",
+        "Cf",
+        "[±紧 ±卷舌]",
+        "新版同音",
+        "新版同音 小類",
+        "新版同音 小類内順序",
+        "sort(新版同音)",
+        "旧版同音",
+        "旧版同音 声母",
+        "旧版同音 小類",
+        "旧版同音 小類内順序",
+        "文海",
+        "文海 反切上字",
+        "文海 反切下字",
+        "文海 反切注",
+        "文海 小韻",
+        "文海 小韻内順序",
+        "sort(文海)",
+        "文海寶韻",
+        "文海寶韻 小韻",
+        "文海寶韻小韻内順序",
+        "合編",
+        "合編 反切A上字",
+        "合編 反切A下字",
+        "合編 反切A下字.1",
+        "合編 反切B上字",
+        "合編 反切注",
+        "総合韻",
+        "TYA",
+        "TYB"
+      ]
+    },
+    "检字": {
+      "field_count": 6,
+      "avg_rate": 99.6,
+      "fields": [
+        "四角号码",
+        "笔画",
+        "仓颉码",
+        "N4522笔画码",
+        "结构",
+        "部件"
+      ]
+    },
+    "部首": {
+      "field_count": 4,
+      "avg_rate": 97.8,
+      "fields": [
+        "Unicode部首",
+        "夏漢字典部首",
+        "夏俄英漢詞典部首",
+        "西夏文詞典部首"
+      ]
+    },
+    "释义": {
+      "field_count": 3,
+      "avg_rate": 67.3,
+      "fields": [
+        "释义",
+        "英文释义",
+        "Notes"
+      ]
+    }
+  },
+  "fields": {
+    "No.": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "LFW": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "英文释义": {
+      "nonempty": 6082,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "释义": {
+      "nonempty": 6083,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "字": {
+      "nonempty": 6090,
+      "total": 6090,
+      "rate": 100.0
+    },
+    "GX": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "GHC": {
+      "nonempty": 6014,
+      "total": 6090,
+      "rate": 98.8
+    },
+    "Kychanov2006": {
+      "nonempty": 5695,
+      "total": 6090,
+      "rate": 93.5
+    },
+    "Miyake2019": {
+      "nonempty": 6071,
+      "total": 6090,
+      "rate": 99.7
+    },
+    "Nishida1966": {
+      "nonempty": 3184,
+      "total": 6090,
+      "rate": 52.3
+    },
+    "Sofronov1968": {
+      "nonempty": 5408,
+      "total": 6090,
+      "rate": 88.8
+    },
+    "TYA": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "TYB": {
+      "nonempty": 6050,
+      "total": 6090,
+      "rate": 99.3
+    },
+    "同音": {
+      "nonempty": 6090,
+      "total": 6090,
+      "rate": 100.0
+    },
+    "韵类": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "声调": {
+      "nonempty": 6081,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "小韵": {
+      "nonempty": 6081,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "Cₚ": {
+      "nonempty": 1269,
+      "total": 6090,
+      "rate": 20.8
+    },
+    "Cᵢ": {
+      "nonempty": 6078,
+      "total": 6090,
+      "rate": 99.8
+    },
+    "Cₘ": {
+      "nonempty": 1458,
+      "total": 6090,
+      "rate": 23.9
+    },
+    "V₁": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "V₂": {
+      "nonempty": 30,
+      "total": 6090,
+      "rate": 0.5
+    },
+    "Cf": {
+      "nonempty": 1102,
+      "total": 6090,
+      "rate": 18.1
+    },
+    "[±紧 ±卷舌]": {
+      "nonempty": 1849,
+      "total": 6090,
+      "rate": 30.4
+    },
+    "等": {
+      "nonempty": 6081,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "结构": {
+      "nonempty": 6070,
+      "total": 6090,
+      "rate": 99.7
+    },
+    "西夏文詞典": {
+      "nonempty": 5985,
+      "total": 6090,
+      "rate": 98.3
+    },
+    "笔画": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "Unicode部首": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "夏漢字典部首": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "夏俄英漢詞典部首": {
+      "nonempty": 5657,
+      "total": 6090,
+      "rate": 92.9
+    },
+    "西夏文詞典部首": {
+      "nonempty": 5987,
+      "total": 6090,
+      "rate": 98.3
+    },
+    "四角号码": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "Sofronov序號": {
+      "nonempty": 5768,
+      "total": 6090,
+      "rate": 94.7
+    },
+    "夏俄英漢詞典序號": {
+      "nonempty": 5657,
+      "total": 6090,
+      "rate": 92.9
+    },
+    "韓小忙序號": {
+      "nonempty": 5846,
+      "total": 6090,
+      "rate": 96.0
+    },
+    "部件": {
+      "nonempty": 5984,
+      "total": 6090,
+      "rate": 98.3
+    },
+    "N4522笔画码": {
+      "nonempty": 6084,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "仓颉码": {
+      "nonempty": 6071,
+      "total": 6090,
+      "rate": 99.7
+    },
+    "Notes": {
+      "nonempty": 121,
+      "total": 6090,
+      "rate": 2.0
+    },
+    "声符": {
+      "nonempty": 2,
+      "total": 6090,
+      "rate": 0.0
+    },
+    "上标声调": {
+      "nonempty": 6081,
+      "total": 6090,
+      "rate": 99.9
+    },
+    "LFW 1997": {
+      "nonempty": 6090,
+      "total": 6090,
+      "rate": 100.0
+    },
+    "Kychanov 2006": {
+      "nonempty": 6089,
+      "total": 6090,
+      "rate": 100.0
+    },
+    "Sofronov 1968": {
+      "nonempty": 6089,
+      "total": 6090,
+      "rate": 100.0
+    },
+    "西田 1966": {
+      "nonempty": 3500,
+      "total": 6090,
+      "rate": 57.5
+    },
+    "sort(新版同音)": {
+      "nonempty": 5644,
+      "total": 6090,
+      "rate": 92.7
+    },
+    "新版同音": {
+      "nonempty": 5644,
+      "total": 6090,
+      "rate": 92.7
+    },
+    "声母": {
+      "nonempty": 5906,
+      "total": 6090,
+      "rate": 97.0
+    },
+    "新版同音 小類": {
+      "nonempty": 5779,
+      "total": 6090,
+      "rate": 94.9
+    },
+    "新版同音 小類内順序": {
+      "nonempty": 5779,
+      "total": 6090,
+      "rate": 94.9
+    },
+    "旧版同音": {
+      "nonempty": 5673,
+      "total": 6090,
+      "rate": 93.2
+    },
+    "旧版同音 声母": {
+      "nonempty": 5673,
+      "total": 6090,
+      "rate": 93.2
+    },
+    "旧版同音 小類": {
+      "nonempty": 5673,
+      "total": 6090,
+      "rate": 93.2
+    },
+    "旧版同音 小類内順序": {
+      "nonempty": 5673,
+      "total": 6090,
+      "rate": 93.2
+    },
+    "sort(文海)": {
+      "nonempty": 5302,
+      "total": 6090,
+      "rate": 87.1
+    },
+    "文海": {
+      "nonempty": 3113,
+      "total": 6090,
+      "rate": 51.1
+    },
+    "総合韻": {
+      "nonempty": 5905,
+      "total": 6090,
+      "rate": 97.0
+    },
+    "声調": {
+      "nonempty": 5905,
+      "total": 6090,
+      "rate": 97.0
+    },
+    "声調韻": {
+      "nonempty": 5905,
+      "total": 6090,
+      "rate": 97.0
+    },
+    "文海 小韻": {
+      "nonempty": 3063,
+      "total": 6090,
+      "rate": 50.3
+    },
+    "文海 小韻内順序": {
+      "nonempty": 3063,
+      "total": 6090,
+      "rate": 50.3
+    },
+    "文海 反切上字": {
+      "nonempty": 3123,
+      "total": 6090,
+      "rate": 51.3
+    },
+    "文海 反切下字": {
+      "nonempty": 3123,
+      "total": 6090,
+      "rate": 51.3
+    },
+    "文海 反切注": {
+      "nonempty": 67,
+      "total": 6090,
+      "rate": 1.1
+    },
+    "文海寶韻": {
+      "nonempty": 5233,
+      "total": 6090,
+      "rate": 85.9
+    },
+    "文海寶韻 小韻": {
+      "nonempty": 5236,
+      "total": 6090,
+      "rate": 86.0
+    },
+    "文海寶韻小韻内順序": {
+      "nonempty": 5236,
+      "total": 6090,
+      "rate": 86.0
+    },
+    "合編": {
+      "nonempty": 1315,
+      "total": 6090,
+      "rate": 21.6
+    },
+    "韓小忙 2008": {
+      "nonempty": 1282,
+      "total": 6090,
+      "rate": 21.1
+    },
+    "合編 反切A上字": {
+      "nonempty": 1315,
+      "total": 6090,
+      "rate": 21.6
+    },
+    "合編 反切A下字": {
+      "nonempty": 1315,
+      "total": 6090,
+      "rate": 21.6
+    },
+    "合編 反切B上字": {
+      "nonempty": 1315,
+      "total": 6090,
+      "rate": 21.6
+    },
+    "合編 反切A下字.1": {
+      "nonempty": 1315,
+      "total": 6090,
+      "rate": 21.6
+    },
+    "合編 反切注": {
+      "nonempty": 1247,
+      "total": 6090,
+      "rate": 20.5
+    }
+  }
+}

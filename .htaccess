@@ -20,6 +20,11 @@ AddType application/json .json
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^x-([^/]+)/?$ x.php?h=$1 [L,QSA,B]
 
+  # 字头详情页 /c-0257/ 或 /c-0257 → c.php?c=0257
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^c-([^/]+)/?$ c.php?c=$1 [L,QSA,B]
+
   # /about → about.php
   RewriteRule ^about/?$ about.php [L]
 

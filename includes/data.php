@@ -92,6 +92,35 @@ function find_by_lfw(string $lfwId): ?array
     return ($idx[$norm] ?? $idx[$lfwId] ?? null);
 }
 
+/** 字头详情：LFW 编号或码位 → detail JSON（O(1) 索引 + 单文件读取） */
+function find_detail(string $key): ?array
+{
+    static $idx = null;
+    if ($idx === null) {
+        $idx = read_json(shard_dir() . '/detail_index.json') ?? [];
+    }
+    // 尝试 LFW 编号（归一化：去 L/l 前缀 + 去前导零）
+    $norm = ltrim($key, 'Ll');
+    $norm = ltrim($norm, '0');
+    $fname = $idx['by_lfw'][$norm] ?? $idx['by_lfw'][$key] ?? null;
+
+    // 尝试码位（U+1760D、U1760D、1760D → 统一为 U+1760D）
+    if (!$fname) {
+        $cp = strtoupper(ltrim($key));
+        if (preg_match('/^U?\+?([0-9A-F]{4,6})$/i', $cp, $m)) {
+            $fname = $idx['by_codepoint']['U+' . strtoupper($m[1])] ?? null;
+        }
+        if (!$fname) {
+            $fname = $idx['by_codepoint'][$key] ?? null;
+        }
+    }
+
+    if (!$fname) {
+        return null;
+    }
+    return read_json(dirname(__DIR__) . '/detail/' . basename($fname) . '.json');
+}
+
 /** 站点统计（优先读预生成的 stats.json，缺失或损坏时遍历分片重算） */
 function site_stats(): array
 {

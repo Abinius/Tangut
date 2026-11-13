@@ -25,6 +25,13 @@ if (preg_match('#^/x-([^/]+)/?$#', $uri, $m)) {
     return true;
 }
 
+// /c-0257/ 或 /c-0257 → c.php?c=0257（字头详情页）
+if (preg_match('#^/c-([^/]+)/?$#', $uri, $m)) {
+    $_GET['c'] = rawurldecode($m[1]);
+    require __DIR__ . '/c.php';
+    return true;
+}
+
 // /about → about.php
 if (preg_match('#^/about/?$#', $uri)) {
     require __DIR__ . '/about.php';

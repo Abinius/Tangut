@@ -109,9 +109,14 @@ function render_candidate(array $c): void
   <div class="cell">
     <div class="meta">
       <span class="tier"><?= h($tier) ?> · <?= h(tier_label($tier)) ?></span>
-      <span class="chip">U+<?= h((string) ($c['unicode'] ?? '')) ?></span>
+      <span class="chip"><?= h((string) ($c['unicode'] ?? '')) ?></span>
       <span class="chip">拟音（龚煌城）：<?= h(((string) ($c['gong'] ?? '')) !== '' ? (string) $c['gong'] : '—') ?></span>
-      <span class="chip">LFW <?= h((string) ($c['lfw_id'] ?? '')) ?></span>
+      <?php $lfwId = (string) ($c['lfw_id'] ?? ''); ?>
+      <?php if ($lfwId): ?>
+      <span class="chip"><a href="/c-<?= h(rawurlencode($lfwId)) ?>/">LFW <?= h($lfwId) ?> ↗</a></span>
+      <?php else: ?>
+      <span class="chip">LFW —</span>
+      <?php endif; ?>
     </div>
     <p class="gloss">释义：<?= h((string) ($c['gloss_zh'] ?? '')) ?></p>
   </div>
