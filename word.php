@@ -83,7 +83,7 @@ page_start($title, "西夏文词组查询，共 {$total} 条词组。", '/word/'
   <div class="seclabel"><span>搜索词组</span><span class="rule"></span></div>
   <form class="search-bar" method="get" action="/word/">
     <input type="search" name="q" placeholder="输入西夏文词条、中文或英文释义" aria-label="搜索词组" autocomplete="off">
-    <button class="btn" type="submit">搜索</button>
+    <?php search_btn('搜索'); ?>
   </form>
 </section>
 
