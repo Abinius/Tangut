@@ -1,4 +1,4 @@
-# 蕃汉 TANGUT Lab · PHP 动态站
+# Tangut Dictionary · 蕃汉合时掌中珠 · PHP 动态站
 
 通过 `.env` 配置站点信息（标题/描述/域名/备案等），改一处刷新即全站生效，无需重新构建。
 
@@ -40,8 +40,8 @@ php-site/
 
 ```ini
 SITE_URL=https://你的域名
-SITE_NAME=蕃汉 TANGUT Lab
-SITE_TITLE=蕃汉 TANGUT Lab — 汉字→西夏文查询
+SITE_NAME=Tangut Dictionary
+SITE_TITLE=Tangut Dictionary — 汉字·西夏文查询
 SITE_DESCRIPTION=免费公益工具：输入任意汉字，查看西夏文候选、拟音与义项依据。
 DATA_VERSION=2026.11.0
 # 分享图（留空则用默认 /og-image.png）

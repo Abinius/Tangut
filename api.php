@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * 蕃汉 TANGUT Lab REST API（只读 JSON，PRD A-01~A-06）。
+ * Tangut Dictionary（蕃汉合时掌中珠）REST API（只读 JSON，PRD A-01~A-06）。
  * 路由：.htaccess 将 ^api/v1/(.*)$ 重写为 api.php?path=$1；router.php 同映射。
  * 契约对齐 PRD 6.10 与 Cloudflare Worker 实现（字段、data_version 贯通）。
  */

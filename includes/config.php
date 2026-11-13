@@ -95,8 +95,8 @@ function rate_limited(): bool
 
 define('SITE_URL', rtrim(cfg('SITE_URL', 'https://voue.cn'), '/'));
 define('BRAND', cfg('BRAND', 'TANGUT'));
-define('BRAND_TAGLINE', cfg('BRAND_TAGLINE', '汉字 → 西夏文对应关系查询'));
-define('SITE_NAME', cfg('SITE_NAME', 'TANGUT Lab'));
+define('BRAND_TAGLINE', cfg('BRAND_TAGLINE', '蕃汉合时掌中珠 · Tangut Dictionary'));
+define('SITE_NAME', cfg('SITE_NAME', 'Tangut Dictionary'));
 define('SITE_TITLE', cfg('SITE_TITLE', SITE_NAME . ' — 汉字→西夏文查询'));
 define('SITE_DESCRIPTION', cfg('SITE_DESCRIPTION', '免费公益工具：输入姓名、姓氏或任意汉字，查看西夏文候选、拟音与义项依据。'));
 define('OG_IMAGE', cfg('OG_IMAGE', '/og-image.png'));

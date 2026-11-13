@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/includes/layout.php';
 
 $dv = data_version();
-page_start('关于 · ' . SITE_NAME, '蕃汉 TANGUT Lab 的工具定位、数据来源、对应关系、版权与边界，以及西夏文简介。', '/about');
+page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（蕃汉合时掌中珠）的工具定位、数据来源、对应关系、版权与边界，以及西夏文简介。', '/about');
 ?>
 <article class="about">
   <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 关于</p>

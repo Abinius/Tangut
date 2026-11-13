@@ -1,4 +1,4 @@
-# 蕃汉 TANGUT Lab
+# Tangut Dictionary · 蕃汉合时掌中珠
 User-agent: *
 Allow: /
 
