@@ -962,3 +962,19 @@
     .wenhai-stat { padding: 0.6rem 0.3rem; }
     .wenhai-cell, .wenhai-cells .radical-cell { padding: 0.5rem 0.2rem; }
   }
+
+  /* ── 文海二级详情页：居中不变、隐藏卡片（去底/边框/阴影）────── */
+  .wenhai-flat .detail-header,
+  .wenhai-flat .row {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .wenhai-flat .row .glyph {
+    background: none; border: none; box-shadow: none;
+  }
+  .wenhai-flat .row { border-bottom: 1px solid var(--hairline-soft); }
+  .wenhai-flat .row:last-child { border-bottom: none; }

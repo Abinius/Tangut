@@ -92,14 +92,14 @@ page_start($title, "《文海》条目 {$decoded}，共 {$total} 字。", '/wenh
 ?>
 <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> <a href="/wenhai/">文海</a> <span class="sep">///</span> <?= h($decoded) ?></p>
 
-<section class="detail-header">
+<section class="detail-header wenhai-flat">
     <div class="detail-glyph glyph" style="font-family:var(--mono);font-size:24px"><?= h($decoded) ?></div>
     <div class="detail-meta">
         <p class="status done"><span class="chip"><?= $total ?> 字</span><span class="chip"><?= h(data_version()) ?></span></p>
     </div>
 </section>
 
-<section class="index" aria-label="文海条目字头">
+<section class="index wenhai-flat" aria-label="文海条目字头">
     <?php foreach ($chars as $e):
         $lfw = (string) ($e['lfw'] ?? '');
         $char = (string) ($e['char'] ?? '');
