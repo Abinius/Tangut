@@ -43,7 +43,7 @@ function h(?string $s): string
 /** 基础限流：按 IP 窗口计数（APCu 优先，回退文件计数）。超限返回 true，调用方应返回 429。 */
 function rate_limited(): bool
 {
-    $limit = (int) cfg('RATE_LIMIT_PER_MIN', '0');
+    $limit = (int) cfg('RATE_LIMIT_PER_MIN', '60');
     if ($limit <= 0) {
         return false;
     }
@@ -68,11 +68,16 @@ function rate_limited(): bool
     }
 
     $dir = rtrim(sys_get_temp_dir(), '/\\') . '/tangut-ratelimit';
-    if (!is_dir($dir)) {
-        @mkdir($dir, 0700, true);
+    if (!is_dir($dir) && !@mkdir($dir, 0700, true) && !is_dir($dir)) {
+        return false;
     }
     $f = $dir . '/' . md5($ip);
-    $d = is_file($f) ? json_decode((string) @file_get_contents($f), true) : null;
+    $fh = @fopen($f, 'c+');
+    if ($fh === false) {
+        return false;
+    }
+    flock($fh, LOCK_EX);
+    $d = json_decode((string) stream_get_contents($fh), true);
     $n = is_array($d) ? (int) ($d['n'] ?? 0) : 0;
     $ts = is_array($d) ? (int) ($d['t'] ?? 0) : 0;
     if ($now - $ts >= $window) {
@@ -80,7 +85,11 @@ function rate_limited(): bool
         $ts = $now;
     }
     $n++;
-    @file_put_contents($f, json_encode(['n' => $n, 't' => $ts]), LOCK_EX);
+    rewind($fh);
+    ftruncate($fh, 0);
+    fwrite($fh, json_encode(['n' => $n, 't' => $ts]));
+    flock($fh, LOCK_UN);
+    fclose($fh);
     return $n > $limit;
 }
 

@@ -13,7 +13,7 @@ AddType application/json .json
   RewriteEngine On
 
   # REST API 只读 JSON（/api/v1/* → api.php?path=*）
-  RewriteRule ^api/v1/?(.*)$ api.php?path=$1 [L,QSA]
+  RewriteRule ^api/v1/?(.*)$ api.php?path=$1 [L,QSA,B]
 
   # 汉字详情页 /x-青/ 或 /x-青 → x.php?h=青
   RewriteCond %{REQUEST_FILENAME} !-f
@@ -25,6 +25,12 @@ AddType application/json .json
 
   # /sitemap.xml → sitemap.php（动态生成）
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
 <IfModule mod_expires.c>

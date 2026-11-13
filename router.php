@@ -7,6 +7,12 @@
  */
 $uri = (string) parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 
+// 敏感文件拦截：php -S 会直接返回磁盘上的文件（含 .env），本地开发亦先拒绝
+if (preg_match('#(^|/)\.env($|\.)#', $uri)) {
+    http_response_code(403);
+    return true;
+}
+
 // 静态资源：交给内置服务器直接返回
 if ($uri !== '/' && $uri !== '' && is_file(__DIR__ . $uri)) {
     return false;

@@ -117,7 +117,9 @@ php -S 127.0.0.1:8080 router.php
 # 开放数据包：http://127.0.0.1:8080/data/tangutlab_data_2026.11.0.json
 ```
 
-> ⚠️ **`router.php` 仅限本地测试。** `php -S` 会直接返回磁盘上存在的文件（含 `.env`），禁止用于对外服务；生产环境必须用 Apache/Nginx + `.htaccess`（或上述 Nginx 配置），由服务器层拒绝 `.env` 访问。
+> ⚠️ **`router.php` 仅限本地测试。** `php -S` 会直接返回磁盘上存在的文件；`router.php` 已拦截 `.env` 返回 403，但生产环境仍必须用 Apache/Nginx + `.htaccess`（或上述 Nginx 配置）由服务器层拒绝 `.env` 访问，且禁止将 `php -S` 绑定到 `0.0.0.0` 对外服务。
+
+> **API 安全说明：** `Access-Control-Allow-Origin: *` 是公开只读 API（PRD A-06）的显式设计，允许任意源跨域只读查询；API 与全站响应已加 `X-Content-Type-Options: nosniff`、`X-Frame-Options: SAMEORIGIN`、`Referrer-Policy: strict-origin-when-cross-origin`，JSON 输出做 `JSON_HEX_*` 转义。限流默认 60 次/分/IP（`.env` 的 `RATE_LIMIT_PER_MIN`，设 `0` 关闭）。
 
 ## 与原静态站的区别
 
