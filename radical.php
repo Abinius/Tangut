@@ -35,9 +35,9 @@ if ($system === '' || !isset($systems[$system])) {
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> 部首</p>
     <p class="status done">四套部首体系，按体系浏览全部部首，点击进入字头列表。</p>
-    <section class="overview-grid">
+    <section class="overview-grid overview-grid-4">
         <?php foreach ($systems as $sk => $sv): ?>
-        <article class="row tier-P0">
+        <article class="row tier-P0 overview-mini">
             <div class="cell">
                 <div class="meta">
                     <span class="tier"><?= h($sv['label']) ?></span>
