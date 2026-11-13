@@ -15,6 +15,7 @@ require_once __DIR__ . '/includes/layout.php';
 require_once __DIR__ . '/includes/indexes.php';
 
 $group = trim((string) ($_GET['group'] ?? ''));
+$page = max(1, (int) ($_GET['p'] ?? 1));
 
 if ($group !== '' && rate_limited()) {
     http_response_code(429);
@@ -34,13 +35,21 @@ if ($group === '') {
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 文献 <span class="sep">///</span> 同音</p>
     <p class="status done"><?= (int) ($idx['total_groups'] ?? 0) ?> 组 · <?= (int) ($idx['total_chars'] ?? 0) ?> 字 · 覆盖 100%</p>
     <section class="radical-grid" aria-label="同音组列表">
-        <?php foreach ($groups as $gk => $g): ?>
+        <?php
+        $gridTotal = count($groups);
+        $gridPerPage = 120;
+        $gridPages = max(1, (int) ceil($gridTotal / $gridPerPage));
+        $page = max(1, min($page, $gridPages));
+        $gridSlice = array_slice($groups, ($page - 1) * $gridPerPage, $gridPerPage, true);
+        foreach ($gridSlice as $gk => $g):
+        ?>
         <a class="radical-cell" href="/tongyin/<?= h(rawurlencode($gk)) ?>/">
             <span class="radical-glyph mono" style="font-size:14px"><?= h($gk) ?></span>
             <span class="radical-count"><?= (int) $g['count'] ?> 字</span>
         </a>
         <?php endforeach; ?>
     </section>
+    <?php render_pagination($page, $gridPages, '/tongyin/'); ?>
     <p class="backlinks"><a href="/">回首页</a> <span class="sep">///</span> <a href="/wenhai/">文海文献</a></p>
     <?php
     page_end();

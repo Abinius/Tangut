@@ -22,6 +22,8 @@ if ($ref !== '' && rate_limited()) {
     exit;
 }
 
+$page = max(1, (int) ($_GET['p'] ?? 1));
+
 $idx = read_json(shard_dir() . '/index_wenhai.json') ?? [];
 $entries = $idx['entries'] ?? [];
 $byVolume = $idx['by_volume'] ?? [];
@@ -48,12 +50,15 @@ if ($ref === '') {
     </section>
 
     <section>
-      <div class="seclabel"><span>条目列表（前 200 条）</span><span class="rule"></span></div>
+      <div class="seclabel"><span>条目列表</span><span class="rule"></span></div>
       <div class="radical-grid">
         <?php
-        $shown = 0;
-        foreach ($entries as $refKey => $info):
-            if ($shown++ >= 200) break;
+        $gridTotal = count($entries);
+        $gridPerPage = 120;
+        $gridPages = max(1, (int) ceil($gridTotal / $gridPerPage));
+        $page = max(1, min($page, $gridPages));
+        $gridSlice = array_slice($entries, ($page - 1) * $gridPerPage, $gridPerPage, true);
+        foreach ($gridSlice as $refKey => $info):
         ?>
         <a class="radical-cell" href="/wenhai/<?= h(rawurlencode($refKey)) ?>/">
           <span class="radical-glyph mono" style="font-size:13px"><?= h($refKey) ?></span>
@@ -61,6 +66,7 @@ if ($ref === '') {
         </a>
         <?php endforeach; ?>
       </div>
+      <?php render_pagination($page, $gridPages, '/wenhai/'); ?>
     </section>
     <p class="backlinks"><a href="/">回首页</a> <span class="sep">///</span> <a href="/tongyin/">同音文献</a></p>
     <?php

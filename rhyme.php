@@ -67,7 +67,12 @@ if ($value === '') {
         <?php
         $sorted = $groups;
         uasort($sorted, static fn($a, $b) => $b['count'] <=> $a['count']);
-        foreach ($sorted as $val => $g):
+        $gridTotal = count($sorted);
+        $gridPerPage = 120;
+        $gridPages = max(1, (int) ceil($gridTotal / $gridPerPage));
+        $page = max(1, min($page, $gridPages));
+        $gridSlice = array_slice($sorted, ($page - 1) * $gridPerPage, $gridPerPage, true);
+        foreach ($gridSlice as $val => $g):
         ?>
         <a class="radical-cell" href="<?= h($route . rawurlencode($val) . '/') ?>">
             <span class="radical-glyph mono" style="font-size:14px"><?= h($val) ?></span>
@@ -75,6 +80,7 @@ if ($value === '') {
         </a>
         <?php endforeach; ?>
     </section>
+    <?php render_pagination($page, $gridPages, $route); ?>
     <?php
     page_end();
     exit;

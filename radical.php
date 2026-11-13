@@ -74,10 +74,15 @@ if ($radicalCp === '') {
     ?>
     <section class="radical-grid" aria-label="部首列表">
         <?php
-        // 按字数降序排列
+        // 按字数降序排列 + 分页（120/页）
         $sorted = $radicals;
         uasort($sorted, static fn($a, $b) => $b['count'] <=> $a['count']);
-        foreach ($sorted as $cp => $r):
+        $gridTotal = count($sorted);
+        $gridPerPage = 120;
+        $gridPages = max(1, (int) ceil($gridTotal / $gridPerPage));
+        $page = max(1, min($page, $gridPages));
+        $gridSlice = array_slice($sorted, ($page - 1) * $gridPerPage, $gridPerPage, true);
+        foreach ($gridSlice as $cp => $r):
             $cpClean = str_replace('U+', '', $cp);
             $rg = $radAll['glyphs'][$cp] ?? null;
         ?>
@@ -91,6 +96,7 @@ if ($radicalCp === '') {
         </a>
         <?php endforeach; ?>
     </section>
+    <?php render_pagination($page, $gridPages, '/radical/' . $system . '/'); ?>
     <?php
     page_end();
     exit;
