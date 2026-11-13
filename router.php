@@ -118,7 +118,12 @@ if ($uri === '/rhyme' || $uri === '/rhyme/') {
     return true;
 }
 
-// 词组查询 /word/
+// 词组查询 /word/ /word/h-{汉字}/
+if (preg_match('#^/word/h-([^/]+)/?$#', $uri, $m)) {
+    $_GET['h'] = rawurldecode($m[1]);
+    require __DIR__ . '/word.php';
+    return true;
+}
 if ($uri === '/word' || $uri === '/word/') {
     require __DIR__ . '/word.php';
     return true;

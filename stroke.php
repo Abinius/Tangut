@@ -25,12 +25,20 @@ $strokes = $idx['strokes'] ?? [];
 $min = (int) ($idx['min'] ?? 0);
 $max = (int) ($idx['max'] ?? 0);
 
+// 无效笔画数 → 404（与其余检字页一致，避免软 404）
+if ($n !== '' && !isset($strokes[$n])) {
+    http_response_code(404);
+    page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
+    echo '<h1 class="page-title">404</h1><p class="status">未找到「' . h($n) . '」画字头。<a href="/stroke/">回笔画总览</a></p>';
+    page_end();
+    exit;
+}
+
 // 无 n → 总览
-if ($n === '' || !isset($strokes[$n])) {
-    $noindex = ($n !== '' && !isset($strokes[$n]));
+if ($n === '') {
     $title = '笔画检字 · ' . SITE_NAME;
     $desc = "按笔画数浏览西夏文字头，{$min}–{$max} 画。";
-    page_start($title, $desc, '/stroke/', null, null, $noindex);
+    page_start($title, $desc, '/stroke/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> 笔画</p>
     <h1 class="page-title">笔画检字</h1>

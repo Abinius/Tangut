@@ -78,7 +78,10 @@ AddType application/json .json
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^rhyme/?$ rhyme.php [L]
 
-  # 词组查询 /word/
+  # 词组查询 /word/ /word/h-{汉字}/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^word/h-([^/]+)/?$ word.php?h=$1 [L,QSA,B]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^word/?$ word.php [L,QSA]
