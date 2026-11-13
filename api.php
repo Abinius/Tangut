@@ -99,4 +99,19 @@ if (preg_match('#^character/(.+)$#', $path, $m)) {
     api_json(['character' => $c, 'source' => 'tangutdata (MIT)', 'data_version' => $dv]);
 }
 
+// A-07：/api/v1/tangut/{char或码位} — 反查（西夏文字符或码位 → 全字段详情）
+if (preg_match('#^tangut/(.+)$#', $path, $m)) {
+    $input = rawurldecode($m[1]);
+    // 单字符 → 转码位查找
+    if (mb_strlen($input, 'UTF-8') === 1) {
+        $cp = mb_ord($input, 'UTF-8');
+        $input = $cp !== false ? sprintf('U+%04X', $cp) : '';
+    }
+    $detail = $input !== '' ? find_detail($input) : null;
+    if (!$detail) {
+        api_json(['error' => 'not found', 'input' => mb_substr($input, 0, 64, 'UTF-8'), 'data_version' => $dv], 404);
+    }
+    api_json(['character' => $detail, 'source' => 'tangutdata (MIT)', 'data_version' => $dv]);
+}
+
 api_json(['error' => 'not found', 'path' => $path, 'data_version' => $dv], 404);

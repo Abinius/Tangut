@@ -83,6 +83,27 @@ if (!$any && !$items) {
 <?php endif; ?>
 
 <section>
+  <div class="seclabel"><span>检字</span><span class="rule"></span></div>
+  <div class="lookup-grid">
+    <a class="lookup-card" href="/radical/">
+      <span class="lookup-label">部首检字</span>
+      <span class="lookup-desc">四套部首体系 · 371–509 部首</span>
+    </a>
+    <a class="lookup-card" href="/stroke/">
+      <span class="lookup-label">笔画检字</span>
+      <span class="lookup-desc">4–22 画 · 6084 字</span>
+    </a>
+    <form class="lookup-card lookup-form" onsubmit="var v=this.q.value.trim();if(v)window.location='/c-'+encodeURIComponent(v)+'/';return false">
+      <span class="lookup-label">字头反查</span>
+      <div class="search-bar" style="margin-top:0.4rem">
+        <input type="search" name="q" placeholder="LFW 编号 / 码位 (如 0257、U+1760D)" aria-label="输入 LFW 编号或码位" autocomplete="off">
+        <button class="btn" type="submit">查看</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section>
   <div class="seclabel"><span>字形 specimen</span><span class="rule"></span></div>
   <!-- 设计样张：固定示例字形，不随数据版本变化（仅演示三档字号渲染） -->
   <div class="spec">

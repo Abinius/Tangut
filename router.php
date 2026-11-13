@@ -38,6 +38,34 @@ if (preg_match('#^/about/?$#', $uri)) {
     return true;
 }
 
+// /radical/ → radical.php（部首检字）
+if (preg_match('#^/radical/([^/]+)/([^/]+)/?$#', $uri, $m)) {
+    $_GET['system'] = rawurldecode($m[1]);
+    $_GET['r'] = rawurldecode($m[2]);
+    require __DIR__ . '/radical.php';
+    return true;
+}
+if (preg_match('#^/radical/([^/]+)/?$#', $uri, $m)) {
+    $_GET['system'] = rawurldecode($m[1]);
+    require __DIR__ . '/radical.php';
+    return true;
+}
+if ($uri === '/radical' || $uri === '/radical/') {
+    require __DIR__ . '/radical.php';
+    return true;
+}
+
+// /stroke/ → stroke.php（笔画检字）
+if (preg_match('#^/stroke/([^/]+)/?$#', $uri, $m)) {
+    $_GET['n'] = rawurldecode($m[1]);
+    require __DIR__ . '/stroke.php';
+    return true;
+}
+if ($uri === '/stroke' || $uri === '/stroke/') {
+    require __DIR__ . '/stroke.php';
+    return true;
+}
+
 // /sitemap.xml → sitemap.php（动态生成）
 if ($uri === '/sitemap.xml') {
     require __DIR__ . '/sitemap.php';

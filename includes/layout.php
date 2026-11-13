@@ -67,6 +67,8 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
     </a>
     <nav class="nav" aria-label="主导航">
       <a href="/" class="nav-link">查询</a>
+      <a href="/radical/" class="nav-link">部首</a>
+      <a href="/stroke/" class="nav-link">笔画</a>
       <a href="/about" class="nav-link">关于</a>
     </nav>
   </div>

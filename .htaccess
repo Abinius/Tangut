@@ -28,6 +28,25 @@ AddType application/json .json
   # /about → about.php
   RewriteRule ^about/?$ about.php [L]
 
+  # 部首检字 /radical/ /radical/{system}/ /radical/{system}/{cp}/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^radical/([^/]+)/([^/]+)/?$ radical.php?system=$1&r=$2 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^radical/([^/]+)/?$ radical.php?system=$1 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^radical/?$ radical.php [L]
+
+  # 笔画检字 /stroke/ /stroke/{n}/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^stroke/([^/]+)/?$ stroke.php?n=$1 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^stroke/?$ stroke.php [L]
+
   # /sitemap.xml → sitemap.php（动态生成）
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
 </IfModule>

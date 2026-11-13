@@ -492,3 +492,61 @@
     .field-row { grid-template-columns: 1fr; gap: 0.2rem; }
     .field-row dt { font-size: 10px; }
   }
+
+  /* ── 检字页（/radical/ /stroke/）────────────────────── */
+  .radical-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
+    gap: 0.5rem; margin-top: 1rem;
+  }
+  .radical-cell {
+    display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+    padding: 0.6rem 0.3rem; background: var(--paper-2); border-radius: 8px;
+    text-decoration: none; border: 1px solid var(--hairline-soft);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .radical-cell:hover { border-color: var(--accent); background: var(--paper-3); }
+  .radical-glyph { font-size: 28px; font-family: "Tangut", "TangutRest", serif; line-height: 1; }
+  .radical-count { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); }
+
+  .stroke-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 0.5rem; margin-top: 1rem;
+  }
+  .stroke-cell {
+    display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+    padding: 0.7rem 0.3rem; background: var(--paper-2); border-radius: 8px;
+    text-decoration: none; border: 1px solid var(--hairline-soft);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .stroke-cell:hover { border-color: var(--accent); background: var(--paper-3); }
+  .stroke-num { font-size: 24px; font-weight: 300; color: var(--ink); }
+  .stroke-count { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); }
+
+  .pagination {
+    margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.3rem;
+    font-family: var(--mono); font-size: 13px;
+  }
+  .pagination a, .pagination .page-current {
+    display: inline-block; padding: 0.25rem 0.6rem; border-radius: 4px;
+    text-decoration: none; color: var(--ink-soft);
+    border: 1px solid var(--hairline-soft);
+  }
+  .pagination a:hover { border-color: var(--accent); color: var(--accent-deep); }
+  .pagination .page-current { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  /* ── 首页检字入口 ───────────────────────────────────── */
+  .lookup-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.8rem; margin-top: 1rem;
+  }
+  .lookup-card {
+    display: flex; flex-direction: column; gap: 0.2rem;
+    padding: 1rem 1.2rem; background: var(--paper-2); border-radius: 10px;
+    text-decoration: none; border: 1px solid var(--hairline-soft);
+    transition: border-color 0.15s;
+  }
+  .lookup-card:hover { border-color: var(--accent); }
+  .lookup-label { font-size: 15px; font-weight: 400; color: var(--ink); }
+  .lookup-desc { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.05em; }
+  .lookup-form .search-bar { display: flex; gap: 8px; }
+  .lookup-form input { flex: 1; min-width: 0; }
