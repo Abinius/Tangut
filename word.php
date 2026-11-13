@@ -133,7 +133,8 @@ function _render_word_list(array $entries, int $page, int $perPage = 60): void
     }
     echo '</section>';
     if ($pages > 1) {
-        $baseUrl = strtok($_SERVER['REQUEST_URI'] ?? '/word/', '?');
+        // 保留 q/h 查询参数，仅去掉分页 p（strtok 会丢 query 导致翻页回总览）
+        $baseUrl = preg_replace('/([?&])p=\d+$/', '', (string) ($_SERVER['REQUEST_URI'] ?? '/word/'));
         render_pagination($page, $pages, $baseUrl);
     }
 }

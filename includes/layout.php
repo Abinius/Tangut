@@ -61,17 +61,26 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
     <a class="brand" href="/" aria-label="返回首页">
       <span class="brand-mark" aria-hidden="true"><?= h(BRAND) ?><em>.</em></span>
     </a>
-    <nav class="nav" aria-label="主导航">
-      <a href="/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>查询</a>
-      <a href="/radical/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/></svg>部首</a>
-      <a href="/stroke/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l2.5-7L16 3.5 20.5 8 12 16.5z"/><path d="M14 6l4 4"/></svg>笔画</a>
-      <a href="/rhyme/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3M8 7v10M13 4v16M18 8v8M21 12h-2"/></svg>声韵</a>
-      <a href="/word/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="5" rx="1.5"/><rect x="4" y="13" width="16" height="5" rx="1.5"/></svg>词组</a>
-      <a href="/wenhai/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>文献</a>
-      <a href="/about" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>关于</a>
-    </nav>
+    <button class="menu-toggle" type="button" aria-label="打开菜单" aria-controls="navDrawer" aria-expanded="false">
+      <svg class="menu-icon" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false"><path d="M382.2 165.7H217.4c-47.5 0-86.2 38.7-86.2 86.2v164.8c0 47.5 38.7 86.2 86.2 86.2h164.8c47.5 0 86.2-38.7 86.2-86.2V251.9c0.1-47.6-38.6-86.2-86.2-86.2z m-9.9 241.1h-145v-145h145v145zM382.2 557.6H217.4c-47.5 0-86.2 38.7-86.2 86.2v164.8c0 47.5 38.7 86.2 86.2 86.2h164.8c47.5 0 86.2-38.7 86.2-86.2V643.8c0.1-47.5-38.6-86.2-86.2-86.2z m-9.9 241.1h-145v-145h145v145zM871.6 273.3L755.1 156.8c-16.3-16.3-37.9-25.3-61-25.3-23 0-44.7 9-61 25.3L516.6 273.3c-33.6 33.6-33.6 88.3 0 121.9l116.6 116.5c16.3 16.3 37.9 25.3 61 25.3 23 0 44.7-9 61-25.3l116.6-116.6c33.4-33.4 33.4-88.1-0.2-121.8zM694.1 436.8L591.6 334.3l102.5-102.5 102.5 102.5-102.5 102.5zM776.5 557.6H611.7c-47.5 0-86.2 38.7-86.2 86.2v164.8c0 47.5 38.7 86.2 86.2 86.2h164.8c47.5 0 86.2-38.7 86.2-86.2V643.8c0-47.5-38.7-86.2-86.2-86.2z m-9.9 241.1h-145v-145h145v145z" fill="currentColor"/></svg>
+    </button>
   </div>
 </header>
+<div class="drawer-backdrop" id="navBackdrop"></div>
+<aside class="drawer" id="navDrawer" aria-label="主导航" aria-hidden="true">
+  <div class="drawer-head">
+    <button class="drawer-close" type="button" aria-label="关闭菜单" aria-controls="navDrawer">×</button>
+  </div>
+  <nav class="nav" aria-label="主导航">
+    <a href="/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>查询</a>
+    <a href="/radical/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/></svg>部首</a>
+    <a href="/stroke/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l2.5-7L16 3.5 20.5 8 12 16.5z"/><path d="M14 6l4 4"/></svg>笔画</a>
+    <a href="/rhyme/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3M8 7v10M13 4v16M18 8v8M21 12h-2"/></svg>声韵</a>
+    <a href="/word/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="5" rx="1.5"/><rect x="4" y="13" width="16" height="5" rx="1.5"/></svg>词组</a>
+    <a href="/wenhai/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>文献</a>
+    <a href="/about" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>关于</a>
+  </nav>
+</aside>
 <main class="container main">
 <?php
 }
@@ -96,6 +105,29 @@ function page_end(): void
     </div>
   </div>
 </footer>
+<script>
+(function () {
+  var b = document.querySelector('.menu-toggle');
+  var d = document.getElementById('navDrawer');
+  var k = document.getElementById('navBackdrop');
+  var c = document.querySelector('.drawer-close');
+  if (!b || !d) return;
+  function open() {
+    d.classList.add('open'); d.setAttribute('aria-hidden', 'false');
+    k.classList.add('show'); b.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  }
+  function close() {
+    d.classList.remove('open'); d.setAttribute('aria-hidden', 'true');
+    k.classList.remove('show'); b.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+  b.addEventListener('click', open);
+  if (c) c.addEventListener('click', close);
+  k.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
+</script>
 </body>
 </html>
 <?php

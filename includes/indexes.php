@@ -77,6 +77,7 @@ function render_pagination(int $page, int $pages, string $baseUrl): void
     if ($pages <= 1) {
         return;
     }
+    $page = max(1, min($page, $pages));
     echo '<nav class="pagination" aria-label="分页">';
     $sep = str_contains($baseUrl, '?') ? '&' : '?';
     for ($i = 1; $i <= $pages; $i++) {

@@ -117,8 +117,7 @@ page_start($title, "《文海》条目 {$decoded}，共 {$total} 字。", '/wenh
         <div class="meta">
           <?php if ($lfw): ?><span class="chip"><a href="/c-<?= h(rawurlencode($lfw)) ?>/">LFW <?= h($lfw) ?> ↗</a></span><?php endif; ?>
           <?php if ($gong): ?><span class="chip">龚煌城：<?= h($gong) ?></span><?php endif; ?>
-          <?php if ($xy): ?><span class="chip">小韵 <?= h($xy) ?><?php if ($xyOrder): ?> · 第<?= h($xyOrder) ?></span><?php endif; ?>
-          <?php endif; ?>
+          <?php if ($xy): ?><span class="chip">小韵 <?= h($xy) ?><?php if ($xyOrder): ?> · 第<?= h($xyOrder) ?><?php endif; ?></span><?php endif; ?>
         </div>
         <?php if ($gloss): ?><p class="gloss">释义：<?= h($gloss) ?></p><?php endif; ?>
         <?php if ($fqUp || $fqLow): ?>
