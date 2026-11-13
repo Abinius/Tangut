@@ -39,11 +39,11 @@ if ($ref === '') {
 
     <section>
       <div class="seclabel"><span>按卷统计</span><span class="rule"></span></div>
-      <div class="overview-grid">
+      <div class="wenhai-stats">
         <?php foreach ($byVolume as $vol => $info): ?>
-        <div class="overview-card">
-          <span class="ov-label">卷 <?= h($vol) ?></span>
-          <span class="ov-count"><?= (int) $info['refs'] ?> 条目 · <?= (int) $info['count'] ?> 字</span>
+        <div class="wenhai-stat">
+          <span class="ws-label">卷 <?= h($vol) ?></span>
+          <span class="ws-count"><?= (int) $info['refs'] ?> 条目 · <?= (int) $info['count'] ?> 字</span>
         </div>
         <?php endforeach; ?>
       </div>
@@ -51,7 +51,7 @@ if ($ref === '') {
 
     <section>
       <div class="seclabel"><span>条目列表</span><span class="rule"></span></div>
-      <div class="radical-grid">
+      <div class="radical-grid wenhai-cells">
         <?php
         $gridTotal = count($entries);
         $gridPerPage = 120;
