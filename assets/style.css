@@ -986,3 +986,38 @@
   }
   .wenhai-flat .row { border-bottom: 1px solid var(--hairline-soft); }
   .wenhai-flat .row:last-child { border-bottom: none; }
+
+  /* ── 二级详情页全局扁平化 ─────────────────────────────
+   * 适用：所有含 detail-header 的检字/文献二级页
+   *   /c-{lfw}/  /radical/{sys}/{cp}/  /stroke/{n}/  /rhyme/{sys}/{val}/
+   *   /tongyin/{group}/  /sijiao|ids|cangjie/{val}/  /wenhai/{ref}/
+   * 规则：detail-header 与紧随其后的字头 .row 去玻璃卡（底/边框/阴影），
+   *       保留居中排版；首页卡片、总览网格、x-汉字候选、词组卡不受影响。 */
+  section.detail-header {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  section.detail-header .detail-glyph {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+  }
+  section.detail-header ~ section .row {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    border-bottom: 1px solid var(--hairline-soft);
+  }
+  section.detail-header ~ section .row:last-child { border-bottom: none; }
+  section.detail-header ~ section .row .glyph {
+    background: none; border: none; box-shadow: none;
+  }
