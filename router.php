@@ -31,6 +31,13 @@ if ($uri === '/sitemap.xml') {
     return true;
 }
 
+// /api/v1/* → api.php（只读 JSON，path 交给 api.php 分发；/api/v1 亦匹配）
+if (preg_match('#^/api/v1/?(.*)$#', $uri, $m)) {
+    $_GET['path'] = $m[1];
+    require __DIR__ . '/api.php';
+    return true;
+}
+
 // 其余走首页
 require __DIR__ . '/index.php';
 return true;

@@ -80,6 +80,18 @@ function lookup_text(string $text): array
     return $out;
 }
 
+/** 李范文编号 → 候选（预构建 lfw_index，O(1)） */
+function find_by_lfw(string $lfwId): ?array
+{
+    static $idx = null;
+    if ($idx === null) {
+        $d = read_json(shard_dir() . '/lfw_index.json');
+        $idx = ($d['entries'] ?? []);
+    }
+    $norm = ltrim($lfwId, '0');
+    return ($idx[$norm] ?? $idx[$lfwId] ?? null);
+}
+
 /** 站点统计（优先读预生成的 stats.json，缺失或损坏时遍历分片重算） */
 function site_stats(): array
 {

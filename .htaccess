@@ -12,6 +12,9 @@ AddType application/json .json
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # REST API 只读 JSON（/api/v1/* → api.php?path=*）
+  RewriteRule ^api/v1/?(.*)$ api.php?path=$1 [L,QSA]
+
   # 汉字详情页 /x-青/ 或 /x-青 → x.php?h=青
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d

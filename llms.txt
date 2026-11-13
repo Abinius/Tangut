@@ -5,21 +5,20 @@
 ## 数据版本
 - data_version: 2026.11.0（API / 开放数据包 / npm 包三端一致）
 
-## API（REST，Cloudflare Workers）
+## API（REST，PHP 只读 JSON，可用）
 - `GET /api/v1/lookup?char=X` — 单字查询
-- `GET /api/v1/lookup?text=XYZ` — 整串查询（逐字）
+- `GET /api/v1/lookup?text=XYZ` — 整串查询（逐字，≤64 字）
 - `GET /api/v1/character/{lfw_id}` — 字头详情
 - 自描述：`GET /api/v1`
-- 限流：单 IP 60 次/分钟
+- 限流：单 IP 60 次/分钟（超限 429 + Retry-After）
+- 响应：UTF-8 JSON，含 disclaimer / disclaimer_en / license / data_version；CORS 全开放
 
-## MCP（Model Context Protocol，/mcp Streamable HTTP）
-- `lookup_hanzi` — 汉字 → 西夏文候选（多候选为常态，须转述义项差异）
-- `get_tangut_character` — 西夏字/码位 → 详情
-- `export_name_seal` — 姓名 → 竖排印章式 SVG data URI
-- npm：`npx tangutlab-mcp`（stdio，数据内嵌）
+## MCP（Model Context Protocol）
+- stdio（可用）：`npx tangutlab-mcp`（npm 包，数据内嵌）— `lookup_hanzi` / `get_tangut_character` / `export_name_seal`
+- 托管 `/mcp` Streamable HTTP：需 Node/Worker 运行时，待部署（PHP 无法执行）
 
-## 开放数据包
-- `/data/tangutlab_data_2026.11.0.json` — 全量映射 JSON（data_version 一致）
+## 开放数据包（可用）
+- `/data/tangutlab_data_2026.11.0.json` — 全量映射 JSON（3422 汉字 / 36806 候选，data_version 一致）
 
 ## 免责与许可
 - 西夏文与汉字非一一对应，多候选为常态；tier 为自动分层近似

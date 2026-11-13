@@ -11,8 +11,10 @@ php-site/
 ├── index.php             ← 查询首页（/?q=青）
 ├── x.php                 ← 汉字详情页（/x-青/ 或 /x.php?h=青）
 ├── about.php             ← 关于页（/about）
+├── api.php               ← REST API 只读 JSON（/api/v1/*，A-01~A-06）
 ├── sitemap.php           ← 动态 sitemap（/sitemap.xml）
 ├── robots.txt            ← robots + sitemap 指名
+├── data/                 ← 开放数据包（/data/tangutlab_data_2026.11.0.json）
 ├── router.php            ← PHP 内置服务器路由（本地测试用）
 ├── .htaccess             ← Apache 伪静态 + 缓存 + MIME
 ├── includes/
@@ -111,6 +113,8 @@ php -S 127.0.0.1:8080 router.php
 # 详情：http://127.0.0.1:8080/x-青/
 # 关于：http://127.0.0.1:8080/about
 # sitemap：http://127.0.0.1:8080/sitemap.xml
+# Agent API：http://127.0.0.1:8080/api/v1/lookup?char=青
+# 开放数据包：http://127.0.0.1:8080/data/tangutlab_data_2026.11.0.json
 ```
 
 > ⚠️ **`router.php` 仅限本地测试。** `php -S` 会直接返回磁盘上存在的文件（含 `.env`），禁止用于对外服务；生产环境必须用 Apache/Nginx + `.htaccess`（或上述 Nginx 配置），由服务器层拒绝 `.env` 访问。
