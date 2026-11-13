@@ -87,11 +87,27 @@ if (!$any && !$items) {
   <div class="lookup-grid">
     <a class="lookup-card" href="/radical/">
       <span class="lookup-label">部首检字</span>
-      <span class="lookup-desc">四套部首体系 · 371–509 部首</span>
+      <span class="lookup-desc">四套部首体系</span>
     </a>
     <a class="lookup-card" href="/stroke/">
       <span class="lookup-label">笔画检字</span>
-      <span class="lookup-desc">4–22 画 · 6084 字</span>
+      <span class="lookup-desc">4–22 画浏览</span>
+    </a>
+    <a class="lookup-card" href="/sijiao/">
+      <span class="lookup-label">四角号码</span>
+      <span class="lookup-desc">2687 组</span>
+    </a>
+    <a class="lookup-card" href="/rhyme/">
+      <span class="lookup-label">声韵检字</span>
+      <span class="lookup-desc">同音 / 文海 / 韵类</span>
+    </a>
+    <a class="lookup-card" href="/cangjie/">
+      <span class="lookup-label">仓颉码</span>
+      <span class="lookup-desc">5977 组</span>
+    </a>
+    <a class="lookup-card" href="/word/">
+      <span class="lookup-label">词组查询</span>
+      <span class="lookup-desc">18292 条词组</span>
     </a>
     <form class="lookup-card lookup-form" onsubmit="var v=this.q.value.trim();if(v)window.location='/c-'+encodeURIComponent(v)+'/';return false">
       <span class="lookup-label">字头反查</span>

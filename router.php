@@ -66,6 +66,64 @@ if ($uri === '/stroke' || $uri === '/stroke/') {
     return true;
 }
 
+// 四角号码 / 仓颉码 / IDS 检字（通用 lookup.php）
+if (preg_match('#^/sijiao/([^/]+)/?$#', $uri, $m)) {
+    $_GET['idx'] = 'sijiao';
+    $_GET['v'] = rawurldecode($m[1]);
+    require __DIR__ . '/lookup.php';
+    return true;
+}
+if ($uri === '/sijiao' || $uri === '/sijiao/') {
+    $_GET['idx'] = 'sijiao';
+    require __DIR__ . '/lookup.php';
+    return true;
+}
+if (preg_match('#^/cangjie/([^/]+)/?$#', $uri, $m)) {
+    $_GET['idx'] = 'cangjie';
+    $_GET['v'] = rawurldecode($m[1]);
+    require __DIR__ . '/lookup.php';
+    return true;
+}
+if ($uri === '/cangjie' || $uri === '/cangjie/') {
+    $_GET['idx'] = 'cangjie';
+    require __DIR__ . '/lookup.php';
+    return true;
+}
+if (preg_match('#^/ids/([^/]+)/?$#', $uri, $m)) {
+    $_GET['idx'] = 'ids';
+    $_GET['v'] = rawurldecode($m[1]);
+    require __DIR__ . '/lookup.php';
+    return true;
+}
+if ($uri === '/ids' || $uri === '/ids/') {
+    $_GET['idx'] = 'ids';
+    require __DIR__ . '/lookup.php';
+    return true;
+}
+
+// 声韵检字 /rhyme/
+if (preg_match('#^/rhyme/([^/]+)/([^/]+)/?$#', $uri, $m)) {
+    $_GET['system'] = rawurldecode($m[1]);
+    $_GET['v'] = rawurldecode($m[2]);
+    require __DIR__ . '/rhyme.php';
+    return true;
+}
+if (preg_match('#^/rhyme/([^/]+)/?$#', $uri, $m)) {
+    $_GET['system'] = rawurldecode($m[1]);
+    require __DIR__ . '/rhyme.php';
+    return true;
+}
+if ($uri === '/rhyme' || $uri === '/rhyme/') {
+    require __DIR__ . '/rhyme.php';
+    return true;
+}
+
+// 词组查询 /word/
+if ($uri === '/word' || $uri === '/word/') {
+    require __DIR__ . '/word.php';
+    return true;
+}
+
 // /sitemap.xml → sitemap.php（动态生成）
 if ($uri === '/sitemap.xml') {
     require __DIR__ . '/sitemap.php';

@@ -47,6 +47,42 @@ AddType application/json .json
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^stroke/?$ stroke.php [L]
 
+  # 四角号码 / 仓颉码 / IDS 检字（通用 lookup.php）
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^sijiao/([^/]+)/?$ lookup.php?idx=sijiao&v=$1 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^sijiao/?$ lookup.php?idx=sijiao [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^cangjie/([^/]+)/?$ lookup.php?idx=cangjie&v=$1 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^cangjie/?$ lookup.php?idx=cangjie [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ids/([^/]+)/?$ lookup.php?idx=ids&v=$1 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^ids/?$ lookup.php?idx=ids [L]
+
+  # 声韵检字 /rhyme/ /rhyme/{system}/ /rhyme/{system}/{value}/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^rhyme/([^/]+)/([^/]+)/?$ rhyme.php?system=$1&v=$2 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^rhyme/([^/]+)/?$ rhyme.php?system=$1 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^rhyme/?$ rhyme.php [L]
+
+  # 词组查询 /word/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^word/?$ word.php [L,QSA]
+
   # /sitemap.xml → sitemap.php（动态生成）
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
 </IfModule>
