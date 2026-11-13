@@ -54,11 +54,20 @@ foreach ($items as $it):
     if ($top) {
         $any = true;
         $t = (string) ($top['tier'] ?? 'none');
+        $lfw = (string) ($top['lfw_id'] ?? '');
+        $gong = (string) ($top['gong'] ?? '');
+        $detail = find_detail($lfw);
+        $sj = is_array($detail) ? (string) ($detail['四角号码'] ?? '') : '';
         ?>
   <article class="row tier-<?= h($t) ?>">
     <div class="glyph" lang="txg" aria-label="西夏文 <?= h((string) $top['tangut']) ?>"><?= h((string) $top['tangut']) ?></div>
     <div class="cell">
-      <div class="meta"><span class="tier"><?= h($it['char']) ?> → <?= h($t) ?> (<?= count($cands) ?> 候选)</span></div>
+      <div class="meta">
+        <span class="tier"><?= h($it['char']) ?> → <?= h($t) ?> (<?= count($cands) ?> 候选)</span>
+        <?php if ($lfw): ?><a class="chip" href="/c-<?= h(rawurlencode($lfw)) ?>/">LFW <?= h($lfw) ?> ↗</a><?php endif; ?>
+        <?php if ($gong): ?><span class="chip">龚煌城：<?= h($gong) ?></span><?php endif; ?>
+        <?php if ($sj): ?><a class="chip" href="/sijiao/<?= h(rawurlencode($sj)) ?>/">四角 <?= h($sj) ?> ↗</a><?php endif; ?>
+      </div>
       <p class="gloss">释义：<?= h((string) ($top['gloss_zh'] ?? '')) ?></p>
     </div>
   </article>

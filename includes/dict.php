@@ -99,6 +99,23 @@ function is_tangut_field(string $field): bool
     return in_array($field, TANGUT_FIELDS, true);
 }
 
+/** 深链：字段值 → 对应检字/文献页 URL（无对应页返回 null）。 */
+function field_link(string $field, string $val): ?string
+{
+    if ($val === '') {
+        return null;
+    }
+    return match ($field) {
+        '四角号码' => '/sijiao/' . rawurlencode($val) . '/',
+        '仓颉码'   => '/cangjie/' . rawurlencode($val) . '/',
+        '结构'     => '/ids/' . rawurlencode($val) . '/',
+        '笔画'     => '/stroke/' . rawurlencode($val) . '/',
+        '文海'     => '/wenhai/' . rawurlencode($val) . '/',
+        '同音'     => '/tongyin/' . rawurlencode($val) . '/',
+        default    => null,
+    };
+}
+
 /** 渲染单行字段；空值返回 false（调用方跳过） */
 function render_field_row(array $detail, string $field, string $label): bool
 {
@@ -107,10 +124,14 @@ function render_field_row(array $detail, string $field, string $label): bool
         return false;
     }
     $isTangut = is_tangut_field($field);
+    $link = field_link($field, $val);
     ?>
     <div class="field-row">
       <dt><?= h($label) ?></dt>
-      <dd<?php if ($isTangut): ?> class="glyph-inline" lang="txg"<?php endif; ?>><?= h($val) ?></dd>
+      <dd<?php if ($isTangut): ?> class="glyph-inline" lang="txg"<?php endif; ?>>
+        <?php if ($link): ?><a class="deep-link" href="<?= h($link) ?>"><?= h($val) ?> ↗</a>
+        <?php else: ?><?= h($val) ?><?php endif; ?>
+      </dd>
     </div>
     <?php
     return true;

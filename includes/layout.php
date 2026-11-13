@@ -12,7 +12,7 @@ function abs_url(string $path): string
 }
 
 /** 输出 <head> + 站点头部（配置全部来自 .env） */
-function page_start(string $title, string $desc, string $canonical, ?string $ogTitle = null, ?string $ogDesc = null, bool $noindex = false): void
+function page_start(string $title, string $desc, string $canonical, ?string $ogTitle = null, ?string $ogDesc = null, bool $noindex = false, bool $preloadRest = false): void
 {
     $dv = data_version();
     $canon = abs_url($canonical);
@@ -50,6 +50,11 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="stylesheet" href="/assets/style.css">
 <link rel="preload" href="<?= h(TANGUT_CORE_FONT) ?>" as="font" type="font/woff2" crossorigin>
+<?php if ($preloadRest): ?>
+<link rel="preload" href="<?= h(TANGUT_REST_FONT) ?>" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="<?= h(TANGUT_FIX_FONT) ?>" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="<?= h(TANGUT_IDSOPS_FONT) ?>" as="font" type="font/woff2" crossorigin>
+<?php endif; ?>
 </head>
 <body>
 <header class="site-header">

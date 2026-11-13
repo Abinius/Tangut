@@ -55,7 +55,7 @@ $desc .= "。LFW {$lfw}，{$unicode}，75 字段全量详情。";
 $title = "{$char} · LFW {$lfw} · 西夏文字头 · " . SITE_NAME;
 $canonical = '/c-' . rawurlencode($lfw ?: $unicode) . '/';
 
-page_start($title, $desc, $canonical, $title, $desc, false);
+page_start($title, $desc, $canonical, $title, $desc, false, true);
 ?>
 <section class="search">
   <div class="search-bar">

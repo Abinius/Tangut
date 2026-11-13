@@ -8,6 +8,16 @@
         src: url("/fonts/tangut_rest-cba4d927d1e4.woff2") format("woff2");
         font-display: swap;
       }
+      @font-face {
+        font-family: "TangutFix";
+        src: url("/fonts/tangut_fix-bc6408ee5bc4.woff2") format("woff2");
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "TangutIdsOps";
+        src: url("/fonts/tangut_idsops-8b8d5c156180.woff2") format("woff2");
+        font-display: swap;
+      }
 
       /* ── 奢华极简留白（Luxury Minimal Whitespace）设计令牌 ──────────
        * 单一基底：暖白画布 #FAFAF8。前景：暖近黑 #1A1A18。
@@ -34,7 +44,7 @@
           "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
         --mono: ui-monospace, "SF Mono", "JetBrains Mono", "IBM Plex Mono",
           Menlo, Consolas, monospace;
-        --tangut: "Tangut", "TangutRest", "Noto Serif Tangut", serif;
+        --tangut: "Tangut", "TangutRest", "TangutFix", "TangutIdsOps", "Noto Serif Tangut", serif;
         --gutter: clamp(1.25rem, 4vw, 3rem);
         --maxw: 1080px;
         --fast: 160ms;
@@ -450,7 +460,7 @@
     border: 1px solid var(--hairline-soft);
   }
   .detail-meta { flex: 1; min-width: 0; }
-  .detail-meta .page-title { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 300; }
+  .detail-meta .page-title { font-size: 1.8rem; margin: 0 0 0.5rem; font-weight: 300; font-family: var(--tangut); }
   .detail-meta .status { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.3rem 0; }
 
   .detail-group { margin-bottom: 2.2rem; }
@@ -467,7 +477,7 @@
   }
   .field-row dd { font-size: 15px; color: var(--ink); font-weight: 300; margin: 0; word-break: break-word; }
   .field-row dd.mono { font-family: var(--mono); font-size: 14px; letter-spacing: 0.02em; }
-  .field-row dd.glyph-inline { font-size: 20px; font-family: "Tangut", "TangutRest", serif; }
+  .field-row dd.glyph-inline { font-size: 20px; font-family: "Tangut", "TangutRest", "TangutFix", "TangutIdsOps", serif; }
   .tone-mark { color: var(--accent-deep); font-size: 0.85em; }
 
   .phonetics-fold {
