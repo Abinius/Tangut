@@ -964,7 +964,8 @@
   }
 
   /* ── 文海二级详情页：居中不变、隐藏卡片（去底/边框/阴影）────── */
-  .wenhai-flat .detail-header,
+  /* detail-header 与 wenhai-flat 同元素，须用复合选择器；detail-glyph 内部字形卡一并去除 */
+  .wenhai-flat.detail-header,
   .wenhai-flat .row {
     background: none;
     -webkit-backdrop-filter: none;
@@ -972,6 +973,13 @@
     border: none;
     box-shadow: none;
     border-radius: 0;
+  }
+  .wenhai-flat .detail-glyph {
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
   }
   .wenhai-flat .row .glyph {
     background: none; border: none; box-shadow: none;
