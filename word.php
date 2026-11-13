@@ -112,7 +112,7 @@ function _render_word_list(array $entries, int $page, int $perPage = 60): void
     $offset = ($page - 1) * $perPage;
     $slice = array_slice($entries, $offset, $perPage);
 
-    echo '<section class="index" aria-label="词组列表">';
+    echo '<section class="index word-list" aria-label="词组列表">';
     foreach ($slice as $e) {
         $word = (string) ($e['word'] ?? '');
         $glossCn = (string) ($e['gloss_cn'] ?? '');

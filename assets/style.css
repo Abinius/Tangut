@@ -875,3 +875,23 @@
     .retrieve-glyph { width: 46px; height: 46px; padding: 6px; }
     .retrieve-systems { grid-template-columns: repeat(2, 1fr); }
   }
+
+  /* ── 词组页（/word/）：PC 三列网格 ─────────────────── */
+  .word-list {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem; margin-top: 1rem;
+  }
+  .word-list .row {
+    padding: 1.2rem 1rem; gap: 0.7rem;
+  }
+  .word-list .row .glyph { font-size: 2.4rem; }
+  .word-list .row .gloss { font-size: 0.95rem; line-height: 1.6; word-break: break-word; }
+
+  /* 平板两列 */
+  @media (max-width: 1023px) {
+    .word-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
+  }
+  /* 手机单列 */
+  @media (max-width: 620px) {
+    .word-list { grid-template-columns: 1fr; gap: 0.6rem; }
+  }
