@@ -32,9 +32,8 @@ if ($system === '' || !isset($systems[$system])) {
     page_start('声韵检字 · ' . SITE_NAME, '按同音 / 文海 / 韵类三体系浏览西夏文字头。', '/rhyme/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> 声韵</p>
-    <h1 class="page-title">声韵检字</h1>
     <p class="status done">三体系：同音 / 文海 / 韵类</p>
-    <section class="index">
+    <section class="overview-grid">
         <?php foreach ($systems as $sk => $sv): ?>
         <article class="row tier-P0">
             <div class="cell">
@@ -63,7 +62,6 @@ if ($value === '') {
     page_start($sysLabel . '检字 · ' . SITE_NAME, "按{$sysLabel}浏览西夏文字头，共 {$sys['group_count']} 组。", $route);
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> <a href="/rhyme/">声韵</a> <span class="sep">///</span> <?= h($sysLabel) ?></p>
-    <h1 class="page-title"><?= h($sysLabel) ?> <span class="arrow">·</span> <?= (int) $sys['group_count'] ?> 组</h1>
     <p class="status done"><?= (int) $sys['total_chars'] ?> 字 · 按字数降序</p>
     <section class="radical-grid" aria-label="分组列表">
         <?php
@@ -87,7 +85,7 @@ $decoded = rawurldecode($value);
 if (!isset($groups[$decoded])) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
-    echo '<h1 class="page-title">404</h1><p class="status">未找到该分组。<a href="' . h($route) . '">回' . h($sysLabel) . '总览</a></p>';
+    echo '<p class="status">未找到该分组。<a href="' . h($route) . '">回' . h($sysLabel) . '总览</a></p>';
     page_end();
     exit;
 }
@@ -102,7 +100,6 @@ page_start($decoded . ' · ' . $sysLabel . ' · ' . SITE_NAME, "{$sysLabel}「{$
 <section class="detail-header">
     <div class="detail-glyph glyph" style="font-family:var(--mono);font-size:28px"><?= h($decoded) ?></div>
     <div class="detail-meta">
-        <h1 class="page-title" style="font-size:1.4rem"><?= h($decoded) ?> <span class="arrow">·</span> <?= h($sysLabel) ?></h1>
         <p class="status done"><span class="chip"><?= $total ?> 字</span><span class="chip"><?= h(data_version()) ?></span></p>
     </div>
 </section>

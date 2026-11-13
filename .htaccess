@@ -1,4 +1,4 @@
-# 蕃汉 TANGUT Lab · Apache 伪静态 + 缓存 + MIME
+# Tangut Dictionary（蕃汉合时掌中珠）· Apache 伪静态 + 缓存 + MIME
 # 上传到站点根目录（与 index.php 同级）
 
 DirectoryIndex index.php

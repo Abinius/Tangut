@@ -27,7 +27,6 @@ if (!$detail) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
     ?>
-    <h1 class="page-title">404<span class="arrow">.</span></h1>
     <p class="status">未找到该字头。请输入有效的 LFW 编号（如 0257）或码位（如 U+1760D）。
       从 <a href="/">首页查询</a> 汉字，再点击候选卡片进入字头详情。</p>
     <?php

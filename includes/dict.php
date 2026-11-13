@@ -239,7 +239,6 @@ function render_detail_page(array $detail): void
     <section class="detail-header">
       <div class="detail-glyph glyph" lang="txg" aria-label="西夏文 <?= h($char) ?>"><?= h($char) ?></div>
       <div class="detail-meta">
-        <h1 class="page-title"><?= h($char) ?> <span class="arrow">·</span> <span class="mono">LFW <?= h($lfw) ?></span></h1>
         <p class="status done">
           <?php if ($unicode): ?><span class="chip"><?= h($unicode) ?></span><?php endif; ?>
           <?php if ($gloss): ?><span class="chip">释义：<?= h($gloss) ?></span><?php endif; ?>

@@ -1,0 +1,14 @@
+{
+ "font_stack": {
+  "core": 3414,
+  "rest": 2648,
+  "fix": 744,
+  "idsops": 9,
+  "stack_size": 6815
+ },
+ "codepoints": {
+  "used": 6806,
+  "missing": 0
+ },
+ "pages_with_uncovered_char": 0
+}

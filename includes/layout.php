@@ -14,7 +14,6 @@ function abs_url(string $path): string
 /** 输出 <head> + 站点头部（配置全部来自 .env） */
 function page_start(string $title, string $desc, string $canonical, ?string $ogTitle = null, ?string $ogDesc = null, bool $noindex = false, bool $preloadRest = false): void
 {
-    $dv = data_version();
     $canon = abs_url($canonical);
     $ogt = $ogTitle ?? $title;
     $ogd = $ogDesc ?? $desc;
@@ -58,26 +57,18 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
 </head>
 <body>
 <header class="site-header">
-  <div class="register">
-    <div class="container register-inner mono">
-      <span class="rp">[ <?= h(SITE_NAME) ?> ]</span>
-      <span><span class="sep">///</span> 全量索引 · P0–P3</span>
-      <span><span class="sep">///</span> <?= h($dv) ?></span>
-      <span><span class="sep">///</span> PHP · 动态</span>
-    </div>
-  </div>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="返回首页">
       <span class="brand-mark" aria-hidden="true"><?= h(BRAND) ?><em>.</em></span>
     </a>
     <nav class="nav" aria-label="主导航">
-      <a href="/" class="nav-link">查询</a>
-      <a href="/radical/" class="nav-link">部首</a>
-      <a href="/stroke/" class="nav-link">笔画</a>
-      <a href="/rhyme/" class="nav-link">声韵</a>
-      <a href="/word/" class="nav-link">词组</a>
-      <a href="/wenhai/" class="nav-link">文献</a>
-      <a href="/about" class="nav-link">关于</a>
+      <a href="/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>查询</a>
+      <a href="/radical/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/></svg>部首</a>
+      <a href="/stroke/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l2.5-7L16 3.5 20.5 8 12 16.5z"/><path d="M14 6l4 4"/></svg>笔画</a>
+      <a href="/rhyme/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3M8 7v10M13 4v16M18 8v8M21 12h-2"/></svg>声韵</a>
+      <a href="/word/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="5" rx="1.5"/><rect x="4" y="13" width="16" height="5" rx="1.5"/></svg>词组</a>
+      <a href="/wenhai/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>文献</a>
+      <a href="/about" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>关于</a>
     </nav>
   </div>
 </header>

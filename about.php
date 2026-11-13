@@ -8,7 +8,6 @@ page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（蕃汉合时掌中珠�
 ?>
 <article class="about">
   <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 关于</p>
-  <h1 class="page-title">关于 <span class="arrow">·</span> 蕃汉</h1>
 
   <section>
     <div class="seclabel"><span>01 本工具</span><span class="rule"></span></div>

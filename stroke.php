@@ -29,7 +29,7 @@ $max = (int) ($idx['max'] ?? 0);
 if ($n !== '' && !isset($strokes[$n])) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
-    echo '<h1 class="page-title">404</h1><p class="status">未找到「' . h($n) . '」画字头。<a href="/stroke/">回笔画总览</a></p>';
+    echo '<p class="status">未找到「' . h($n) . '」画字头。<a href="/stroke/">回笔画总览</a></p>';
     page_end();
     exit;
 }
@@ -41,7 +41,6 @@ if ($n === '') {
     page_start($title, $desc, '/stroke/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> 笔画</p>
-    <h1 class="page-title">笔画检字</h1>
     <p class="status done"><?= $min ?>–<?= $max ?> 画 · 按笔画数浏览字头</p>
     <section class="stroke-grid" aria-label="笔画入口">
         <?php for ($i = $min; $i <= $max; $i++): 
@@ -73,7 +72,6 @@ page_start($title, $desc, '/stroke/' . $n . '/');
 <section class="detail-header">
     <div class="detail-glyph glyph" style="font-family:var(--mono);font-size:48px"><?= h($n) ?></div>
     <div class="detail-meta">
-        <h1 class="page-title"><?= h($n) ?> <span class="arrow">·</span> 画</h1>
         <p class="status done">
             <span class="chip"><?= $total ?> 字</span>
             <span class="chip"><?= h(data_version()) ?></span>

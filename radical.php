@@ -34,9 +34,8 @@ if ($system === '' || !isset($systems[$system])) {
     page_start($title, $desc, '/radical/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> 部首</p>
-    <h1 class="page-title">部首检字</h1>
     <p class="status done">四套部首体系，按体系浏览全部部首，点击进入字头列表。</p>
-    <section class="index">
+    <section class="overview-grid">
         <?php foreach ($systems as $sk => $sv): ?>
         <article class="row tier-P0">
             <div class="cell">
@@ -67,8 +66,12 @@ if ($radicalCp === '') {
     page_start($title, $desc, $canonical);
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> <a href="/radical/">部首</a> <span class="sep">///</span> <?= h($sysLabel) ?></p>
-    <h1 class="page-title"><?= h($sysLabel) ?> <span class="arrow">·</span> <?= (int) $sys['radical_count'] ?> 部首</h1>
     <p class="status done"><?= (int) $sys['total_chars'] ?> 字 · 按字数降序</p>
+    <?php
+    // 部首字形复用首页 SVG 矢量（tangut_fix/rest 提取）；缺失码位（PUA 占位）回退字体
+    $radAll = require __DIR__ . '/includes/radical_all.php';
+    $radAllVb = implode(' ', $radAll['viewbox']);
+    ?>
     <section class="radical-grid" aria-label="部首列表">
         <?php
         // 按字数降序排列
@@ -76,9 +79,14 @@ if ($radicalCp === '') {
         uasort($sorted, static fn($a, $b) => $b['count'] <=> $a['count']);
         foreach ($sorted as $cp => $r):
             $cpClean = str_replace('U+', '', $cp);
+            $rg = $radAll['glyphs'][$cp] ?? null;
         ?>
         <a class="radical-cell" href="/radical/<?= h($system) ?>/<?= h($cpClean) ?>/">
+            <?php if ($rg): ?>
+            <svg class="radical-svg" viewBox="<?= h($radAllVb) ?>" aria-hidden="true" focusable="false"><path d="<?= h($rg['d']) ?>"/></svg>
+            <?php else: ?>
             <span class="glyph radical-glyph" lang="txg"><?= h($r['char']) ?></span>
+            <?php endif; ?>
             <span class="radical-count"><?= (int) $r['count'] ?></span>
         </a>
         <?php endforeach; ?>
@@ -95,7 +103,6 @@ if (!isset($radicals[$cpKey])) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
     ?>
-    <h1 class="page-title">404<span class="arrow">.</span></h1>
     <p class="status">未找到该部首。请从 <a href="/radical/<?= h($system) ?>/">部首列表</a> 选择。</p>
     <?php
     page_end();
@@ -115,7 +122,6 @@ page_start($title, $desc, '/radical/' . $system . '/' . $cpClean . '/');
 <section class="detail-header">
     <div class="detail-glyph glyph" lang="txg" aria-label="部首 <?= h($r['char']) ?>"><?= h($r['char']) ?></div>
     <div class="detail-meta">
-        <h1 class="page-title"><?= h($r['char']) ?> <span class="arrow">·</span> <?= h($sysLabel) ?></h1>
         <p class="status done">
             <span class="chip"><?= (int) $total ?> 字</span>
             <span class="chip"><?= h($cpKey) ?></span>

@@ -10,7 +10,6 @@ if (!$isSingle) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
     ?>
-    <h1 class="page-title">404<span class="arrow">.</span></h1>
     <p class="status">无效的汉字参数。请从 <a href="/">首页查询</a> 输入单个汉字。</p>
     <?php
     page_end();
@@ -48,7 +47,6 @@ page_start($title, $desc, $canonical, $title, $desc, !$cands);
   <a href="/">查询</a> <span class="sep">///</span> 汉字 <span class="sep">///</span> <?= h($h) ?>
 </p>
 
-<h1 class="page-title"><?= h($h) ?> <span class="arrow">→</span> 西夏文</h1>
 <p class="status done"><?= count($cands) ?> 个候选 · 数据版本 <?= h($dv) ?></p>
 
 <section class="search">

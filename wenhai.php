@@ -33,16 +33,15 @@ if ($ref === '') {
     page_start($title, $desc, '/wenhai/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 文献 <span class="sep">///</span> 文海</p>
-    <h1 class="page-title">文海文献</h1>
     <p class="status done"><?= (int) ($idx['total_refs'] ?? 0) ?> 条目 · <?= (int) ($idx['total_chars'] ?? 0) ?> 字 · 反切数据覆盖 51%</p>
 
     <section>
       <div class="seclabel"><span>按卷统计</span><span class="rule"></span></div>
-      <div class="lookup-grid">
+      <div class="overview-grid">
         <?php foreach ($byVolume as $vol => $info): ?>
-        <div class="lookup-card">
-          <span class="lookup-label">卷 <?= h($vol) ?></span>
-          <span class="lookup-desc"><?= (int) $info['refs'] ?> 条目 · <?= (int) $info['count'] ?> 字</span>
+        <div class="overview-card">
+          <span class="ov-label">卷 <?= h($vol) ?></span>
+          <span class="ov-count"><?= (int) $info['refs'] ?> 条目 · <?= (int) $info['count'] ?> 字</span>
         </div>
         <?php endforeach; ?>
       </div>
@@ -74,7 +73,7 @@ $decoded = rawurldecode($ref);
 if (!isset($entries[$decoded])) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
-    echo '<h1 class="page-title">404</h1><p class="status">未找到文海条目「' . h(mb_substr($decoded, 0, 40, 'UTF-8')) . '」。<a href="/wenhai/">回文海总览</a></p>';
+    echo '<p class="status">未找到文海条目「' . h(mb_substr($decoded, 0, 40, 'UTF-8')) . '」。<a href="/wenhai/">回文海总览</a></p>';
     page_end();
     exit;
 }
@@ -90,7 +89,6 @@ page_start($title, "《文海》条目 {$decoded}，共 {$total} 字。", '/wenh
 <section class="detail-header">
     <div class="detail-glyph glyph" style="font-family:var(--mono);font-size:24px"><?= h($decoded) ?></div>
     <div class="detail-meta">
-        <h1 class="page-title" style="font-size:1.4rem">文海 <span class="arrow">·</span> <?= h($decoded) ?></h1>
         <p class="status done"><span class="chip"><?= $total ?> 字</span><span class="chip"><?= h(data_version()) ?></span></p>
     </div>
 </section>

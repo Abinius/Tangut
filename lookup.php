@@ -33,7 +33,7 @@ $IDX_CONFIG = [
 if (!isset($IDX_CONFIG[$idxType])) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
-    echo '<h1 class="page-title">404</h1><p class="status">未知检字类型。</p>';
+    echo '<p class="status">未知检字类型。</p>';
     page_end();
     exit;
 }
@@ -57,7 +57,6 @@ if ($value === '') {
     page_start($title, $desc, $route);
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> <?= h($label) ?></p>
-    <h1 class="page-title"><?= h($cfg['title']) ?></h1>
     <p class="status done"><?= (int) ($idx['group_count'] ?? 0) ?> 组 · <?= (int) ($idx['total_chars'] ?? 0) ?> 字 · 按字数降序</p>
     <section class="radical-grid" aria-label="<?= h($label) ?>列表">
         <?php
@@ -88,7 +87,6 @@ if (!isset($groups[$decoded])) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
     ?>
-    <h1 class="page-title">404</h1>
     <p class="status">未找到 <?= h($cfg['value_label']) ?> 「<?= h(mb_substr($decoded, 0, 40, 'UTF-8')) ?>」。
       请从 <a href="<?= h($route) ?>"><?= h($label) ?>总览</a> 选择。</p>
     <?php
@@ -108,7 +106,6 @@ page_start($title, $desc, $route . $value . '/');
 <section class="detail-header">
     <div class="detail-glyph glyph" style="font-family:var(--mono);font-size:24px;word-break:break-all"><?= h(mb_substr($decoded, 0, 12, 'UTF-8')) ?></div>
     <div class="detail-meta">
-        <h1 class="page-title" style="font-size:1.4rem"><?= h($cfg['value_label']) ?> <span class="arrow">·</span> <?= h(mb_substr($decoded, 0, 20, 'UTF-8')) ?></h1>
         <p class="status done"><span class="chip"><?= $total ?> 字</span><span class="chip"><?= h(data_version()) ?></span></p>
     </div>
 </section>

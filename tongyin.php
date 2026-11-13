@@ -32,7 +32,6 @@ if ($group === '') {
     page_start($title, $desc, '/tongyin/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 文献 <span class="sep">///</span> 同音</p>
-    <h1 class="page-title">同音文献</h1>
     <p class="status done"><?= (int) ($idx['total_groups'] ?? 0) ?> 组 · <?= (int) ($idx['total_chars'] ?? 0) ?> 字 · 覆盖 100%</p>
     <section class="radical-grid" aria-label="同音组列表">
         <?php foreach ($groups as $gk => $g): ?>
@@ -53,7 +52,7 @@ $decoded = rawurldecode($group);
 if (!isset($groups[$decoded])) {
     http_response_code(404);
     page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
-    echo '<h1 class="page-title">404</h1><p class="status">未找到同音组「' . h($decoded) . '」。<a href="/tongyin/">回同音总览</a></p>';
+    echo '<p class="status">未找到同音组「' . h($decoded) . '」。<a href="/tongyin/">回同音总览</a></p>';
     page_end();
     exit;
 }
@@ -69,7 +68,6 @@ page_start($title, "《同音》组 {$decoded}，共 {$total} 字，新版/旧�
 <section class="detail-header">
     <div class="detail-glyph glyph" style="font-family:var(--mono);font-size:28px"><?= h($decoded) ?></div>
     <div class="detail-meta">
-        <h1 class="page-title" style="font-size:1.4rem">同音 <span class="arrow">·</span> <?= h($decoded) ?></h1>
         <p class="status done"><span class="chip"><?= $total ?> 字</span><span class="chip"><?= h(data_version()) ?></span></p>
     </div>
 </section>

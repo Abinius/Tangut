@@ -36,7 +36,6 @@ if ($hanzi !== '' && isset($byHanzi[$hanzi])) {
     page_start($title, $desc, '/word/h-' . rawurlencode($hanzi) . '/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> <a href="/word/">词组</a> <span class="sep">///</span> <?= h($hanzi) ?></p>
-    <h1 class="page-title"><?= h($hanzi) ?> <span class="arrow">·</span> 西夏文词组</h1>
     <p class="status done"><?= $total ?> 条词组 · 释义含「<?= h($hanzi) ?>」</p>
     <?php
     _render_word_list($entries, $page);
@@ -62,7 +61,6 @@ if ($q !== '') {
     page_start($title, "搜索「{$q}」的西夏文词组结果。", '/word/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> <a href="/word/">词组</a> <span class="sep">///</span> 搜索</p>
-    <h1 class="page-title">词组搜索</h1>
     <p class="status done"><?= count($results) ?> 条结果 · 搜索「<?= h($q) ?>」</p>
     <?php
     _render_word_list($results, $page);
@@ -79,7 +77,6 @@ $title = '词组查询 · ' . SITE_NAME;
 page_start($title, "西夏文词组查询，共 {$total} 条词组。", '/word/');
 ?>
 <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 词组</p>
-<h1 class="page-title">词组查询</h1>
 <p class="status done"><?= $total ?> 条词组 · <?= (int) ($idx['total_hanzi_with_words'] ?? 0) ?> 汉字有词组数据</p>
 
 <section class="search">
