@@ -42,7 +42,7 @@ if ($n === '') {
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> 笔画</p>
     <p class="status done"><?= $min ?>–<?= $max ?> 画 · 按笔画数浏览字头</p>
-    <section class="stroke-grid" aria-label="笔画入口">
+    <section class="stroke-grid stroke-grid-5" aria-label="笔画入口">
         <?php for ($i = $min; $i <= $max; $i++): 
             $sn = (string) $i;
             if (!isset($strokes[$sn])) continue;

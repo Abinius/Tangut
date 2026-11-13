@@ -923,3 +923,15 @@
     .overview-grid-4 { grid-template-columns: 1fr; gap: 0.5rem; }
     .overview-grid-4 .overview-mini { padding: 0.8rem 0.7rem; }
   }
+
+  /* ── 笔画总览：PC 一行五个卡片 ─────────────────────── */
+  .stroke-grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  @media (max-width: 1023px) {
+    .stroke-grid-5 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  @media (max-width: 768px) {
+    .stroke-grid-5 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 480px) {
+    .stroke-grid-5 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
