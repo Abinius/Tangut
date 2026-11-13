@@ -109,6 +109,14 @@ if (!$any && !$items) {
       <span class="lookup-label">词组查询</span>
       <span class="lookup-desc">18292 条词组</span>
     </a>
+    <a class="lookup-card" href="/wenhai/">
+      <span class="lookup-label">文海文献</span>
+      <span class="lookup-desc">3064 条目 · 反切</span>
+    </a>
+    <a class="lookup-card" href="/tongyin/">
+      <span class="lookup-label">同音文献</span>
+      <span class="lookup-desc">1320 组 · 新旧版对照</span>
+    </a>
     <form class="lookup-card lookup-form" onsubmit="var v=this.q.value.trim();if(v)window.location='/c-'+encodeURIComponent(v)+'/';return false">
       <span class="lookup-label">字头反查</span>
       <div class="search-bar" style="margin-top:0.4rem">

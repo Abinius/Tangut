@@ -124,6 +124,28 @@ if ($uri === '/word' || $uri === '/word/') {
     return true;
 }
 
+// 文海文献 /wenhai/
+if (preg_match('#^/wenhai/([^/]+)/?$#', $uri, $m)) {
+    $_GET['ref'] = rawurldecode($m[1]);
+    require __DIR__ . '/wenhai.php';
+    return true;
+}
+if ($uri === '/wenhai' || $uri === '/wenhai/') {
+    require __DIR__ . '/wenhai.php';
+    return true;
+}
+
+// 同音文献 /tongyin/
+if (preg_match('#^/tongyin/([^/]+)/?$#', $uri, $m)) {
+    $_GET['group'] = rawurldecode($m[1]);
+    require __DIR__ . '/tongyin.php';
+    return true;
+}
+if ($uri === '/tongyin' || $uri === '/tongyin/') {
+    require __DIR__ . '/tongyin.php';
+    return true;
+}
+
 // /sitemap.xml → sitemap.php（动态生成）
 if ($uri === '/sitemap.xml') {
     require __DIR__ . '/sitemap.php';

@@ -83,6 +83,22 @@ AddType application/json .json
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^word/?$ word.php [L,QSA]
 
+  # 文海文献 /wenhai/ /wenhai/{ref}/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^wenhai/([^/]+)/?$ wenhai.php?ref=$1 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^wenhai/?$ wenhai.php [L]
+
+  # 同音文献 /tongyin/ /tongyin/{group}/
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^tongyin/([^/]+)/?$ tongyin.php?group=$1 [L,QSA,B]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^tongyin/?$ tongyin.php [L]
+
   # /sitemap.xml → sitemap.php（动态生成）
   RewriteRule ^sitemap\.xml$ sitemap.php [L]
 </IfModule>

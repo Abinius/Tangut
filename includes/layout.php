@@ -71,6 +71,7 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
       <a href="/stroke/" class="nav-link">笔画</a>
       <a href="/rhyme/" class="nav-link">声韵</a>
       <a href="/word/" class="nav-link">词组</a>
+      <a href="/wenhai/" class="nav-link">文献</a>
       <a href="/about" class="nav-link">关于</a>
     </nav>
   </div>

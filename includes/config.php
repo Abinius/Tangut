@@ -34,8 +34,8 @@ function cfg(string $key, string $default = ''): string
     return $ENV[$key] ?? $default;
 }
 
-/** HTML 转义 */
-function h(?string $s): string
+/** HTML 转义（接受数值：JSON 数组键如卷号/韵类会解析为 int，转字符串兜底） */
+function h(string|int|float|null $s): string
 {
     return htmlspecialchars((string) $s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
