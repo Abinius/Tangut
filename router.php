@@ -25,6 +25,12 @@ if (preg_match('#^/about/?$#', $uri)) {
     return true;
 }
 
+// /sitemap.xml → sitemap.php（动态生成）
+if ($uri === '/sitemap.xml') {
+    require __DIR__ . '/sitemap.php';
+    return true;
+}
+
 // 其余走首页
 require __DIR__ . '/index.php';
 return true;

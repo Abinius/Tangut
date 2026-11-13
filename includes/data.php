@@ -9,12 +9,32 @@ function shard_dir(): string
     return dirname(__DIR__) . '/index_shards';
 }
 
+/** 读取并解析 JSON 文件；缺失或解析失败时记 error_log 并标记 500，返回 null（调用方兜底为空） */
+function read_json(string $path): ?array
+{
+    if (!is_file($path)) {
+        error_log("tangut: missing data file: {$path}");
+        if (!headers_sent()) {
+            http_response_code(500);
+        }
+        return null;
+    }
+    $d = json_decode((string) file_get_contents($path), true);
+    if (!is_array($d)) {
+        error_log("tangut: invalid JSON in {$path}: " . json_last_error_msg());
+        if (!headers_sent()) {
+            http_response_code(500);
+        }
+        return null;
+    }
+    return $d;
+}
+
 function manifest(): array
 {
     static $m = null;
     if ($m === null) {
-        $p = shard_dir() . '/manifest.json';
-        $m = is_file($p) ? (json_decode((string) file_get_contents($p), true) ?: []) : [];
+        $m = read_json(shard_dir() . '/manifest.json') ?? [];
     }
     return $m;
 }
@@ -23,8 +43,7 @@ function shard(string $key): array
 {
     static $c = [];
     if (!isset($c[$key])) {
-        $p = shard_dir() . '/' . basename($key) . '.json';
-        $c[$key] = is_file($p) ? (json_decode((string) file_get_contents($p), true) ?: []) : [];
+        $c[$key] = read_json(shard_dir() . '/' . basename($key) . '.json') ?? [];
     }
     return $c[$key];
 }
@@ -61,28 +80,7 @@ function lookup_text(string $text): array
     return $out;
 }
 
-/** 西夏字 / U+ 码位 → 候选（遍历分片，供详情反查） */
-function find_by_tangut(string $t): ?array
-{
-    $norm = strtoupper(preg_replace('/^U\+/i', '', $t) ?? '');
-    foreach ((manifest()['shards'] ?? []) as $key) {
-        $s = shard((string) $key);
-        foreach (($s['entries'] ?? []) as $cands) {
-            foreach ($cands as $c) {
-                if (($c['tangut'] ?? '') === $t) {
-                    return $c;
-                }
-                $u = strtoupper(preg_replace('/^U\+/i', '', (string) ($c['unicode'] ?? '')) ?? '');
-                if ($norm !== '' && $u === $norm) {
-                    return $c;
-                }
-            }
-        }
-    }
-    return null;
-}
-
-/** 站点统计（优先读预生成的 stats.json，缺失时遍历分片） */
+/** 站点统计（优先读预生成的 stats.json，缺失或损坏时遍历分片重算） */
 function site_stats(): array
 {
     static $s = null;
@@ -90,11 +88,12 @@ function site_stats(): array
         return $s;
     }
     $p = shard_dir() . '/stats.json';
-    if (is_file($p)) {
-        $d = json_decode((string) file_get_contents($p), true);
-        if (is_array($d) && isset($d['hanzi'])) {
-            return $s = $d;
-        }
+    $d = is_file($p) ? json_decode((string) file_get_contents($p), true) : null;
+    if (is_array($d) && isset($d['hanzi'])) {
+        return $s = $d;
+    }
+    if ($d === null && is_file($p)) {
+        error_log("tangut: invalid JSON in {$p}: " . json_last_error_msg());
     }
     $m = manifest();
     $total = 0;

@@ -40,6 +40,50 @@ function h(?string $s): string
     return htmlspecialchars((string) $s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+/** 基础限流：按 IP 窗口计数（APCu 优先，回退文件计数）。超限返回 true，调用方应返回 429。 */
+function rate_limited(): bool
+{
+    $limit = (int) cfg('RATE_LIMIT_PER_MIN', '0');
+    if ($limit <= 0) {
+        return false;
+    }
+    $ip = (string) ($_SERVER['REMOTE_ADDR'] ?? 'unknown');
+    $window = 60;
+    $now = time();
+
+    if (function_exists('apcu_fetch')) {
+        $key = 'tangut_rl:' . $ip;
+        $start = (int) apcu_fetch($key . ':t', $ok);
+        if (!$ok || $now - $start >= $window) {
+            apcu_store($key . ':t', $now, $window);
+            apcu_store($key, 1, $window);
+            return false;
+        }
+        $n = (int) apcu_inc($key);
+        if ($n === false) {
+            apcu_store($key, 1, $window);
+            $n = 1;
+        }
+        return $n > $limit;
+    }
+
+    $dir = rtrim(sys_get_temp_dir(), '/\\') . '/tangut-ratelimit';
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0700, true);
+    }
+    $f = $dir . '/' . md5($ip);
+    $d = is_file($f) ? json_decode((string) @file_get_contents($f), true) : null;
+    $n = is_array($d) ? (int) ($d['n'] ?? 0) : 0;
+    $ts = is_array($d) ? (int) ($d['t'] ?? 0) : 0;
+    if ($now - $ts >= $window) {
+        $n = 0;
+        $ts = $now;
+    }
+    $n++;
+    @file_put_contents($f, json_encode(['n' => $n, 't' => $ts]), LOCK_EX);
+    return $n > $limit;
+}
+
 define('SITE_URL', rtrim(cfg('SITE_URL', 'https://voue.cn'), '/'));
 define('BRAND', cfg('BRAND', 'TANGUT'));
 define('BRAND_TAGLINE', cfg('BRAND_TAGLINE', '汉字 → 西夏文对应关系查询'));
@@ -47,6 +91,9 @@ define('SITE_NAME', cfg('SITE_NAME', 'TANGUT Lab'));
 define('SITE_TITLE', cfg('SITE_TITLE', SITE_NAME . ' — 汉字→西夏文查询'));
 define('SITE_DESCRIPTION', cfg('SITE_DESCRIPTION', '免费公益工具：输入姓名、姓氏或任意汉字，查看西夏文候选、拟音与义项依据。'));
 define('OG_IMAGE', cfg('OG_IMAGE', '/og-image.png'));
+define('OG_TYPE', cfg('OG_TYPE', 'website'));
+define('TWITTER_CARD', cfg('TWITTER_CARD', 'summary_large_image'));
+define('TANGUT_CORE_FONT', cfg('TANGUT_CORE_FONT', '/fonts/tangut_core-be5a06e05246.woff2'));
 define('ICP_BEIAN', cfg('ICP_BEIAN', ''));
 define('ICP_URL', cfg('ICP_URL', 'https://beian.miit.gov.cn/'));
 define('GONGAN_BEIAN', cfg('GONGAN_BEIAN', ''));

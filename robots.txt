@@ -1,0 +1,8 @@
+# 蕃汉 TANGUT Lab
+User-agent: *
+Allow: /
+
+# Agent 可发现层（与 llms.txt 呼应）
+# llms.txt: https://voue.cn/llms.txt
+
+Sitemap: https://voue.cn/sitemap.xml

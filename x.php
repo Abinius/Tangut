@@ -8,7 +8,7 @@ $isSingle = ($h !== '' && mb_strlen($h, 'UTF-8') === 1);
 
 if (!$isSingle) {
     http_response_code(404);
-    page_start('404 · ' . SITE_NAME, '页面不存在', '/404');
+    page_start('404 · ' . SITE_NAME, '页面不存在', '', null, null, true);
     ?>
     <h1 class="page-title">404<span class="arrow">.</span></h1>
     <p class="status">无效的汉字参数。请从 <a href="/">首页查询</a> 输入单个汉字。</p>
@@ -17,12 +17,24 @@ if (!$isSingle) {
     exit;
 }
 
+if (rate_limited()) {
+    http_response_code(429);
+    header('Retry-After: 60');
+    header('Content-Type: text/html; charset=UTF-8');
+    echo '<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>429 · ' . h(SITE_NAME) . '</title><body><p>查询过于频繁，请一分钟后再试。</p></body></html>';
+    exit;
+}
+
 $cands = lookup_hanzi($h);
 $top = $cands[0] ?? null;
 $dv = data_version();
 
+if (!$cands) {
+    http_response_code(404);
+}
+
 if ($cands) {
-    $preview = implode('、', array_map(static fn($c) => (string) $c['tangut'], array_slice($cands, 0, 3)));
+    $preview = implode('、', array_map(static fn($c) => (string) ($c['tangut'] ?? ''), array_slice($cands, 0, 3)));
     $desc = "「{$h}」的西夏文写法：{$preview}。候选项据西夏文字典释义反查生成，按 tier 分层。";
 } else {
     $desc = "「{$h}」无精确对应西夏文候选（释义不含该字）。";
@@ -30,7 +42,7 @@ if ($cands) {
 $title = "{$h} 的西夏文写法 · " . SITE_NAME;
 $canonical = '/x-' . rawurlencode($h) . '/';
 
-page_start($title, $desc, $canonical, $title, $desc);
+page_start($title, $desc, $canonical, $title, $desc, !$cands);
 ?>
 <p class="breadcrumb" aria-label="面包屑">
   <a href="/">查询</a> <span class="sep">///</span> 汉字 <span class="sep">///</span> <?= h($h) ?>

@@ -12,7 +12,7 @@ function abs_url(string $path): string
 }
 
 /** 输出 <head> + 站点头部（配置全部来自 .env） */
-function page_start(string $title, string $desc, string $canonical, ?string $ogTitle = null, ?string $ogDesc = null): void
+function page_start(string $title, string $desc, string $canonical, ?string $ogTitle = null, ?string $ogDesc = null, bool $noindex = false): void
 {
     $dv = data_version();
     $canon = abs_url($canonical);
@@ -26,15 +26,22 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title><?= h($title) ?></title>
+<?php if ($canonical !== ''): ?>
 <link rel="canonical" href="<?= h($canon) ?>">
+<?php endif; ?>
+<?php if ($noindex): ?>
+<meta name="robots" content="noindex, nofollow">
+<?php endif; ?>
 <meta name="description" content="<?= h($desc) ?>">
 <meta property="og:title" content="<?= h($ogt) ?>">
 <meta property="og:description" content="<?= h($ogd) ?>">
 <meta property="og:image" content="<?= h($ogImg) ?>">
+<?php if ($canonical !== ''): ?>
 <meta property="og:url" content="<?= h($canon) ?>">
-<meta property="og:type" content="website">
+<?php endif; ?>
+<meta property="og:type" content="<?= h(OG_TYPE) ?>">
 <meta property="og:site_name" content="<?= h(SITE_NAME) ?>">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="<?= h(TWITTER_CARD) ?>">
 <meta name="twitter:title" content="<?= h($ogt) ?>">
 <meta name="twitter:description" content="<?= h($ogd) ?>">
 <meta name="twitter:image" content="<?= h($ogImg) ?>">
@@ -42,6 +49,7 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
 <link rel="icon" href="/favicon.ico">
 <link rel="apple-touch-icon" href="/favicon.png">
 <link rel="stylesheet" href="/assets/style.css">
+<link rel="preload" href="<?= h(TANGUT_CORE_FONT) ?>" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
 <header class="site-header">
@@ -50,7 +58,6 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
       <span class="rp">[ <?= h(SITE_NAME) ?> ]</span>
       <span><span class="sep">///</span> 全量索引 · P0–P3</span>
       <span><span class="sep">///</span> <?= h($dv) ?></span>
-      <span><span class="sep">///</span> 39.9°N 116.4°E</span>
       <span><span class="sep">///</span> PHP · 动态</span>
     </div>
   </div>
@@ -98,7 +105,7 @@ function render_candidate(array $c): void
 {
     $tier = (string) ($c['tier'] ?? 'none');
     ?><article class="row tier-<?= h($tier) ?>">
-  <div class="glyph" lang="xsgs" aria-label="西夏文 <?= h((string) ($c['tangut'] ?? '')) ?>"><?= h((string) ($c['tangut'] ?? '')) ?></div>
+  <div class="glyph" lang="txg" aria-label="西夏文 <?= h((string) ($c['tangut'] ?? '')) ?>"><?= h((string) ($c['tangut'] ?? '')) ?></div>
   <div class="cell">
     <div class="meta">
       <span class="tier"><?= h($tier) ?> · <?= h(tier_label($tier)) ?></span>

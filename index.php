@@ -3,7 +3,16 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/includes/layout.php';
 
-$q = trim((string) ($_GET['q'] ?? ''));
+$q = mb_substr(trim((string) ($_GET['q'] ?? '')), 0, 16, 'UTF-8');
+
+if ($q !== '' && rate_limited()) {
+    http_response_code(429);
+    header('Retry-After: 60');
+    header('Content-Type: text/html; charset=UTF-8');
+    echo '<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>429 · ' . h(SITE_NAME) . '</title><body><p>查询过于频繁，请一分钟后再试。</p></body></html>';
+    exit;
+}
+
 $stats = site_stats();
 $dv = data_version();
 
@@ -21,14 +30,6 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/');
     <div><dt>候选项</dt><dd><?= (int) ($stats['candidates'] ?? 0) ?></dd></div>
     <div><dt>分层</dt><dd>P0–P3 自动近似</dd></div>
   </dl>
-  <div class="indicators" aria-hidden="true">
-    <div class="ind" style="height:20px;animation-delay:2.4s,3.0s"></div>
-    <div class="ind" style="height:28px;animation-delay:2.46s,3.1s"></div>
-    <div class="ind gold" style="height:36px;animation-delay:2.52s,3.2s"></div>
-    <div class="ind" style="height:24px;animation-delay:2.58s,3.3s"></div>
-    <div class="ind gold" style="height:40px;animation-delay:2.64s,3.4s"></div>
-    <div class="ind" style="height:26px;animation-delay:2.7s,3.5s"></div>
-  </div>
 </section>
 
 <section class="search">
@@ -55,7 +56,7 @@ foreach ($items as $it):
         $t = (string) ($top['tier'] ?? 'none');
         ?>
   <article class="row tier-<?= h($t) ?>">
-    <div class="glyph" lang="xsgs" aria-label="西夏文 <?= h((string) $top['tangut']) ?>"><?= h((string) $top['tangut']) ?></div>
+    <div class="glyph" lang="txg" aria-label="西夏文 <?= h((string) $top['tangut']) ?>"><?= h((string) $top['tangut']) ?></div>
     <div class="cell">
       <div class="meta"><span class="tier"><?= h($it['char']) ?> → <?= h($t) ?> (<?= count($cands) ?> 候选)</span></div>
       <p class="gloss">释义：<?= h((string) ($top['gloss_zh'] ?? '')) ?></p>
@@ -83,6 +84,7 @@ if (!$any && !$items) {
 
 <section>
   <div class="seclabel"><span>字形 specimen</span><span class="rule"></span></div>
+  <!-- 设计样张：固定示例字形，不随数据版本变化（仅演示三档字号渲染） -->
   <div class="spec">
     <div class="spec-cell"><span class="label">caption · 22px</span><span class="glyph s1">𗘍</span></div>
     <div class="spec-cell"><span class="label">display · 48px</span><span class="glyph s2">𗘍</span></div>

@@ -57,18 +57,18 @@ page_start('关于 · ' . SITE_NAME, '蕃汉 TANGUT Lab 的工具定位、数据
     <table class="structure">
       <thead><tr><th>结构</th><th>例字</th><th>说明</th></tr></thead>
       <tbody>
-        <tr><td>独体</td><td><span class="glyph s2" lang="xsgs">𗸦</span></td><td>人</td></tr>
-        <tr><td>左右</td><td><span class="glyph s2" lang="xsgs">𘍑</span></td><td>林</td></tr>
-        <tr><td>上下</td><td><span class="glyph s2" lang="xsgs">𗨷</span></td><td>渐</td></tr>
-        <tr><td>会意</td><td><span class="glyph s2" lang="xsgs">𘊇</span></td><td>昌</td></tr>
+        <tr><td>独体</td><td><span class="glyph s2" lang="txg">𗸦</span></td><td>人</td></tr>
+        <tr><td>左右</td><td><span class="glyph s2" lang="txg">𘍑</span></td><td>林</td></tr>
+        <tr><td>上下</td><td><span class="glyph s2" lang="txg">𗨷</span></td><td>渐</td></tr>
+        <tr><td>会意</td><td><span class="glyph s2" lang="txg">𘊇</span></td><td>昌</td></tr>
       </tbody>
     </table>
 
     <h3 class="focus-h">构造原理</h3>
     <p>会意字由两个或多个意符组合表达新义，例如：</p>
     <div class="formula">
-      <div class="f-row"><span class="glyph s1" lang="xsgs">𗿿</span> <span class="eq">=</span> <span class="glyph s1" lang="xsgs">𗿿</span> 定 + 疑 → 孤</div>
-      <div class="f-row"><span class="glyph s1" lang="xsgs">𗆼</span> <span class="eq">=</span> 疑 + 孤 → 愁</div>
+      <div class="f-row"><span class="glyph s1" lang="txg">𗿿</span> <span class="eq">=</span> <span class="glyph s1" lang="txg">𗿿</span> 定 + 疑 → 孤</div>
+      <div class="f-row"><span class="glyph s1" lang="txg">𗆼</span> <span class="eq">=</span> 疑 + 孤 → 愁</div>
     </div>
 
     <h3 class="focus-h">字数与声韵</h3>
@@ -78,9 +78,9 @@ page_start('关于 · ' . SITE_NAME, '蕃汉 TANGUT Lab 的工具定位、数据
   <section>
     <div class="seclabel"><span>字形 specimen</span><span class="rule"></span></div>
     <div class="spec">
-      <div class="spec-cell"><span class="label">caption · 22px</span><span class="glyph s1" lang="xsgs">𘔺</span></div>
-      <div class="spec-cell"><span class="label">display · 48px</span><span class="glyph s2" lang="xsgs">𘔺</span></div>
-      <div class="spec-cell"><span class="label">hero · 96px</span><span class="glyph s3" lang="xsgs">𘔺</span></div>
+      <div class="spec-cell"><span class="label">caption · 22px</span><span class="glyph s1" lang="txg">𘔺</span></div>
+      <div class="spec-cell"><span class="label">display · 48px</span><span class="glyph s2" lang="txg">𘔺</span></div>
+      <div class="spec-cell"><span class="label">hero · 96px</span><span class="glyph s3" lang="txg">𘔺</span></div>
     </div>
   </section>
 

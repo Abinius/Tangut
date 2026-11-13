@@ -11,14 +11,17 @@ php-site/
 ├── index.php             ← 查询首页（/?q=青）
 ├── x.php                 ← 汉字详情页（/x-青/ 或 /x.php?h=青）
 ├── about.php             ← 关于页（/about）
+├── sitemap.php           ← 动态 sitemap（/sitemap.xml）
+├── robots.txt            ← robots + sitemap 指名
 ├── router.php            ← PHP 内置服务器路由（本地测试用）
 ├── .htaccess             ← Apache 伪静态 + 缓存 + MIME
 ├── includes/
 │   ├── config.php        ← 读 .env，提供 cfg()/SITE_* 常量
 │   ├── data.php          ← 读分片，查询 lookup_hanzi/lookup_text
 │   └── layout.php        ← 统一头部/页脚/候选卡片（配置驱动）
-├── assets/style.css      ← 全站样式（从原静态站抽取）
-├── fonts/                ← 西夏字体（6062 字形，5.2MB）
+├── assets/style.css      ← 全站样式（从原静态站抽取，两级字体）
+├── fonts/                ← 西夏字体两级子集（tangut_core-*.woff2 首屏 + tangut_rest-*.woff2 懒加载）
+│                          └─ tangut_mvp.woff2 为子集构建源（非对外引用）
 ├── images/               ← hero 文石图
 ├── index_shards/         ← 索引分片 + manifest + stats.json
 ├── favicon.* og-image.png llms.txt
@@ -72,6 +75,9 @@ server {
     location ~ ^/about/?$ {
         try_files $uri $uri/ /about.php;
     }
+    location = /sitemap.xml {
+        try_files $uri $uri/ /sitemap.php;
+    }
 
     # PHP
     location ~ \.php$ {
@@ -104,7 +110,10 @@ php -S 127.0.0.1:8080 router.php
 # 查询：http://127.0.0.1:8080/?q=青
 # 详情：http://127.0.0.1:8080/x-青/
 # 关于：http://127.0.0.1:8080/about
+# sitemap：http://127.0.0.1:8080/sitemap.xml
 ```
+
+> ⚠️ **`router.php` 仅限本地测试。** `php -S` 会直接返回磁盘上存在的文件（含 `.env`），禁止用于对外服务；生产环境必须用 Apache/Nginx + `.htaccess`（或上述 Nginx 配置），由服务器层拒绝 `.env` 访问。
 
 ## 与原静态站的区别
 
