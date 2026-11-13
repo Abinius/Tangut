@@ -245,10 +245,11 @@
         position: relative; z-index: 1;
       }
       .hero-strike::after {
-        content: ""; display: block; height: 2px; width: 88px;
-        background: linear-gradient(90deg, #2a2a30, #e8ebf2 28%, #8f95a6 50%, #e8ebf2 72%, #2a2a30);
-        border-radius: 999px;
-        margin: 1.6rem auto 0; opacity: 0.95;
+        content: "★★★"; display: block;
+        font-size: 0.85rem; line-height: 1;
+        letter-spacing: 0.55em; text-indent: 0.55em;
+        color: inherit; /* 与文本同色（--ink-soft） */
+        margin: 1.4rem auto 0; opacity: 1;
       }
       .hero-meta {
         display: flex; flex-wrap: wrap; justify-content: center;
