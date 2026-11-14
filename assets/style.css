@@ -266,20 +266,6 @@
         -webkit-background-clip: text; background-clip: text;
         color: transparent;
       }
-      .hero-strike {
-        font-family: var(--grotesk); font-weight: 300; font-size: 0.95rem;
-        color: var(--ink-soft); margin: 1.1rem 0 0; max-width: 34rem; line-height: 1.9;
-        position: relative; z-index: 1;
-      }
-      .hero-strike::after {
-        content: "★★★"; display: block;
-        font-size: 0.85rem; line-height: 1;
-        letter-spacing: 0.55em; text-indent: 0.55em;
-        color: inherit; /* 与文本同色（--ink-soft） */
-        margin: 1.4rem auto 0; opacity: 1;
-      }
-      .hero-strike .tag-seg { display: inline-block; }
-      .hero-strike .tag-seg:not(:last-child)::after { content: "|"; color: var(--ink-faint); margin: 0 0.55em; font-weight: 200; }
       .hero-meta {
         display: flex; flex-wrap: wrap; justify-content: center;
         gap: 2.4rem 3.6rem; margin: 2.8rem 0 0; border: 0; padding: 0;
@@ -467,10 +453,14 @@
         .seclabel { margin: 2.6rem 0 1.3rem; }
         .detail-header { gap: 1.4rem; padding: 1.3rem 1.3rem; }
         .field-row { grid-template-columns: 170px 1fr; }
+        /* 首页：4 列检字网格收紧间距，全宽检索卡收窄内边距 */
+        .lookup-grid { gap: 0.85rem; }
+        .retrieve-card { padding: 1.5rem 1.4rem 1.3rem; }
+        .retrieve-systems { gap: 0.45rem; }
       }
 
-      /* 移动：导航换行、hero 收紧、卡片单列 */
-      @media (max-width: 620px) {
+      /* 手机（≤767）：导航换行、hero 收紧、卡片紧凑 */
+      @media (max-width: 767px) {
         .header-inner { flex-wrap: wrap; align-items: flex-start; gap: 0.8rem; }
         .brand { flex-direction: column; gap: 0.2rem; }
         .brand-mark { font-size: 1.7rem; }
@@ -480,9 +470,6 @@
         .hero { padding: 2.2rem 0 2.2rem; }
         .hero-word { font-size: clamp(2.8rem, 17vw, 5.6rem); }
         .hero-latin { letter-spacing: 0.3em; }
-        .hero-strike { font-size: 0.88rem; }
-        .hero-strike .tag-seg:not(:first-child) { display: none; }
-        .hero-strike .tag-seg:not(:last-child)::after { content: none; }
         .hero-meta { gap: 1.3rem 1.8rem; margin-top: 2.2rem; }
         .glass-orb.orb-a { width: 90px; height: 90px; top: 0.6rem; left: 2%; }
         .glass-orb.orb-b { width: 56px; height: 56px; right: 3%; bottom: 1.6rem; }
@@ -727,7 +714,7 @@
   .pagination .page-current { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
   /* ── 首页检字入口 ───────────────────────────────────── */
-  /* PC 固定三列：九张卡（含字头反查表单）排成 3×3；手机端下方降为两列 */
+  /* PC/平板固定三列：六张卡排成 2×3；手机端降为两列 */
   .lookup-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 1rem; margin-top: 1rem;
@@ -749,21 +736,16 @@
   .lookup-card:hover .ic { color: var(--violet); }
   .lookup-label { font-size: 15px; font-weight: 400; color: var(--ink); }
   .lookup-desc { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.05em; }
-  .lookup-form .search-bar { display: flex; gap: 8px; }
-  .lookup-form input { flex: 1; min-width: 0; }
 
-  /* 手机端：检字入口固定两列。须位于 .lookup-grid 基础规则之后，否则被其覆盖 */
+  /* 手机端：检字入口固定两列（六卡排 3×2）。须位于 .lookup-grid 基础规则之后，否则被其覆盖 */
   @media (max-width: 620px) {
     .lookup-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
-    /* 字头反查表单卡含输入框+按钮，独占一行避免挤压 */
-    .lookup-form { grid-column: span 2; }
   }
 
   /* ── 首页检索卡片（SVG 部首检字 · 四套部首体系）────────────────
-   * 居中收窄栏，复用磨砂玻璃令牌；字形为内联 SVG 矢量路径（不依赖字体加载）。 */
+   * 与下方检字入口同宽（全站宽度一致），复用磨砂玻璃令牌；
+   * 字形为内联 SVG 矢量路径（不依赖字体加载）。 */
   .retrieve-card {
-    max-width: 760px;
-    margin: 0 auto;
     padding: 1.7rem 1.6rem 1.5rem;
     background: var(--glass-bg-strong);
     -webkit-backdrop-filter: var(--glass-blur);
@@ -985,7 +967,7 @@
   /* ── 响应式网格修正 ─────────────────────────────────────
    * 本块必须位于 .lookup-grid/.radical-grid/.stroke-grid/.retrieve-systems/.field-row
    * 各自的基础规则之后，否则被基础规则覆盖（同优先级后写胜出）。 */
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .lookup-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
     .retrieve-systems { grid-template-columns: repeat(2, 1fr); }
     .radical-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
@@ -995,7 +977,6 @@
     .field-row { grid-template-columns: 1fr; gap: 0.2rem; }
   }
   @media (max-width: 480px) {
-    .lookup-grid { grid-template-columns: 1fr; gap: 0.5rem; }
     .radical-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
     .stroke-grid { grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); }
   }

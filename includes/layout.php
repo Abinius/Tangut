@@ -145,6 +145,14 @@ function page_end(): void
   onScroll();
   bt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 })();
+// 带查询结果时自动定位到搜索框：URL 含 ?q= 则滚到搜索框顶部（避免停留在页首/hero，直接看到结果）
+(function () {
+  if (!location.search.includes('q=')) return;
+  var sq = document.querySelector('.search-bar');
+  if (!sq) return;
+  var target = sq.closest('.search') || sq;
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+})();
 </script>
 </body>
 </html>

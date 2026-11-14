@@ -23,6 +23,13 @@ if (($q !== '' || $hanzi !== '') && rate_limited()) {
     exit;
 }
 
+// 统一分发：LFW/码位、单个西夏文、四角号码 → 对应页面；词条/中文/英文释义走下方词组搜索
+// routeToWord=false：词条串在此页语境处理，避免跳回自身造成自循环
+if ($q !== '' && ($target = search_target($q, false)) !== null) {
+    header('Location: ' . $target);
+    exit;
+}
+
 $idx = read_json(shard_dir() . '/index_word.json') ?? [];
 $allWords = $idx['words'] ?? [];
 $byHanzi = $idx['by_hanzi'] ?? [];
@@ -82,7 +89,7 @@ page_start($title, "西夏文词组查询，共 {$total} 条词组。", '/word/'
 <section class="search">
   <div class="seclabel"><span>搜索词组</span><span class="rule"></span></div>
   <form class="search-bar" method="get" action="/word/">
-    <input type="search" name="q" placeholder="输入西夏文词条、中文或英文释义" aria-label="搜索词组" autocomplete="off">
+    <input type="search" name="q" placeholder="词条 / 释义 / LFW 编号 / 码位" aria-label="搜索词组，或输入 LFW 编号/码位查字头" autocomplete="off">
     <?php search_btn('搜索'); ?>
   </form>
 </section>

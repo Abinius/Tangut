@@ -139,3 +139,5 @@ define('DISCLAIMER_EN', cfg('DISCLAIMER_EN', 'Tangut-Chinese correspondence is m
 define('LICENSE_TEXT', cfg('LICENSE_TEXT', '映射数据 tangutdata (MIT) 开放；释义版权归原出版社，引用须注明出处。'));
 define('COLOPHON_PAPER', cfg('COLOPHON_PAPER', 'WARM WHITE #FAFAF8'));
 define('COLOPHON_TYPE', cfg('COLOPHON_TYPE', 'LIGHT GROTESK + NOTO SERIF TANGUT'));
+define('OG_TITLE', cfg('OG_TITLE', SITE_TITLE));
+define('OG_DESCRIPTION', cfg('OG_DESCRIPTION', SITE_DESCRIPTION));
