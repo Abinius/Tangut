@@ -900,6 +900,7 @@
 
   /* 条目列表：PC 一行6个 */
   .wenhai-cells { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.5rem; }
+  .wenhai-cells .radical-cell { padding: 2.7rem 0.3rem; }
 
   @media (max-width: 768px) {
     .wenhai-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
@@ -908,7 +909,6 @@
   @media (max-width: 480px) {
     .wenhai-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
     .wenhai-stat { padding: 0.6rem 0.3rem; }
-    .wenhai-cells .radical-cell { padding: 0.5rem 0.2rem; }
   }
 
   /* ── 文海二级详情页：居中不变、隐藏卡片（去底/边框/阴影）────── */
