@@ -59,7 +59,7 @@ page_start($title, $desc, $canonical, $title, $desc, false, true);
 <section class="search">
   <div class="search-bar">
     <form method="get" action="/" style="display:flex;flex:1;gap:12px;min-width:0">
-      <input type="search" name="q" placeholder="输入汉字查询（如：青、张）" aria-label="输入要查询的汉字" autocomplete="off">
+      <input type="search" name="q" placeholder="输入汉字查询" aria-label="输入要查询的汉字" autocomplete="off">
       <?php search_btn('查询'); ?>
     </form>
   </div>

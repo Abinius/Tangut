@@ -34,6 +34,29 @@ function cfg(string $key, string $default = ''): string
     return $ENV[$key] ?? $default;
 }
 
+/** 友链：从 .env FRIEND_LINKS 解析「站名|URL, 站名2|URL2」，返回 [['name'=>..,'url'=>..], ..]；空/非法项跳过 */
+function friend_links(): array
+{
+    $raw = cfg('FRIEND_LINKS', '');
+    if ($raw === '') {
+        return [];
+    }
+    $out = [];
+    foreach (explode(',', $raw) as $pair) {
+        $parts = explode('|', $pair, 2);
+        if (count($parts) !== 2) {
+            continue;
+        }
+        $name = trim($parts[0]);
+        $url = trim($parts[1]);
+        if ($name === '' || $url === '' || !preg_match('#^https?://#i', $url)) {
+            continue;
+        }
+        $out[] = ['name' => $name, 'url' => $url];
+    }
+    return $out;
+}
+
 /** HTML 转义（接受数值：JSON 数组键如卷号/韵类会解析为 int，转字符串兜底） */
 function h(string|int|float|null $s): string
 {
