@@ -94,7 +94,7 @@ function page_end(): void
 <footer class="site-footer">
   <div class="container">
     <div class="colophon">
-      <p>PRESS: <?= h(strtoupper($host)) ?> <span class="sep">///</span> PAPER: WARM WHITE #FAFAF8 <span class="sep">///</span> TYPE: LIGHT GROTESK + NOTO SERIF TANGUT <span class="sep">///</span> EDITION: <?= h($dv) ?></p>
+      <p>PRESS: <?= h(strtoupper($host)) ?> <span class="sep">///</span> PAPER: <?= h(COLOPHON_PAPER) ?> <span class="sep">///</span> TYPE: <?= h(COLOPHON_TYPE) ?> <span class="sep">///</span> EDITION: <?= h($dv) ?></p>
       <?php $fl = friend_links(); ?>
       <?php if ($fl): ?>
       <p class="credit">友链：<?php foreach ($fl as $i => $f): ?><?= $i > 0 ? ' · ' : '' ?><a href="<?= h($f['url']) ?>" target="_blank" rel="noopener noreferrer"><?= h($f['name']) ?></a><?php endforeach; ?></p>

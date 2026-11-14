@@ -28,7 +28,7 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/');
   <span class="glass-orb orb-b" aria-hidden="true"></span>
   <h1 class="hero-word" aria-label="<?= h(BRAND) ?>."><?= h(BRAND) ?><span class="dot">.</span></h1>
   <p class="hero-latin"><?= h(SITE_NAME) ?></p>
-  <p class="hero-strike"><?= h(BRAND_TAGLINE) ?></p>
+  <p class="hero-strike"><?php foreach (explode('|', BRAND_TAGLINE) as $seg): ?><span class="tag-seg"><?= h($seg) ?></span><?php endforeach; ?></p>
   <dl class="hero-meta">
     <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7h14M5 7v13h14V7M8 4h8l3 3"/></svg>数据版本</dt><dd><?= h($dv) ?></dd></div>
     <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 5v14M5 12h14"/></svg>全量汉字</dt><dd><?= (int) ($stats['hanzi'] ?? 0) ?></dd></div>

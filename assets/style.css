@@ -278,6 +278,8 @@
         color: inherit; /* 与文本同色（--ink-soft） */
         margin: 1.4rem auto 0; opacity: 1;
       }
+      .hero-strike .tag-seg { display: inline-block; }
+      .hero-strike .tag-seg:not(:last-child)::after { content: "|"; color: var(--ink-faint); margin: 0 0.55em; font-weight: 200; }
       .hero-meta {
         display: flex; flex-wrap: wrap; justify-content: center;
         gap: 2.4rem 3.6rem; margin: 2.8rem 0 0; border: 0; padding: 0;
@@ -479,6 +481,8 @@
         .hero-word { font-size: clamp(2.8rem, 17vw, 5.6rem); }
         .hero-latin { letter-spacing: 0.3em; }
         .hero-strike { font-size: 0.88rem; }
+        .hero-strike .tag-seg:not(:first-child) { display: none; }
+        .hero-strike .tag-seg:not(:last-child)::after { content: none; }
         .hero-meta { gap: 1.3rem 1.8rem; margin-top: 2.2rem; }
         .glass-orb.orb-a { width: 90px; height: 90px; top: 0.6rem; left: 2%; }
         .glass-orb.orb-b { width: 56px; height: 56px; right: 3%; bottom: 1.6rem; }

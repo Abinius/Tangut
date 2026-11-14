@@ -137,3 +137,5 @@ define('ENV_DATA_VERSION', cfg('DATA_VERSION', ''));
 define('DISCLAIMER_ZH', cfg('DISCLAIMER_ZH', '西夏文与汉字非一一对应，多候选为常态；候选项据 tangutdata 中文释义反查 + 同音替代生成，tier 为自动分层近似。'));
 define('DISCLAIMER_EN', cfg('DISCLAIMER_EN', 'Tangut-Chinese correspondence is many-to-many; candidates by tangutdata gloss reverse-lookup + homophone substitution; tier auto-layered (approximate).'));
 define('LICENSE_TEXT', cfg('LICENSE_TEXT', '映射数据 tangutdata (MIT) 开放；释义版权归原出版社，引用须注明出处。'));
+define('COLOPHON_PAPER', cfg('COLOPHON_PAPER', 'WARM WHITE #FAFAF8'));
+define('COLOPHON_TYPE', cfg('COLOPHON_TYPE', 'LIGHT GROTESK + NOTO SERIF TANGUT'));
