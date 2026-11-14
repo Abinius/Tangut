@@ -1,6 +1,11 @@
 # Tangut Dictionary · 蕃汉合时掌中珠 · PHP 动态站
 
-通过 `.env` 配置站点信息（标题/描述/域名/备案等），改一处刷新即全站生效，无需重新构建。
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
+[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![Data](https://img.shields.io/badge/data-2026.11.0-7734db)](https://voue.cn/data/)
+[![Site](https://img.shields.io/badge/site-voue.cn-3498db)](https://voue.cn/)
+
+输入任意汉字，查看西夏文候选字形、拟音与义项依据。通过 `.env` 配置站点信息（品牌/标题/备案/友链/colophon 等），改一处刷新即全站生效，无需重新构建。
 
 ## 目录结构
 
@@ -9,22 +14,34 @@ php-site/
 ├── .env                  ← 站点配置（改这里！）
 ├── .env.example          ← 配置模板
 ├── index.php             ← 查询首页（/?q=青）
-├── x.php                 ← 汉字详情页（/x-青/ 或 /x.php?h=青）
+├── x.php                 ← 汉字详情页（/x-青/）
+├── c.php                 ← 字头详情页（/c-0257/，75 字段六组分区）
 ├── about.php             ← 关于页（/about）
-├── api.php               ← REST API 只读 JSON（/api/v1/*，A-01~A-06）
+├── api.php               ← REST API 只读 JSON（/api/v1/*）
 ├── sitemap.php           ← 动态 sitemap（/sitemap.xml）
-├── robots.txt            ← robots + sitemap 指名
-├── data/                 ← 开放数据包（/data/tangutlab_data_2026.11.0.json）
 ├── router.php            ← PHP 内置服务器路由（本地测试用）
+├── radical.php           ← 部首检字（/radical/{unicode|xh|eyh|xwd}/）
+├── stroke.php            ← 笔画检字（/stroke/{n}/）
+├── rhyme.php             ← 声韵检字（/rhyme/{tongyin|wenhai|yunlei}/）
+├── word.php              ← 词组查询（/word/h-{汉字}/）
+├── wenhai.php            ← 文海文献（/wenhai/{ref}/）
+├── tongyin.php           ← 同音对照（/tongyin/{group}/）
+├── lookup.php            ← 四角/仓颉/IDS 检字（/sijiao|cangjie|ids/{v}/）
 ├── .htaccess             ← Apache 伪静态 + 缓存 + MIME
 ├── includes/
-│   ├── config.php        ← 读 .env，提供 cfg()/SITE_* 常量
-│   ├── data.php          ← 读分片，查询 lookup_hanzi/lookup_text
-│   └── layout.php        ← 统一头部/页脚/候选卡片（配置驱动）
-├── assets/style.css      ← 全站样式（从原静态站抽取，两级字体）
-├── fonts/                ← 西夏字体两级子集（tangut_core-*.woff2 首屏 + tangut_rest-*.woff2 懒加载）
-│                          └─ tangut_mvp.woff2 为子集构建源（非对外引用）
-├── index_shards/         ← 索引分片 + manifest + stats.json
+│   ├── config.php        ← 读 .env，提供 cfg()/常量/friend_links()
+│   ├── data.php          ← 读分片，查询 lookup_hanzi/find_detail
+│   ├── dict.php          ← 字头详情 75 字段渲染
+│   ├── indexes.php       ← 各检字索引读取 + 候选列表渲染
+│   ├── layout.php        ← 统一头部/页脚/候选卡/system_icon/backtop
+│   ├── radical_all.php   ← 部首字形 SVG 矢量
+│   └── radical_svg.php   ← 首页部首 SVG
+├── assets/style.css      ← 全站样式（两级字体 + 响应式）
+├── fonts/                ← 西夏字体四级子集（core 首屏 + rest/fix/idsops 懒加载）
+├── index_shards/         ← 索引分片 + manifest + stats.json + 各检字索引
+├── detail/               ← 6090 个字头详情 JSON（LFW → 75 字段）
+├── data/                 ← 开放数据包
+├── _qa/                  ← QA 脚本（qa_run.py 豆腐块/超链接检查）+ 快照
 ├── favicon.* og-image.png llms.txt
 └── README.md
 ```
@@ -33,27 +50,38 @@ php-site/
 
 ### 1. 上传解压
 
-把 `tangutlab-php-prod.zip` 解压到站点根目录（如 `/www/wwwroot/tangutlab`）。
+把 `tangutlab-php-prod.zip` 解压到站点根目录（如 `/www/wwwroot/voue.cn`）。
 
 ### 2. 改 `.env`
 
 ```ini
-SITE_URL=https://你的域名
-SITE_NAME=Tangut Dictionary
-SITE_TITLE=Tangut Dictionary — 汉字·西夏文查询
-SITE_DESCRIPTION=免费公益工具：输入任意汉字，查看西夏文候选、拟音与义项依据。
 DATA_VERSION=2026.11.0
-# 分享图（留空则用默认 /og-image.png）
+SITE_URL=https://你的域名
+RATE_LIMIT_PER_MIN=60
+
+# 品牌（hero 用）
+BRAND=Tangut Dictionary
+BRAND_TAGLINE=蕃汉合时掌中珠|消失的古文字|煮梦纪
+
+# SEO / 分享（<title>/og:title 用 SITE_TITLE）
+SITE_NAME=The Lost Script of Western Xia
+SITE_TITLE=TANGUT — 汉字→西夏文查询
+SITE_DESCRIPTION=免费公益工具：输入任意汉字，查看西夏文候选、拟音与义项依据。
 OG_IMAGE=/og-image.png
-# 工信部备案（无则留空，页脚自动隐藏）
+
+# 备案（无则留空，页脚自动隐藏）
 ICP_BEIAN=京ICP备xxxxxxxx号-1
 ICP_URL=https://beian.miit.gov.cn
-# 公安备案（无则留空）
-GONGAN_BEIAN=京公网安备 xxxxxxxxxxxx号
+GONGAN_BEIAN=
 GONGAN_URL=https://beian.mps.gov.cn
-```
 
-改完**刷新页面即生效**，无需重启、无需构建。
+# 页脚 colophon（PRESS/EDITION 自动取域名/版本，此处配 PAPER 与 TYPE）
+COLOPHON_PAPER=WARM WHITE #FAFAF8
+COLOPHON_TYPE=LIGHT GROTESK + NOTO SERIF TANGUT
+
+# 友链（页脚「友链：」行；站名|URL，逗号分隔；留空则隐藏）
+FRIEND_LINKS=Tangut Data|https://github.com/tangutdata
+```
 
 ### 3. 选服务器类型
 
@@ -125,7 +153,8 @@ php -S 127.0.0.1:8080 router.php
 | 项 | 静态站（HTML） | PHP 站（本包） |
 |---|---|---|
 | 配置 | 构建时烘焙进 HTML，改配置需重新构建 | `.env` 实时读取，改完刷新即生效 |
-| 页面 | 3424 个预生成 HTML | 3 个 PHP 模板动态生成 |
+| 页面 | 3424 个预生成 HTML | 14 个 PHP 模板动态生成（查询/详情/检字/文献） |
+| 检字 | 无 | 部首/笔画/声韵/四角/仓颉/IDS 六体系 |
 | 查询 | 浏览器加载分片 JS 本地查找 | 服务端 PHP 查分片渲染 |
 | 部署 | 任意静态服务器 | 需 PHP 7.4+ |
 
@@ -133,4 +162,4 @@ php -S 127.0.0.1:8080 router.php
 
 - PHP **7.4+**（推荐 8.x）
 - 无需数据库
-- 数据/字体已随包附带（`index_shards/` `fonts/`）
+- 数据/字体已随包附带（`index_shards/` `detail/` `fonts/`）
