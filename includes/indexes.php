@@ -71,21 +71,33 @@ function render_char_list(array $entries, int $page = 1, int $perPage = 60): int
     return $pages;
 }
 
-/** 渲染分页导航 */
+/** 渲染分页导航（窗口式：首末页 + 当前页±2，缺口用省略号） */
 function render_pagination(int $page, int $pages, string $baseUrl): void
 {
     if ($pages <= 1) {
         return;
     }
     $page = max(1, min($page, $pages));
-    echo '<nav class="pagination" aria-label="分页">';
     $sep = str_contains($baseUrl, '?') ? '&' : '?';
+    $win = 2;
+    $nums = [];
     for ($i = 1; $i <= $pages; $i++) {
+        if ($i === 1 || $i === $pages || abs($i - $page) <= $win) {
+            $nums[] = $i;
+        }
+    }
+    echo '<nav class="pagination" aria-label="分页">';
+    $prev = 0;
+    foreach ($nums as $i) {
+        if ($prev && $i - $prev > 1) {
+            echo '<span class="page-gap" aria-hidden="true">…</span>';
+        }
         if ($i === $page) {
             echo '<span class="page-current">' . $i . '</span>';
         } else {
             echo '<a href="' . h($baseUrl . $sep . 'p=' . $i) . '">' . $i . '</a>';
         }
+        $prev = $i;
     }
     echo '</nav>';
 }

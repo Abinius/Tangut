@@ -8,19 +8,29 @@ $radVb = implode(' ', $radicalSvg['viewbox']);
 
 $q = mb_substr(trim((string) ($_GET['q'] ?? '')), 0, 16, 'UTF-8');
 
-if ($q !== '' && rate_limited()) {
-    http_response_code(429);
-    header('Retry-After: 60');
-    header('Content-Type: text/html; charset=UTF-8');
-    echo '<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>429 · ' . h(SITE_NAME) . '</title><body><p>查询过于频繁，请一分钟后再试。</p></body></html>';
-    exit;
-}
-
 // 主搜索框统一分发：汉字→西夏文、字头反查（LFW/码位）、单个西夏文、四角号码、词组（交给各自页面）
+$inlineEn = null;
 if ($q !== '') {
     $target = search_target($q);
-    if ($target !== null) {
+    // T4：英文单字命中倒排索引 → 内联渲染字头候选，不跳词组页（多词/未命中仍走词组页）
+    if ($target !== null && str_starts_with($target, '/word/') && !str_contains($q, ' ')) {
+        $hits = lookup_en($q);
+        if ($hits) {
+            $inlineEn = $hits;
+        } else {
+            header('Location: ' . $target);
+            exit;
+        }
+    } elseif ($target !== null) {
         header('Location: ' . $target);
+        exit;
+    }
+    // 本页执行逐字查询才限流；重定向的搜索由目标页各自限流（避免一次搜索在两级页面重复计数）
+    if (rate_limited()) {
+        http_response_code(429);
+        header('Retry-After: 60');
+        header('Content-Type: text/html; charset=UTF-8');
+        echo '<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>429 · ' . h(SITE_NAME) . '</title><body><p>查询过于频繁，请一分钟后再试。</p></body></html>';
         exit;
     }
 }
@@ -48,6 +58,7 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/', OG_TITLE !== '' ? OG_TITLE : null,
     <input id="q" type="search" name="q" value="<?= h($q) ?>" placeholder="输入汉字 / LFW 编号 / 码位" aria-label="输入汉字、LFW 编号或码位" autocomplete="off" autofocus>
     <?php search_btn('查询'); ?>
   </form>
+  <p class="query-hint">支持：汉字（青）· 英文（blue）· 四角号（1141 20）· 直接粘贴西夏字</p>
   <dl class="hero-meta">
  
     <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 5v14M5 12h14"/></svg>全量汉字</dt><dd><?= (int) ($stats['hanzi'] ?? 0) ?></dd></div>
@@ -59,6 +70,37 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/', OG_TITLE !== '' ? OG_TITLE : null,
 <?php if ($q !== ''): ?>
 <section class="index" aria-live="polite">
 <?php
+if ($inlineEn !== null) {
+    echo '<p class="status done">英文「' . h($q) . '」匹配 ' . count($inlineEn) . ' 个字头</p>';
+    foreach ($inlineEn as $hit) {
+        $d = find_detail($hit['lfw']);
+        if (!$d) { continue; }
+        render_candidate([
+            'tier' => 'P0',
+            'tangut' => (string) ($d['字'] ?? ''),
+            'unicode' => (string) ($d['unicode'] ?? ''),
+            'gong' => (string) ($d['GHC'] ?? ''),
+            'lfw_id' => (string) ($d['lfw_id'] ?? ''),
+            'gloss_zh' => (string) ($d['释义'] ?? ''),
+        ]);
+    }
+    $rel = lookup_word_en($q, 12);
+    if ($rel) {
+        echo '<div class="seclabel" style="margin-top:1.5rem"><span>相关词组</span><span class="rule"></span></div>';
+        foreach ($rel as $w) {
+            $word = (string) ($w['word'] ?? '');
+            $gcn = (string) ($w['gloss_cn'] ?? '');
+            $gen = (string) ($w['gloss_en'] ?? '');
+            $gxc = (string) ($w['gxc'] ?? '');
+            echo '<article class="row tier-P0"><div class="glyph" lang="txg" style="font-size:24px" aria-label="西夏文词组 ' . h($word) . '">' . h($word) . '</div><div class="cell"><div class="meta">';
+            if ($gxc) { echo '<span class="chip">龚煌城：' . h($gxc) . '</span>'; }
+            echo '</div>';
+            if ($gcn) { echo '<p class="gloss">释义：' . h($gcn) . '</p>'; }
+            if ($gen) { echo '<p class="gloss" style="color:var(--ink-mute)">' . h($gen) . '</p>'; }
+            echo '</div></article>';
+        }
+    }
+} else {
 $items = lookup_text($q);
 $any = false;
 foreach ($items as $it):
@@ -77,6 +119,7 @@ foreach ($items as $it):
     <div class="cell">
       <div class="meta">
         <span class="tier"><?= h($it['char']) ?> → <?= h($t) ?> (<?= count($cands) ?> 候选)</span>
+        <a class="chip" href="/x-<?= h(rawurlencode($it['char'])) ?>/">查看全部候选 ↗</a>
         <?php if ($lfw): ?><a class="chip" href="/c-<?= h(rawurlencode($lfw)) ?>/">LFW <?= h($lfw) ?> ↗</a><?php endif; ?>
         <?php if ($gong): ?><span class="chip">龚煌城：<?= h($gong) ?></span><?php endif; ?>
         <?php if ($sj): ?><a class="chip" href="/sijiao/<?= h(rawurlencode($sj)) ?>/">四角 <?= h($sj) ?> ↗</a><?php endif; ?>
@@ -99,6 +142,7 @@ foreach ($items as $it):
 endforeach;
 if (!$any && !$items) {
     echo '<p class="empty">未识别的输入</p>';
+}
 }
 ?>
 </section>

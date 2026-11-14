@@ -12,6 +12,12 @@ require_once __DIR__ . '/includes/dict.php';
 
 $raw = trim((string) ($_GET['c'] ?? ''));
 
+// 小写 u 前缀 = 码位形态（/c-u1760d/，来自 search_target 的无特殊字符跳转）→ 归一为 U+XXXX
+$code = $raw;
+if (preg_match('/^u([0-9a-f]{4,6})$/i', $raw, $m)) {
+    $code = 'U+' . strtoupper($m[1]);
+}
+
 // 限流
 if ($raw !== '' && rate_limited()) {
     http_response_code(429);
@@ -21,7 +27,7 @@ if ($raw !== '' && rate_limited()) {
     exit;
 }
 
-$detail = $raw !== '' ? find_detail($raw) : null;
+$detail = $code !== '' ? find_detail($code) : null;
 
 if (!$detail) {
     http_response_code(404);
@@ -59,11 +65,17 @@ page_start($title, $desc, $canonical, $title, $desc, false, true);
 <section class="search">
   <div class="search-bar">
     <form method="get" action="/" style="display:flex;flex:1;gap:12px;min-width:0">
-      <input type="search" name="q" placeholder="输入汉字 / LFW 编号 / 码位" aria-label="输入汉字、LFW 编号或码位" autocomplete="off">
+      <input type="search" name="q" value="<?= h($raw) ?>" placeholder="输入汉字 / LFW 编号 / 码位" aria-label="输入汉字、LFW 编号或码位" autocomplete="off">
       <?php search_btn('查询'); ?>
     </form>
   </div>
 </section>
+<?php
+$sjField = field_value($detail, '四角号码');
+if (($_GET['from'] ?? '') === 'lfw'):
+?>
+<p class="status">按 LFW 编号 <?= h($lfw) ?> 检索<?= $sjField !== '' ? '；如需按四角号码查找，请使用「' . h($sjField) . '」格式' : '' ?>。</p>
+<?php endif; ?>
 <?php
 render_detail_page($detail);
 page_end();

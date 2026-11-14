@@ -124,8 +124,14 @@ function find_detail(string $key): ?array
 /**
  * 统一搜索分发器（首页/词组等搜索框共用）：
  * 按输入形态返回跳转 URL，无法判定时返回 null 交由各框自身语境处理。
- * 优先级：LFW/码位 → 字头详情；单个西夏文 → 码位字头详情；4 位非 LFW 数字 → 四角号码（前缀匹配第一组）；
- * 无汉字串（英文/西夏文词条等）→ 词组搜索（$routeToWord=false 时不跳，供 word 页自身语境，防自循环）。
+ * 分派顺序（工单 T2，消除 LFW/四角号歧义）：
+ *   1. 显式 LFW 编号（LFW1141 / L1141 / #1141）→ 字头详情
+ *   2. 显式码位（U+1760D / U1760D / u1760d）→ /c-u{hex}/
+ *   3. 裸 5–6 位十六进制 ≥ U+17000（必非 LFW，无歧义）→ 码位
+ *   4. 单个西夏文字 → 码位
+ *   5. 完整四角号「XXXX YY」→ 该分组
+ *   6. 4 位数字：四角号前缀优先，未命中再看 LFW（附 ?from=lfw 标记）
+ *   7. 拉丁字母串（≥2 字符）→ 英文/词组搜索（$routeToWord=false 时不跳，供 word 页自身语境）
  */
 function search_target(string $q, bool $routeToWord = true): ?string
 {
@@ -134,23 +140,57 @@ function search_target(string $q, bool $routeToWord = true): ?string
         return null;
     }
 
-    // LFW 编号 / 码位（find_detail 命中索引才跳，普通词/汉字不误判）
-    if (find_detail($q) !== null) {
-        return '/c-' . rawurlencode($q) . '/';
+    // 1. 显式 LFW 编号：LFW1141 / L1141 / #1141（前缀必填，避免裸 4 位数字被当 LFW）
+    if (preg_match('/^(?:lfw|l|#)\s*(\d{1,4})$/i', $q, $m)) {
+        return find_detail($m[1]) !== null ? '/c-' . $m[1] . '/' : null;
     }
 
-    // 单个西夏文字（U+17000–U+18AFF）→ 转码位 → 字头详情
+    // 2. 显式码位：U+1760D / U1760D / u1760d / u+1760d
+    if (preg_match('/^U\+?([0-9A-F]{4,6})$/i', $q, $m)) {
+        $hex = strtolower($m[1]);
+        return find_detail('U+' . strtoupper($m[1])) !== null ? '/c-u' . $hex . '/' : null;
+    }
+
+    // 3. 裸 5–6 位十六进制 ≥ U+17000（LFW 编号最大 4 位，必是码位，无歧义）
+    if (preg_match('/^([0-9A-F]{5,6})$/i', $q, $m) && hexdec($m[1]) >= 0x17000) {
+        $hex = strtolower($m[1]);
+        return find_detail('U+' . strtoupper($m[1])) !== null ? '/c-u' . $hex . '/' : null;
+    }
+
+    // 4. 单个西夏文字（U+17000–U+18AFF）→ 转码位 → 字头详情（/c-u{hex} 无特殊字符）
     if (mb_strlen($q, 'UTF-8') === 1) {
         $cp = mb_ord($q, 'UTF-8');
         if ($cp !== false && $cp >= 0x17000 && $cp <= 0x18AFF) {
-            $u = 'U+' . strtoupper(dechex($cp));
-            if (find_detail($u) !== null) {
-                return '/c-' . rawurlencode($u) . '/';
+            $hex = strtolower(dechex($cp));
+            if (find_detail('U+' . strtoupper($hex)) !== null) {
+                return '/c-u' . $hex . '/';
             }
         }
     }
 
-    // 4 位纯数字、非 LFW → 四角号码（键为「XXXX YY」，前缀匹配第一个组）
+    // 5. 多字西夏文串（词条/词组）→ 词组页（word 页未命中词组时回退逐字展示）
+    if (preg_match_all('/./us', $q, $mm) && count($mm[0]) >= 2) {
+        $allTangut = true;
+        foreach ($mm[0] as $ch) {
+            $cp = mb_ord($ch, 'UTF-8');
+            if ($cp === false || $cp < 0x17000 || $cp > 0x18AFF) {
+                $allTangut = false;
+                break;
+            }
+        }
+        if ($allTangut) {
+            return $routeToWord ? '/word/?q=' . rawurlencode($q) : null;
+        }
+    }
+
+    // 6. 完整「XXXX YY」四角号码分组键（从四角页复制整串粘回）直接命中
+    if (preg_match('/^\d{4}\s+\d{2}$/', $q)) {
+        $groups = (read_json(shard_dir() . '/index_sijiao.json') ?? [])['groups'] ?? [];
+        $norm = preg_replace('/\s+/', ' ', $q);
+        return isset($groups[$norm]) ? '/sijiao/' . rawurlencode($norm) . '/' : null;
+    }
+
+    // 7. 4 位数字：四角号前缀优先，未命中再看 LFW（附 ?from=lfw 提示区分检索方式）
     if (preg_match('/^\d{4}$/', $q)) {
         $groups = (read_json(shard_dir() . '/index_sijiao.json') ?? [])['groups'] ?? [];
         foreach ($groups as $key => $_g) {
@@ -158,14 +198,49 @@ function search_target(string $q, bool $routeToWord = true): ?string
                 return '/sijiao/' . rawurlencode((string) $key) . '/';
             }
         }
+        if (find_detail($q) !== null) {
+            return '/c-' . $q . '/?from=lfw';
+        }
+        return null;
     }
 
-    // 无汉字串（英文短语、多字西夏文词条等）→ 词组搜索；含汉字的串交由语境（首页逐字查 / word 页释义搜索）
-    if ($routeToWord && !preg_match('/\p{Han}/u', $q)) {
-        return '/word/?q=' . rawurlencode($q);
+    // 8. 拉丁字母串（≥2 字符，避免单字母触发海量结果）→ 英文/词组搜索
+    if (preg_match('/^[A-Za-z][A-Za-z\s\'-]{1,40}$/', $q)) {
+        return $routeToWord ? '/word/?q=' . rawurlencode($q) : null;
     }
 
     return null;
+}
+
+/** 英文单字 → 西夏文字头候选（T4 倒排索引，词条级 O(1)） */
+function lookup_en(string $term): array
+{
+    static $idx = null;
+    if ($idx === null) {
+        $idx = read_json(shard_dir() . '/index_en.json') ?? [];
+    }
+    $t = strtolower(trim($term));
+    return $idx['terms'][$t] ?? [];
+}
+
+/** 词组按英文释义检索（T4 相关词组，命中前 $limit 条） */
+function lookup_word_en(string $term, int $limit = 12): array
+{
+    static $words = null;
+    if ($words === null) {
+        $words = (read_json(shard_dir() . '/index_word.json') ?? [])['words'] ?? [];
+    }
+    $t = strtolower(trim($term));
+    $out = [];
+    foreach ($words as $w) {
+        if (str_contains(strtolower((string) ($w['gloss_en'] ?? '')), $t) || str_contains((string) ($w['word'] ?? ''), $term)) {
+            $out[] = $w;
+            if (count($out) >= $limit) {
+                break;
+            }
+        }
+    }
+    return $out;
 }
 
 /** 站点统计（优先读预生成的 stats.json，缺失或损坏时遍历分片重算） */
