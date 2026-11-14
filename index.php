@@ -18,8 +18,9 @@ if ($q !== '' && rate_limited()) {
 
 $stats = site_stats();
 $dv = data_version();
+$tagShort = explode('|', BRAND_TAGLINE)[0];
 
-page_start(SITE_TITLE, SITE_DESCRIPTION, '/');
+page_start($tagShort, SITE_DESCRIPTION, '/');
 ?>
 <section class="hero">
   <svg class="corner corner-tl" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M0 0L0 26" stroke="#7734db" stroke-width="0.6" opacity="0.45"/><path d="M0 0L26 0" stroke="#7734db" stroke-width="0.6" opacity="0.45"/></svg>
@@ -36,6 +37,7 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/');
     <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h4v-4h4v-4h4V7h4"/></svg>分层</dt><dd>P0–P3 自动近似</dd></div>
   </dl>
 </section>
+<script>if(window.innerWidth>768&&!/MicroMessenger/i.test(navigator.userAgent)){var s=<?= json_encode(explode('|', BRAND_TAGLINE)) ?>;if(s.length>1)document.title=s.join('|');}</script>
 
 <section class="search">
   <div class="seclabel"><span>查询</span><span class="rule"></span></div>
