@@ -11,7 +11,7 @@ page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（蕃汉合时掌中珠�
 
   <section>
     <div class="seclabel"><span>01 本工具</span><span class="rule"></span></div>
-    <p>「蕃汉」是一个把汉字转写成西夏文（Tangut script）的免费公益查询工具。输入姓名、姓氏或任意汉字，即可看到候选的西夏文字形、拟音与义项依据。</p>
+    <p>「蕃汉合时掌中珠」是一个把汉字转写成西夏文（Tangut script）的免费公益查询工具。输入姓名、姓氏或任意汉字，即可看到候选的西夏文字形、拟音与义项依据。</p>
     <p>本站不追求「一一对应」——西夏文与汉字本就不是一一对应，多候选为常态。候选项据释义反查生成，并按 tier（P0–P3）分层近似排序。</p>
   </section>
 

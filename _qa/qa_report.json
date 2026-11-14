@@ -1,0 +1,54 @@
+{
+ "base": "http://127.0.0.1:8080",
+ "routes_checked": 9521,
+ "links_extra_refs": 19164,
+ "font_stack": {
+  "core": 3414,
+  "rest": 2648,
+  "fix": 744,
+  "idsops": 9
+ },
+ "font_union": 6815,
+ "tofu": {
+  "data_codepoints_used": 6806,
+  "data_missing": [],
+  "rendered_codepoints_used": 6806,
+  "rendered_missing": [],
+  "pages_with_missing": {},
+  "pages_not_core": {
+   "count": 8385,
+   "sample": [
+    "/",
+    "/about",
+    "/c-0001/",
+    "/c-0002/",
+    "/c-0003/",
+    "/c-0004/",
+    "/c-0005/",
+    "/c-0006/",
+    "/c-0007/",
+    "/c-0008/"
+   ]
+  }
+ },
+ "links": {
+  "broken_routes": [],
+  "broken_refs": [],
+  "unresolved_refs": [],
+  "external_refs": {
+   "count": 9524,
+   "sample": [
+    "https://beian.miit.gov.cn/",
+    "https://github.com/notofonts/tangut",
+    "https://github.com/tangutdata",
+    "https://voue.cn/",
+    "https://voue.cn/about",
+    "https://voue.cn/c-0001/",
+    "https://voue.cn/c-0002/",
+    "https://voue.cn/c-0003/",
+    "https://voue.cn/c-0004/",
+    "https://voue.cn/c-0005/"
+   ]
+  }
+ }
+}

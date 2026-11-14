@@ -40,7 +40,7 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/');
 <section class="search">
   <div class="seclabel"><span>查询</span><span class="rule"></span></div>
   <form class="search-bar" method="get" action="/">
-    <input id="q" type="search" name="q" value="<?= h($q) ?>" placeholder="输入汉字（如：青、张、张青）" aria-label="输入要查询的汉字" autocomplete="off" autofocus>
+    <input id="q" type="search" name="q" value="<?= h($q) ?>" placeholder="输入汉字" aria-label="输入要查询的汉字" autocomplete="off" autofocus>
     <?php search_btn('查询'); ?>
   </form>
   <p class="status done">数据版本 <?= h($dv) ?> · 全量 <?= (int) ($stats['hanzi'] ?? 0) ?> 字可查 · 服务端实时查询</p>

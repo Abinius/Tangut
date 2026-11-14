@@ -28,17 +28,26 @@
     <a class="brand" href="/" aria-label="返回首页">
       <span class="brand-mark" aria-hidden="true">Tangut Dictionary<em>.</em></span>
     </a>
-    <nav class="nav" aria-label="主导航">
-      <a href="/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>查询</a>
-      <a href="/radical/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/></svg>部首</a>
-      <a href="/stroke/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l2.5-7L16 3.5 20.5 8 12 16.5z"/><path d="M14 6l4 4"/></svg>笔画</a>
-      <a href="/rhyme/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3M8 7v10M13 4v16M18 8v8M21 12h-2"/></svg>声韵</a>
-      <a href="/word/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="5" rx="1.5"/><rect x="4" y="13" width="16" height="5" rx="1.5"/></svg>词组</a>
-      <a href="/wenhai/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>文献</a>
-      <a href="/about" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>关于</a>
-    </nav>
+    <button class="menu-toggle" type="button" aria-label="打开菜单" aria-controls="navDrawer" aria-expanded="false">
+      <svg class="menu-icon" viewBox="0 0 1024 1024" aria-hidden="true" focusable="false"><path d="M382.2 165.7H217.4c-47.5 0-86.2 38.7-86.2 86.2v164.8c0 47.5 38.7 86.2 86.2 86.2h164.8c47.5 0 86.2-38.7 86.2-86.2V251.9c0.1-47.6-38.6-86.2-86.2-86.2z m-9.9 241.1h-145v-145h145v145zM382.2 557.6H217.4c-47.5 0-86.2 38.7-86.2 86.2v164.8c0 47.5 38.7 86.2 86.2 86.2h164.8c47.5 0 86.2-38.7 86.2-86.2V643.8c0.1-47.5-38.6-86.2-86.2-86.2z m-9.9 241.1h-145v-145h145v145zM871.6 273.3L755.1 156.8c-16.3-16.3-37.9-25.3-61-25.3-23 0-44.7 9-61 25.3L516.6 273.3c-33.6 33.6-33.6 88.3 0 121.9l116.6 116.5c16.3 16.3 37.9 25.3 61 25.3 23 0 44.7-9 61-25.3l116.6-116.6c33.4-33.4 33.4-88.1-0.2-121.8zM694.1 436.8L591.6 334.3l102.5-102.5 102.5 102.5-102.5 102.5zM776.5 557.6H611.7c-47.5 0-86.2 38.7-86.2 86.2v164.8c0 47.5 38.7 86.2 86.2 86.2h164.8c47.5 0 86.2-38.7 86.2-86.2V643.8c0-47.5-38.7-86.2-86.2-86.2z m-9.9 241.1h-145v-145h145v145z" fill="currentColor"/></svg>
+    </button>
   </div>
 </header>
+<div class="drawer-backdrop" id="navBackdrop"></div>
+<aside class="drawer" id="navDrawer" aria-label="主导航" aria-hidden="true">
+  <div class="drawer-head">
+    <button class="drawer-close" type="button" aria-label="关闭菜单" aria-controls="navDrawer">×</button>
+  </div>
+  <nav class="nav" aria-label="主导航">
+    <a href="/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>查询</a>
+    <a href="/radical/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/></svg>部首</a>
+    <a href="/stroke/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19l2.5-7L16 3.5 20.5 8 12 16.5z"/><path d="M14 6l4 4"/></svg>笔画</a>
+    <a href="/rhyme/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3M8 7v10M13 4v16M18 8v8M21 12h-2"/></svg>声韵</a>
+    <a href="/word/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="5" rx="1.5"/><rect x="4" y="13" width="16" height="5" rx="1.5"/></svg>词组</a>
+    <a href="/wenhai/" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>文献</a>
+    <a href="/about" class="nav-link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8h.01"/></svg>关于</a>
+  </nav>
+</aside>
 <main class="container main">
 <section class="hero">
   <svg class="corner corner-tl" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M0 0L0 26" stroke="#7734db" stroke-width="0.6" opacity="0.45"/><path d="M0 0L26 0" stroke="#7734db" stroke-width="0.6" opacity="0.45"/></svg>
@@ -59,11 +68,10 @@
 <section class="search">
   <div class="seclabel"><span>查询</span><span class="rule"></span></div>
   <form class="search-bar" method="get" action="/">
-    <input id="q" type="search" name="q" value="" placeholder="输入汉字（如：青、张、张青）" aria-label="输入要查询的汉字" autocomplete="off" autofocus>
+    <input id="q" type="search" name="q" value="" placeholder="输入汉字" aria-label="输入要查询的汉字" autocomplete="off" autofocus>
     <button class="btn" type="submit" aria-label="查询" title="查询">
-      <svg class="btn-icon" viewBox="0 0 1024 1024" width="19" height="19" aria-hidden="true" focusable="false"><path d="M932.571429 493.714286C932.571429 261.485714 744.228571 73.142857 512 73.142857S91.428571 261.485714 91.428571 493.714286s188.342857 420.571429 420.571429 420.571428c89.6 0 171.885714-27.428571 239.542857-74.971428l111.542857 111.542857 51.2-51.2-106.057143-106.057143c76.8-76.8 124.342857-182.857143 124.342858-299.885714zM164.571429 493.714286C164.571429 301.714286 320 146.285714 512 146.285714s347.428571 155.428571 347.428571 347.428572-155.428571 347.428571-347.428571 347.428571S164.571429 685.714286 164.571429 493.714286z" fill="currentColor"></path></svg>
-    </button>
-  </form>
+  <svg class="btn-icon" viewBox="0 0 1024 1024" width="19" height="19" aria-hidden="true" focusable="false"><path d="M932.571429 493.714286C932.571429 261.485714 744.228571 73.142857 512 73.142857S91.428571 261.485714 91.428571 493.714286s188.342857 420.571429 420.571429 420.571428c89.6 0 171.885714-27.428571 239.542857-74.971428l111.542857 111.542857 51.2-51.2-106.057143-106.057143c76.8-76.8 124.342857-182.857143 124.342858-299.885714zM164.571429 493.714286C164.571429 301.714286 320 146.285714 512 146.285714s347.428571 155.428571 347.428571 347.428572-155.428571 347.428571-347.428571 347.428571S164.571429 685.714286 164.571429 493.714286z" fill="currentColor"></path></svg>
+</button>  </form>
   <p class="status done">数据版本 2026.11.0 · 全量 3422 字可查 · 服务端实时查询</p>
 </section>
 
@@ -77,35 +85,55 @@
       <p class="retrieve-sub">四套部首体系 · SVG 矢量字形</p>
     </div>
     <div class="retrieve-glyphs" aria-label="西夏文部首矢量字形样例">
-      <a class="retrieve-glyph" href="/radical/unicode/1888C/" title="𘢌 · 578 字" aria-label="部首 𘢌，578 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M571 242Q454 422 297 509Q292 512 287 515L276 502Q408 396 507 195Q511 187 514 181L610 231Q600 244 586 243Q581 244 571 242ZM691 669Q681 681 666 681Q662 681 653 679Q607 765 544 837Q663 951 658 1030Q655 1064 630 1068Q625 1068 621 1068Q606 1066 592 1056Q569 970 505 879Q387 993 221 1069L210 1054Q361 964 467 829Q414 766 357 717Q307 748 273 766L263 752Q444 625 568 381L661 430Q652 443 636 443Q634 442 629 442Q624 441 622 441Q519 603 374 705Q440 748 494 793Q555 704 593 618Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/18869/" title="𘡩 · 336 字" aria-label="部首 𘡩，336 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M858 291 951 370Q945 385 924 386H728V546Q727 554 695 563Q682 567 673 567H663V386H514V555Q513 563 481 572Q468 576 459 576H449V386H304V549Q303 557 271 566Q258 570 249 570H239V386H78L69 356H239V179L340 190Q333 213 304 218V356H449V175L550 186Q543 209 514 214V356H663V179L764 190Q757 213 728 218V356H808Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/1884A/" title="𘡊 · 274 字" aria-label="部首 𘡊，274 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M847 313 940 392Q934 407 913 408H71L62 378H552Q600 293 650 178L751 216Q738 234 711 231Q652 312 581 378H797ZM253 188Q366 224 392 289Q408 327 386 347Q366 366 337 345Q319 275 242 195Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/18823/" title="𘠣 · 179 字" aria-label="部首 𘠣，179 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M441 573Q427 505 387 437Q339 469 287 497L281 476Q436 347 516 200Q523 187 529 175L621 242Q614 248 604 252Q595 254 574 252Q510 349 417 416Q492 494 501 519Q519 497 599 365Q614 339 626 320L650 335Q559 512 550 535Q546 545 544 551Q536 579 550 607Q542 632 487 663Q457 680 442 682Q446 612 441 573ZM617 700 704 762Q692 774 664 775Q572 954 307 1079L298 1067Q507 931 586 768H339L330 739H586Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/189B3/" title="𘦳 · 178 字" aria-label="部首 𘦳，178 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M297 626Q479 530 560 404H323L314 375H467Q503 292 541 184L643 218Q630 237 604 234Q557 307 496 375H560L591 336L678 398Q666 410 638 411Q558 535 357 618Q332 628 304 639ZM335 191Q429 221 443 276Q452 309 429 325Q405 341 379 316Q373 257 324 196ZM707 763Q696 775 680 773Q674 773 667 770Q619 836 562 890Q657 972 663 1033Q667 1071 638 1078Q636 1079 634 1079Q621 1080 604 1071Q579 1002 520 928Q404 1023 260 1079L250 1063Q376 995 480 884Q431 834 384 799Q333 823 285 840L278 824Q458 734 596 524L683 584Q673 595 657 594Q653 594 642 590Q537 716 407 787Q456 813 509 850Q569 781 615 704Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/18801/" title="𘠁 · 159 字" aria-label="部首 𘠁，159 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M474 1074V176L575 187Q568 210 539 215V1053Q538 1061 506 1070Q493 1074 484 1074Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/18810/" title="𘠐 · 155 字" aria-label="部首 𘠐，155 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M589 1074V176L690 187Q683 210 654 215V1053Q653 1061 621 1070Q608 1074 599 1074ZM405 498Q405 786 339 943Q317 996 287 1038L271 1028Q335 867 339 560Q339 531 339 498V278L438 289Q433 312 406 318Q404 318 404 318Q404 349 405 424Q405 482 405 498Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/1890A/" title="𘤊 · 120 字" aria-label="部首 𘤊，120 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M686 406Q682 406 673 404Q638 463 590 523Q700 605 708 667Q711 702 685 709Q683 710 681 710Q665 709 651 702Q622 633 555 563Q459 667 329 737L319 724Q427 644 514 522Q466 479 408 441Q374 463 342 479L331 466Q447 379 520 212Q526 197 531 184L625 241Q615 253 599 251Q591 251 586 249Q521 359 427 428Q494 461 537 488Q586 410 618 341L712 395Q702 407 686 406ZM576 853Q704 961 702 1039Q702 1074 676 1079Q672 1079 669 1079Q654 1078 639 1068Q612 983 541 894Q437 1005 303 1070L292 1056Q405 978 501 848Q454 798 395 752L408 738Q477 777 525 813Q564 753 590 703L678 765Q666 777 649 775Q648 775 645 774Q640 773 637 772Q607 818 576 853Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/188B8/" title="𘢸 · 112 字" aria-label="部首 𘢸，112 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M854 344 942 419Q936 434 915 435H713V520Q712 528 680 537Q667 541 658 541H648V435H318V526Q317 534 285 543Q272 547 263 547H253V435H74L65 405H253V272L354 283Q347 306 318 311V405H413Q532 325 612 245H164L155 215H627L660 176L744 241Q731 256 701 261Q602 332 455 405H648V301L749 312Q742 335 713 340V405H808Z"/></svg></a>
-      <a class="retrieve-glyph" href="/radical/unicode/18903/" title="𘤃 · 103 字" aria-label="部首 𘤃，103 字"><svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M571 243Q449 397 291 463L282 449Q405 367 512 195Q517 186 522 178L611 237Q600 248 586 246Q580 246 571 243ZM702 758 773 820Q767 835 746 836H630V1058Q629 1066 597 1075Q584 1079 575 1079H565V836H446V1053Q445 1061 413 1070Q400 1074 391 1074H381V836H272L263 806H381V614Q329 641 268 662L260 647Q442 551 592 337L681 397Q671 408 656 406Q648 405 642 402Q531 528 408 599L457 620H554L590 581L671 642Q657 655 630 661V806H667ZM446 806H565V650H446Z"/></svg></a>
-    </div>
+            <a class="retrieve-glyph" href="/radical/unicode/1888C/" title="𘢌 · 578 字" aria-label="部首 𘢌，578 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M571 242Q454 422 297 509Q292 512 287 515L276 502Q408 396 507 195Q511 187 514 181L610 231Q600 244 586 243Q581 244 571 242ZM691 669Q681 681 666 681Q662 681 653 679Q607 765 544 837Q663 951 658 1030Q655 1064 630 1068Q625 1068 621 1068Q606 1066 592 1056Q569 970 505 879Q387 993 221 1069L210 1054Q361 964 467 829Q414 766 357 717Q307 748 273 766L263 752Q444 625 568 381L661 430Q652 443 636 443Q634 442 629 442Q624 441 622 441Q519 603 374 705Q440 748 494 793Q555 704 593 618Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/18869/" title="𘡩 · 336 字" aria-label="部首 𘡩，336 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M858 291 951 370Q945 385 924 386H728V546Q727 554 695 563Q682 567 673 567H663V386H514V555Q513 563 481 572Q468 576 459 576H449V386H304V549Q303 557 271 566Q258 570 249 570H239V386H78L69 356H239V179L340 190Q333 213 304 218V356H449V175L550 186Q543 209 514 214V356H663V179L764 190Q757 213 728 218V356H808Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/1884A/" title="𘡊 · 274 字" aria-label="部首 𘡊，274 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M847 313 940 392Q934 407 913 408H71L62 378H552Q600 293 650 178L751 216Q738 234 711 231Q652 312 581 378H797ZM253 188Q366 224 392 289Q408 327 386 347Q366 366 337 345Q319 275 242 195Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/18823/" title="𘠣 · 179 字" aria-label="部首 𘠣，179 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M441 573Q427 505 387 437Q339 469 287 497L281 476Q436 347 516 200Q523 187 529 175L621 242Q614 248 604 252Q595 254 574 252Q510 349 417 416Q492 494 501 519Q519 497 599 365Q614 339 626 320L650 335Q559 512 550 535Q546 545 544 551Q536 579 550 607Q542 632 487 663Q457 680 442 682Q446 612 441 573ZM617 700 704 762Q692 774 664 775Q572 954 307 1079L298 1067Q507 931 586 768H339L330 739H586Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/189B3/" title="𘦳 · 178 字" aria-label="部首 𘦳，178 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M297 626Q479 530 560 404H323L314 375H467Q503 292 541 184L643 218Q630 237 604 234Q557 307 496 375H560L591 336L678 398Q666 410 638 411Q558 535 357 618Q332 628 304 639ZM335 191Q429 221 443 276Q452 309 429 325Q405 341 379 316Q373 257 324 196ZM707 763Q696 775 680 773Q674 773 667 770Q619 836 562 890Q657 972 663 1033Q667 1071 638 1078Q636 1079 634 1079Q621 1080 604 1071Q579 1002 520 928Q404 1023 260 1079L250 1063Q376 995 480 884Q431 834 384 799Q333 823 285 840L278 824Q458 734 596 524L683 584Q673 595 657 594Q653 594 642 590Q537 716 407 787Q456 813 509 850Q569 781 615 704Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/18801/" title="𘠁 · 159 字" aria-label="部首 𘠁，159 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M474 1074V176L575 187Q568 210 539 215V1053Q538 1061 506 1070Q493 1074 484 1074Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/18810/" title="𘠐 · 155 字" aria-label="部首 𘠐，155 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M589 1074V176L690 187Q683 210 654 215V1053Q653 1061 621 1070Q608 1074 599 1074ZM405 498Q405 786 339 943Q317 996 287 1038L271 1028Q335 867 339 560Q339 531 339 498V278L438 289Q433 312 406 318Q404 318 404 318Q404 349 405 424Q405 482 405 498Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/1890A/" title="𘤊 · 120 字" aria-label="部首 𘤊，120 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M686 406Q682 406 673 404Q638 463 590 523Q700 605 708 667Q711 702 685 709Q683 710 681 710Q665 709 651 702Q622 633 555 563Q459 667 329 737L319 724Q427 644 514 522Q466 479 408 441Q374 463 342 479L331 466Q447 379 520 212Q526 197 531 184L625 241Q615 253 599 251Q591 251 586 249Q521 359 427 428Q494 461 537 488Q586 410 618 341L712 395Q702 407 686 406ZM576 853Q704 961 702 1039Q702 1074 676 1079Q672 1079 669 1079Q654 1078 639 1068Q612 983 541 894Q437 1005 303 1070L292 1056Q405 978 501 848Q454 798 395 752L408 738Q477 777 525 813Q564 753 590 703L678 765Q666 777 649 775Q648 775 645 774Q640 773 637 772Q607 818 576 853Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/188B8/" title="𘢸 · 112 字" aria-label="部首 𘢸，112 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M854 344 942 419Q936 434 915 435H713V520Q712 528 680 537Q667 541 658 541H648V435H318V526Q317 534 285 543Q272 547 263 547H253V435H74L65 405H253V272L354 283Q347 306 318 311V405H413Q532 325 612 245H164L155 215H627L660 176L744 241Q731 256 701 261Q602 332 455 405H648V301L749 312Q742 335 713 340V405H808Z"/></svg>
+      </a>
+            <a class="retrieve-glyph" href="/radical/unicode/18903/" title="𘤃 · 103 字" aria-label="部首 𘤃，103 字">
+        <svg viewBox="42 155 929 944" aria-hidden="true" focusable="false"><path d="M571 243Q449 397 291 463L282 449Q405 367 512 195Q517 186 522 178L611 237Q600 248 586 246Q580 246 571 243ZM702 758 773 820Q767 835 746 836H630V1058Q629 1066 597 1075Q584 1079 575 1079H565V836H446V1053Q445 1061 413 1070Q400 1074 391 1074H381V836H272L263 806H381V614Q329 641 268 662L260 647Q442 551 592 337L681 397Q671 408 656 406Q648 405 642 402Q531 528 408 599L457 620H554L590 581L671 642Q657 655 630 661V806H667ZM446 806H565V650H446Z"/></svg>
+      </a>
+          </div>
     <div class="retrieve-systems">
-      <a class="retrieve-system" href="/radical/unicode/">
+            <a class="retrieve-system" href="/radical/unicode/">
         <span class="rs-label">Unicode 部首</span>
         <span class="rs-count">509 部首 · 6084 字</span>
       </a>
-      <a class="retrieve-system" href="/radical/xh/">
+            <a class="retrieve-system" href="/radical/xh/">
         <span class="rs-label">夏漢字典部首</span>
         <span class="rs-count">433 部首 · 6084 字</span>
       </a>
-      <a class="retrieve-system" href="/radical/eyh/">
+            <a class="retrieve-system" href="/radical/eyh/">
         <span class="rs-label">夏俄英漢詞典部首</span>
         <span class="rs-count">371 部首 · 5657 字</span>
       </a>
-      <a class="retrieve-system" href="/radical/xwd/">
+            <a class="retrieve-system" href="/radical/xwd/">
         <span class="rs-label">西夏文詞典部首</span>
         <span class="rs-count">448 部首 · 5987 字</span>
       </a>
-    </div>
+          </div>
     <div class="retrieve-cta-row">
       <a class="retrieve-cta" href="/radical/">进入检字
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
@@ -161,8 +189,7 @@
         <input type="search" name="q" placeholder="LFW 编号 / 码位 (如 0257、U+1760D)" aria-label="输入 LFW 编号或码位" autocomplete="off">
         <button class="btn" type="submit" aria-label="查看" title="查看">
   <svg class="btn-icon" viewBox="0 0 1024 1024" width="19" height="19" aria-hidden="true" focusable="false"><path d="M932.571429 493.714286C932.571429 261.485714 744.228571 73.142857 512 73.142857S91.428571 261.485714 91.428571 493.714286s188.342857 420.571429 420.571429 420.571428c89.6 0 171.885714-27.428571 239.542857-74.971428l111.542857 111.542857 51.2-51.2-106.057143-106.057143c76.8-76.8 124.342857-182.857143 124.342858-299.885714zM164.571429 493.714286C164.571429 301.714286 320 146.285714 512 146.285714s347.428571 155.428571 347.428571 347.428572-155.428571 347.428571-347.428571 347.428571S164.571429 685.714286 164.571429 493.714286z" fill="currentColor"></path></svg>
-</button>
-      </div>
+</button>      </div>
     </form>
   </div>
 </section>
@@ -187,5 +214,28 @@
           </div>
   </div>
 </footer>
+<script>
+(function () {
+  var b = document.querySelector('.menu-toggle');
+  var d = document.getElementById('navDrawer');
+  var k = document.getElementById('navBackdrop');
+  var c = document.querySelector('.drawer-close');
+  if (!b || !d) return;
+  function open() {
+    d.classList.add('open'); d.setAttribute('aria-hidden', 'false');
+    k.classList.add('show'); b.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  }
+  function close() {
+    d.classList.remove('open'); d.setAttribute('aria-hidden', 'true');
+    k.classList.remove('show'); b.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+  b.addEventListener('click', open);
+  if (c) c.addEventListener('click', close);
+  k.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
+</script>
 </body>
 </html>
