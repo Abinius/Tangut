@@ -43,7 +43,7 @@ if ($group === '') {
         $gridSlice = array_slice($groups, ($page - 1) * $gridPerPage, $gridPerPage, true);
         foreach ($gridSlice as $gk => $g):
         ?>
-        <a class="radical-cell" href="/tongyin/<?= h(rawurlencode($gk)) ?>/">
+        <a class="radical-cell" href="/tongyin/<?= h(rawurlencode((string) $gk)) ?>/">
             <span class="radical-glyph mono" style="font-size:14px"><?= h($gk) ?></span>
             <span class="radical-count"><?= (int) $g['count'] ?> 字</span>
         </a>

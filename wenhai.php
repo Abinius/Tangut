@@ -60,7 +60,7 @@ if ($ref === '') {
         $gridSlice = array_slice($entries, ($page - 1) * $gridPerPage, $gridPerPage, true);
         foreach ($gridSlice as $refKey => $info):
         ?>
-        <a class="radical-cell" href="/wenhai/<?= h(rawurlencode($refKey)) ?>/">
+        <a class="radical-cell" href="/wenhai/<?= h(rawurlencode((string) $refKey)) ?>/">
           <span class="radical-glyph mono" style="font-size:13px"><?= h($refKey) ?></span>
           <span class="radical-count"><?= (int) $info['count'] ?> 字</span>
         </a>

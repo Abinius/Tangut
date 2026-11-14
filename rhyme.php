@@ -37,12 +37,13 @@ if ($system === '' || !isset($systems[$system])) {
         <?php foreach ($systems as $sk => $sv): ?>
         <article class="row tier-P0 overview-mini">
             <div class="cell">
+                <span class="overview-ic"><?= system_icon($sk) ?></span>
+                <h2 class="overview-title"><?= h($sv['label']) ?></h2>
                 <div class="meta">
-                    <span class="tier"><?= h($sv['label']) ?></span>
                     <span class="chip"><?= (int) $sv['group_count'] ?> 组</span>
                     <span class="chip"><?= (int) $sv['total_chars'] ?> 字</span>
                 </div>
-                <p class="gloss"><a href="/rhyme/<?= h($sk) ?>/">浏览 <?= h($sv['label']) ?> →</a></p>
+                <p class="gloss"><a href="/rhyme/<?= h($sk) ?>/">查看全部 →</a></p>
             </div>
         </article>
         <?php endforeach; ?>
@@ -74,7 +75,7 @@ if ($value === '') {
         $gridSlice = array_slice($sorted, ($page - 1) * $gridPerPage, $gridPerPage, true);
         foreach ($gridSlice as $val => $g):
         ?>
-        <a class="radical-cell" href="<?= h($route . rawurlencode($val) . '/') ?>">
+        <a class="radical-cell" href="<?= h($route . rawurlencode((string) $val) . '/') ?>">
             <span class="radical-glyph mono" style="font-size:14px"><?= h($val) ?></span>
             <span class="radical-count"><?= (int) $g['count'] ?></span>
         </a>

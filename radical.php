@@ -34,17 +34,18 @@ if ($system === '' || !isset($systems[$system])) {
     page_start($title, $desc, '/radical/');
     ?>
     <p class="breadcrumb"><a href="/">查询</a> <span class="sep">///</span> 检字 <span class="sep">///</span> 部首</p>
-    <p class="status done">四套部首体系，按体系浏览全部部首，点击进入字头列表。</p>
+    <p class="status done">四套体系 · 点击进入字头列表。</p>
     <section class="overview-grid overview-grid-4">
         <?php foreach ($systems as $sk => $sv): ?>
         <article class="row tier-P0 overview-mini">
             <div class="cell">
+                <span class="overview-ic"><?= system_icon($sk) ?></span>
+                <h2 class="overview-title"><?= h($sv['label']) ?></h2>
                 <div class="meta">
-                    <span class="tier"><?= h($sv['label']) ?></span>
                     <span class="chip"><?= (int) $sv['radical_count'] ?> 部首</span>
                     <span class="chip"><?= (int) $sv['total_chars'] ?> 字</span>
                 </div>
-                <p class="gloss"><a href="/radical/<?= h($sk) ?>/">浏览全部 <?= h($sv['label']) ?> →</a></p>
+                <p class="gloss"><a href="/radical/<?= h($sk) ?>/">查看全部 →</a></p>
             </div>
         </article>
         <?php endforeach; ?>
@@ -140,6 +141,6 @@ page_start($title, $desc, '/radical/' . $system . '/' . $cpClean . '/');
 $pages = render_char_list($entries, $page, 60);
 render_pagination($page, $pages, '/radical/' . $system . '/' . $cpClean . '/');
 ?>
-<p class="backlinks"><a href="/radical/<?= h($system) ?>/">回<?= h($sysLabel) ?>部首列表</a> <span class="sep">///</span> <a href="/">回首页查询</a></p>
+<p class="backlinks"><a href="/radical/<?= h($system) ?>/">回部首列表</a> <span class="sep">///</span> <a href="/">回首页</a></p>
 <?php
 page_end();

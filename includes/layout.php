@@ -196,3 +196,19 @@ function search_btn(string $label = '查询'): void
   <svg class="btn-icon" viewBox="0 0 1024 1024" width="19" height="19" aria-hidden="true" focusable="false"><path d="M932.571429 493.714286C932.571429 261.485714 744.228571 73.142857 512 73.142857S91.428571 261.485714 91.428571 493.714286s188.342857 420.571429 420.571429 420.571428c89.6 0 171.885714-27.428571 239.542857-74.971428l111.542857 111.542857 51.2-51.2-106.057143-106.057143c76.8-76.8 124.342857-182.857143 124.342858-299.885714zM164.571429 493.714286C164.571429 301.714286 320 146.285714 512 146.285714s347.428571 155.428571 347.428571 347.428572-155.428571 347.428571-347.428571 347.428571S164.571429 685.714286 164.571429 493.714286z" fill="currentColor"></path></svg>
 </button><?php
 }
+
+/** 检字体系图标（描边 currentColor，24 viewBox，部首/声韵总览卡复用） */
+function system_icon(string $key): string
+{
+    $icons = [
+        'unicode' => '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M9.5 9.5v10"/>',
+        'xh' => '<path d="M5 4.5h12.5a1.5 1.5 0 0 1 1.5 1.5v12a1.5 1.5 0 0 1-1.5 1.5H6.5A2.5 2.5 0 0 1 4 17V6a2 2 0 0 1 1-1.5z"/><path d="M4 16.5a2.5 2.5 0 0 1 2.5-2.5H19"/>',
+        'eyh' => '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.8 2.6 14.2 0 17M12 3.5c-2.6 2.8-2.6 14.2 0 17"/>',
+        'xwd' => '<path d="M12 6c-1.6-1.3-3.6-2-6-2v14c2.4 0 4.4.7 6 2 1.6-1.3 3.6-2 6-2V4c-2.4 0-4.4.7-6 2z"/><path d="M12 6v14"/>',
+        'tongyin' => '<path d="M3 12h2M8 7.5v9M13 4v16M18 8v8M21 12h.01"/>',
+        'wenhai' => '<path d="M12 6c-1.6-1.3-3.6-2-6-2v14c2.4 0 4.4.7 6 2 1.6-1.3 3.6-2 6-2V4c-2.4 0-4.4.7-6 2z"/><path d="M12 6v14"/>',
+        'yunlei' => '<path d="M4 12V5a1 1 0 0 1 1-1h7l8 8-8 8-8-8z"/><circle cx="8.5" cy="8.5" r="1.4"/>',
+    ];
+    $body = $icons[$key] ?? '<circle cx="12" cy="12" r="8.5"/>';
+    return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">' . $body . '</svg>';
+}

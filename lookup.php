@@ -69,7 +69,7 @@ if ($value === '') {
         $gridSlice = array_slice($sorted, ($page - 1) * $gridPerPage, $gridPerPage, true);
         foreach ($gridSlice as $val => $g):
             if ($g['count'] < 1) continue;
-            $encoded = rawurlencode($val);
+            $encoded = rawurlencode((string) $val);
         ?>
         <a class="radical-cell" href="<?= h($route . $encoded . '/') ?>">
             <span class="radical-glyph mono" style="font-size:14px"><?= h(mb_substr($val, 0, 8, 'UTF-8')) ?></span>

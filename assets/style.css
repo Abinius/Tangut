@@ -641,7 +641,7 @@
   /* 分组卡网格：PC 一行 6 个，手机一行 3 个（各检字/文献页复用） */
   .radical-grid {
     display: grid; grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 0.5rem; margin-top: 1rem;
+    gap: 0.7rem; margin-top: 1.25rem;
   }
   .radical-cell {
     display: flex; flex-direction: column; align-items: center; text-align: center;
@@ -667,14 +667,27 @@
    * 声韵三体系、文海按卷统计等总览卡。 */
   .overview-grid {
     display: grid; grid-template-columns: repeat(2, 1fr);
-    gap: 1rem; margin-top: 1rem;
+    gap: 1.5rem; margin-top: 1.5rem;
   }
   .overview-grid .row {
-    aspect-ratio: 1 / 1.1; justify-content: center; gap: 0.6rem;
+    aspect-ratio: 1 / 1.1; justify-content: center; gap: 0.8rem;
   }
+  .overview-ic {
+    display: inline-flex; width: 30px; height: 30px; margin-bottom: 0.65rem;
+    color: var(--acid);
+  }
+  .overview-ic svg { width: 100%; height: 100%; }
+  .overview-title {
+    margin: 0 0 0.85rem; font-family: var(--grotesk);
+    font-size: 1.15rem; font-weight: 400; line-height: 1.35;
+    color: var(--ink); letter-spacing: -0.01em;
+  }
+  .overview-grid .row .meta { gap: 0.6rem; }
+  .overview-grid .row .gloss { margin-top: 0.95rem; }
   @media (max-width: 620px) {
-    .overview-grid { gap: 0.6rem; }
-    .overview-grid .row { gap: 0.4rem; }
+    .overview-grid { gap: 0.8rem; margin-top: 1.1rem; }
+    .overview-grid .row { gap: 0.5rem; }
+    .overview-ic { width: 26px; height: 26px; }
   }
 
   .stroke-grid {
@@ -884,15 +897,11 @@
   }
 
   /* ── 文海总览：小卡片 PC 一行6个 / 手机一行3个 ───────── */
-  .wenhai-stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0.6rem; margin-top: 1rem; }
+  .wenhai-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.6rem; margin-top: 1rem; }
   .wenhai-stat {
     display: flex; flex-direction: column; align-items: center; text-align: center;
-    gap: 0.2rem; padding: 0.7rem 0.4rem; border-radius: 10px;
-    background: var(--glass-bg);
-    -webkit-backdrop-filter: var(--glass-blur);
-    backdrop-filter: var(--glass-blur);
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--glass-shadow);
+    gap: 0.25rem; padding: 0.65rem 0.4rem 0;
+    cursor: default;
   }
   .wenhai-stat .ws-label { font-size: 13px; font-weight: 400; color: var(--ink); }
   .wenhai-stat .ws-count { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); letter-spacing: 0.03em; }
@@ -907,7 +916,7 @@
   }
   @media (max-width: 480px) {
     .wenhai-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
-    .wenhai-stat { padding: 0.6rem 0.3rem; }
+    .wenhai-stat { padding: 0.5rem 0.3rem 0; }
   }
 
   /* ── 文海二级详情页：居中不变、隐藏卡片（去底/边框/阴影）────── */
@@ -975,7 +984,7 @@
   @media (max-width: 768px) {
     .lookup-grid { grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
     .retrieve-systems { grid-template-columns: repeat(2, 1fr); }
-    .radical-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
+    .radical-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.5rem; }
     .stroke-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 0.4rem; }
   }
   @media (max-width: 640px) {
@@ -983,7 +992,7 @@
   }
   @media (max-width: 480px) {
     .lookup-grid { grid-template-columns: 1fr; gap: 0.5rem; }
-    .radical-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.3rem; }
+    .radical-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
     .stroke-grid { grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); }
   }
 
