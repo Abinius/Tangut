@@ -24,7 +24,6 @@ php-site/
 ├── assets/style.css      ← 全站样式（从原静态站抽取，两级字体）
 ├── fonts/                ← 西夏字体两级子集（tangut_core-*.woff2 首屏 + tangut_rest-*.woff2 懒加载）
 │                          └─ tangut_mvp.woff2 为子集构建源（非对外引用）
-├── images/               ← hero 文石图
 ├── index_shards/         ← 索引分片 + manifest + stats.json
 ├── favicon.* og-image.png llms.txt
 └── README.md

@@ -500,6 +500,10 @@
       }
 
   .tag { font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; background: var(--accent); color: var(--accent-on); padding: .18rem .5rem; border-radius: 999px; vertical-align: middle; }
+  .tag-p0 { background: var(--accent); }
+  .tag-p1 { background: var(--violet); }
+  .tag-p2 { background: var(--ink-soft); }
+  .tag-p3 { background: var(--ink-mute); }
   .structure, .tiers { width: 100%; border-collapse: collapse; margin: .9rem 0; font-size: .92rem; }
   .structure th, .structure td, .tiers th, .tiers td { border: none; padding: .6rem .5rem; text-align: center; }
   .structure th, .tiers th { background: none; color: var(--ink-soft); font-weight: 500; }
