@@ -836,9 +836,12 @@
   @media (max-width: 1023px) {
     .word-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
   }
-  /* 手机单列 */
+  /* 手机两列 */
   @media (max-width: 620px) {
-    .word-list { grid-template-columns: 1fr; gap: 0.6rem; }
+    .word-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+    .word-list .row { padding: 0.8rem 0.6rem; gap: 0.5rem; }
+    .word-list .row .glyph { font-size: 2rem; }
+    .word-list .row .gloss { font-size: 0.85rem; line-height: 1.5; }
   }
 
   /* ── 声韵总览：同音/文海/韵类 一行三张小卡 ───────────── */
