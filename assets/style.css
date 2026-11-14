@@ -728,7 +728,7 @@
     box-shadow: var(--glass-shadow);
     transition: border-color var(--fast) var(--ease), transform var(--fast) var(--ease);
   }
-  .lookup-card .ic { margin-bottom: 0.15rem; width: 22px; height: 22px; }
+  .lookup-card .ic { margin-bottom: 0.15rem; width: 60px; height: auto; }
   .lookup-card:hover { border-color: var(--acid); transform: translateY(-2px); }
   .lookup-card:hover .ic { color: var(--violet); }
   .lookup-label { font-size: 15px; font-weight: 400; color: var(--ink); }
@@ -850,7 +850,7 @@
   .overview-grid-3 .overview-mini .gloss { margin: 0; font-size: 0.95rem; }
   @media (max-width: 620px) {
     .overview-grid-3 { grid-template-columns: 1fr; gap: 0.5rem; }
-    .overview-grid-3 .overview-mini { padding: 0.8rem 0.7rem; }
+    .overview-grid-3 .overview-mini { padding: 1.8rem 3rem; }
   }
 
   /* ── 部首总览：四套体系 一行四张小卡 ───────────────── */
@@ -866,7 +866,7 @@
   }
   @media (max-width: 620px) {
     .overview-grid-4 { grid-template-columns: 1fr; gap: 0.5rem; }
-    .overview-grid-4 .overview-mini { padding: 0.8rem 0.7rem; }
+    .overview-grid-4 .overview-mini { padding: 1.8rem 3rem; }
   }
 
   /* ── 笔画总览：PC 一行五个卡片 ─────────────────────── */
