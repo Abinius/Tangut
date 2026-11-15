@@ -29,7 +29,6 @@
        * 几何：1px 细线为主，圆角克制（8–14px）；留白区块 3rem+，内容窄栏。 */
       :root {
         --paper: #fafaf9;        /* 中性偏冷白画布 */
-        --paper-2: #f4f4f2;      /* 纸面（字形格 / 空态） */
         --paper-3: #ededeb;      /* 交替纸面 */
         --ink: #121216;          /* 偏冷近黑 */
         --ink-soft: rgba(18, 18, 22, 0.72); /* 次要文本 */
@@ -362,15 +361,29 @@
       }
       .row:hover { border-color: rgba(119, 52, 219, 0.45); }
       .row .glyph {
-        width: 92px; height: 92px; border-radius: 12px;
-        background: var(--paper-2);
-        border: 1px solid var(--hairline-soft);
+        height: 92px; width: auto; aspect-ratio: 1.35; border-radius: 12px;
       }
       .glyph {
         flex-shrink: 0; width: auto; height: auto;
         display: inline-flex; align-items: center; justify-content: center;
         font-family: var(--tangut); font-size: 3.2rem; line-height: 1; color: var(--ink);
         background: none; border: none; border-radius: 0;
+      }
+      /* 麻将牌式字形格：白面、宽>高（≈1.35:1）、内圈细线 + 底部厚边 + 柔和落影 */
+      .row .glyph,
+      .retrieve-glyph {
+        background: #fff;
+        border: 1px solid rgba(18, 18, 22, 0.11);
+        box-shadow:
+          inset 0 0 0 1px rgba(18, 18, 22, 0.04),
+          inset 0 1px 0 rgba(255, 255, 255, 0.9),
+          0 1px 0 rgba(18, 18, 22, 0.06),
+          0 2px 6px rgba(18, 18, 22, 0.06);
+      }
+      /* /word/ 页：西夏文字形卡去牌面（隐藏白色麻将卡片样式），纯文字显示 */
+      .wordpage .row .glyph {
+        background: none; border: none; box-shadow: none;
+        width: auto; height: auto; aspect-ratio: auto;
       }
       .cell { flex: 1; min-width: 0; text-align: center; }
       .meta { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: center; }
@@ -450,7 +463,7 @@
         .hero { padding: 3rem 0 2.8rem; }
         .hero-meta { gap: 1.8rem 2.6rem; }
         .row { padding: 1.2rem 1.2rem; }
-        .row .glyph { width: 80px; height: 80px; font-size: 2.8rem; }
+        .row .glyph { height: 80px; width: auto; font-size: 2.8rem; }
         .seclabel { margin: 2.6rem 0 1.3rem; }
         .detail-header { gap: 1.4rem; padding: 1.3rem 1.3rem; }
         .field-row { grid-template-columns: 170px 1fr; }
@@ -772,9 +785,8 @@
   }
   .retrieve-glyph {
     display: flex; align-items: center; justify-content: center;
-    width: 50px; height: 50px; padding: 7px;
+    width: auto; height: 50px; aspect-ratio: 1.35; padding: 7px;
     border-radius: 10px; color: var(--ink);
-    background: var(--paper-2); border: 1px solid var(--hairline-soft);
     transition: border-color var(--fast) var(--ease), color var(--fast) var(--ease), transform var(--fast) var(--ease);
   }
   .retrieve-glyph:hover { border-color: var(--acid); color: var(--acid-deep); transform: translateY(-2px); }
@@ -803,21 +815,23 @@
   }
   /* 主操作 */
   .retrieve-cta-row { display: flex; justify-content: center; margin-top: 1.5rem; }
-  .retrieve-cta {
+  .retrieve-cta, .btn.share {
     display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.62rem 1.5rem; border-radius: 999px;
     font-family: var(--grotesk); font-size: 14px; font-weight: 600; line-height: 1;
     color: var(--accent-on); background: var(--acid); text-decoration: none;
     transition: background-color var(--fast) var(--ease), transform var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
   }
-  .retrieve-cta:hover { background: var(--acid-deep); transform: translateY(-1px); }
-  .retrieve-cta:active { background: var(--violet); transform: none; }
-  .retrieve-cta:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(119, 52, 219, 0.3); }
+  .retrieve-cta:hover, .btn.share:hover { background: var(--acid-deep); transform: translateY(-1px); }
+  .retrieve-cta:active, .btn.share:active { background: var(--violet); transform: none; }
+  .retrieve-cta:focus-visible, .btn.share:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(119, 52, 219, 0.3); }
   .retrieve-cta .ic { width: 15px; height: 15px; color: currentColor; }
+  /* 分享按钮复用「进入检字」主操作样式（上），此处仅做 button 专属重置，抵消 .btn 圆钮基类 */
+  .btn.share { width: auto; height: auto; border: none; cursor: pointer; }
 
   @media (max-width: 620px) {
     .retrieve-card { padding: 1.25rem 1.1rem 1.2rem; }
-    .retrieve-glyph { width: 46px; height: 46px; padding: 6px; }
+    .retrieve-glyph { width: auto; height: 46px; padding: 6px; }
     .retrieve-systems { grid-template-columns: repeat(2, 1fr); }
   }
 
@@ -829,7 +843,7 @@
   .word-list .row {
     padding: 1.2rem 1rem; gap: 0.7rem;
   }
-  .word-list .row .glyph { font-size: 2.4rem; }
+  .word-list .row .glyph { font-size: 2.8rem; }
   .word-list .row .gloss { font-size: 0.95rem; line-height: 1.6; word-break: break-word; }
 
   /* 平板两列 */
@@ -840,7 +854,7 @@
   @media (max-width: 620px) {
     .word-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
     .word-list .row { padding: 0.8rem 0.6rem; gap: 0.5rem; }
-    .word-list .row .glyph { font-size: 2rem; }
+    .word-list .row .glyph { font-size: 2.2rem; }
     .word-list .row .gloss { font-size: 0.85rem; line-height: 1.5; }
   }
 
@@ -1015,3 +1029,101 @@
   @media (max-width: 640px) {
     .backtop { width: 48px; height: 48px; right: 0.9rem; padding: 4px; }
   }
+
+  /* ── 分享海报（按需加载 share.js，全局单例 dialog）──────────── */
+  .row-actions, .combo-cta, .poster-cta { display: flex; justify-content: center; }
+  .row-actions { margin-top: 0.6rem; }
+  .combo-cta { margin: 1rem 0 0.4rem; }
+  .poster-cta { margin: 0.4rem 0 1rem; }
+
+  /* ── 起名构建器：大预览 + 缩略字形条（麻将牌白底） ──────────── */
+  .nb { display: flex; flex-direction: column; gap: 1.1rem; padding: 1.4rem; background: var(--glass-bg); -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur); border: 1px solid var(--glass-border); border-radius: 14px; box-shadow: var(--glass-shadow); }
+  .nb-group { position: relative; display: flex; flex-direction: column; gap: 0.6rem; align-items: center; width: 100%; }
+  .nb-char { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--accent-deep); font-weight: 500; }
+  /* 大预览区：白底麻将牌，居中大字形 + 注音/借字/释义 */
+  .nb-preview { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; width: 160px; padding: 1.2rem 1rem; background: #FFFFFF; border: 1px solid var(--hairline); border-radius: 14px; box-shadow: 0 3px 10px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9); }
+  .nb-glyph-lg { font-family: var(--tangut); font-size: 3.4rem; line-height: 1; }
+  .nb-phon-lg { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); }
+  .nb-borrow { font-family: var(--mono); font-size: 10px; color: var(--accent-deep); border: 1px solid var(--hairline-acid); border-radius: 9999px; padding: 0.1rem 0.45rem; white-space: nowrap; }
+  .nb-gloss-lg { font-size: 0.75rem; color: var(--ink-mute); line-height: 1.4; text-align: center; max-width: 140px; }
+  /* 缩略字形条：小麻将牌横排，snap 滑动，只显示字形 */
+  .nb-thumbs { --tw: 44px; display: flex; gap: 0.5rem; width: 100%; overflow-x: auto; scroll-snap-type: x proximity; scroll-behavior: smooth; padding: 0.3rem calc(50% - var(--tw) / 2); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .nb-thumbs::-webkit-scrollbar { display: none; }
+  .nb-thumb { flex: 0 0 var(--tw); width: var(--tw); height: var(--tw); scroll-snap-align: center; display: flex; align-items: center; justify-content: center; background: #FFFFFF; border: 1px solid var(--hairline); border-radius: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); cursor: pointer; color: var(--ink); transition: border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease), transform var(--fast) var(--ease); }
+  .nb-thumb:hover { border-color: rgba(119, 52, 219, 0.45); transform: translateY(-1px); }
+  .nb-thumb.selected { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(119, 52, 219, 0.18), 0 2px 6px rgba(119,52,219,0.1); transform: translateY(-1px); }
+  .nb-glyph-sm { font-family: var(--tangut); font-size: 1.6rem; line-height: 1; }
+  .nb-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--hairline); background: #FFFFFF; color: var(--ink-mute); font-size: 14px; line-height: 1; cursor: pointer; z-index: 1; box-shadow: 0 1px 3px rgba(0,0,0,0.06); }
+  .nb-nav:hover { color: var(--accent-deep); border-color: rgba(119, 52, 219, 0.45); }
+  .nb-nav.prev { left: 0.2rem; } .nb-nav.next { right: 0.2rem; }
+  @media (max-width: 600px) { .nb-preview { width: 140px; padding: 1rem 0.8rem; } .nb-glyph-lg { font-size: 2.8rem; } .nb-thumbs { --tw: 38px; } .nb-glyph-sm { font-size: 1.3rem; } .nb-nav { width: 24px; height: 24px; font-size: 12px; } }
+
+  .poster-dlg {
+    border: none; border-radius: 16px; padding: 0; background: #0E1014;
+    max-width: min(92vw, 460px); width: 100%; color: var(--ink);
+    max-height: calc(100vh - 6rem);
+    position: relative; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); overflow: visible;
+  }
+  .poster-dlg::backdrop { background: rgba(10, 10, 10, 0.82); backdrop-filter: blur(4px); }
+  .poster-dlg[open] { display: flex; flex-direction: column; animation: posterIn 0.18s var(--ease) both; }
+  @keyframes posterIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+  .poster-fallback { position: fixed; inset: 0; margin: auto; z-index: 200; display: flex; flex-direction: column; align-items: center; }
+  .poster-fallback::before { content: ''; position: fixed; inset: 0; background: rgba(10,10,10,0.82); z-index: -1; }
+  /* 内部滚动区：矮屏（720p / 小手机横竖屏）内容超高时在框内滚动，外部关闭/箭头不裁切 */
+  .poster-scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; border-radius: 16px; }
+
+  .poster-frame { position: relative; background: #0A0A0A; border-radius: 16px 16px 0 0; overflow: hidden; }
+  .poster-frame img {
+    display: block; width: 100%; height: auto;
+    -webkit-touch-callout: default; -webkit-user-select: auto;
+  }
+  .poster-hint {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 0.6rem 0; text-align: center;
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #fff; background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    pointer-events: none;
+  }
+
+  .poster-bar {
+    background: #0E1014; border-radius: 0 0 16px 16px;
+    padding: 0.7rem 0.8rem; display: flex; flex-wrap: wrap; gap: 0.6rem;
+    align-items: center; justify-content: space-between;
+  }
+  .poster-styles { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .ps-btn {
+    font-family: var(--grotesk); font-size: 13px; font-weight: 600; line-height: 1;
+    padding: 0.38rem 0.6rem;
+    border: 1px solid var(--acid); border-radius: 9999px;
+    background: transparent; color: var(--acid); cursor: pointer;
+    transition: background-color var(--fast) var(--ease), color var(--fast) var(--ease), border-color var(--fast) var(--ease);
+  }
+  .ps-btn:hover { border-color: var(--acid-text); color: var(--acid-text); }
+  .ps-btn.active { background: var(--acid); color: var(--accent-on); border-color: var(--acid); }
+  .poster-actions { display: flex; gap: 0.5rem; align-items: center; }
+  .ps-dl {
+    font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    padding: 0.4rem 0.7rem; border-radius: 9999px;
+    background: #B026FF; color: #fff; text-decoration: none;
+  }
+  .ps-dl:hover { background: #9A1FDB; }
+  /* 关闭按钮（×）与左右切换箭头（＜＞）：共用圆形半透明视觉 */
+  .ps-close, .ps-nav {
+    width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--grotesk); font-weight: 300; line-height: 1;
+    color: #fff; background: rgba(0, 0, 0, 0.5); border: none; border-radius: 50%;
+    cursor: pointer; transition: background-color var(--fast) var(--ease), transform var(--fast) var(--ease);
+  }
+  .ps-close:hover, .ps-nav:hover { background: rgba(0, 0, 0, 0.78); }
+  .ps-close { position: absolute; top: auto; right: auto; bottom: -46px; left: 50%; z-index: 5; font-size: 20px; transform: translateX(-50%); }
+  .ps-close:hover { transform: translateX(-50%) scale(1.06); }
+  .ps-nav { position: absolute; top: 50%; z-index: 5; font-size: 15px; transform: translateY(-50%); }
+  .ps-nav:hover { transform: translateY(-50%) scale(1.06); }
+  .ps-nav.prev { left: -46px; }
+  .ps-nav.next { right: -46px; }
+  @media (max-width: 640px) { .ps-nav { display: none; } }
+  @media (max-width: 640px) {
+    .poster-bar { flex-direction: column; align-items: stretch; }
+    .poster-actions { justify-content: flex-end; }
+  }
+

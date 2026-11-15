@@ -60,7 +60,7 @@ page_start($title, $desc, $canonical, $title, $desc, !$cands);
 
 <?php if ($cands): ?>
 <section class="index" aria-label="<?= h($h) ?> 的西夏文候选">
-  <?php foreach ($cands as $c) { render_candidate($c); } ?>
+  <?php foreach ($cands as $c) { render_candidate($c, $h); } ?>
 </section>
 <?php else: ?>
 <p class="empty">无精确对应候选（释义不含该字，或走同音替代/最近义建议）</p>

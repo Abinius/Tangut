@@ -108,6 +108,27 @@ function page_end(): void
     </div>
   </div>
 </footer>
+<dialog id="posterDlg" class="poster-dlg">
+  <button type="button" class="ps-close" id="posterClose" aria-label="关闭海报" title="关闭">×</button>
+  <button type="button" class="ps-nav prev" id="posterPrev" aria-label="上一个样式" title="上一个样式">＜</button>
+  <button type="button" class="ps-nav next" id="posterNext" aria-label="下一个样式" title="下一个样式">＞</button>
+  <div class="poster-scroll">
+    <div class="poster-frame">
+      <img id="posterImg" alt="西夏文分享海报">
+      <span class="poster-hint" id="posterHint">长按图片保存</span>
+    </div>
+    <div class="poster-bar">
+      <div class="poster-styles" role="group" aria-label="海报样式">
+        <button type="button" class="ps-btn active" data-style="acid">Ⅰ</button>
+        <button type="button" class="ps-btn" data-style="chrome">Ⅱ</button>
+        <button type="button" class="ps-btn" data-style="holo">Ⅲ</button>
+      </div>
+      <div class="poster-actions">
+        <a id="posterDl" class="ps-dl" href="#" download="" hidden>下载图片</a>
+      </div>
+    </div>
+  </div>
+</dialog>
 <button class="backtop" id="backTop" type="button" aria-label="返回顶部" title="返回顶部">
   <svg viewBox="0 0 1024 1024" aria-hidden="true" focusable="false">
     <path d="M527.019 176.922c-3.98-3.987-9.385-6.225-15.02-6.225s-11.037 2.237-15.022 6.225l-154.8 154.795c-8.295 8.295-8.295 21.745 0 30.04 8.3 8.295 21.747 8.295 30.042 0l139.78-139.775 139.77 139.775c4.15 4.15 9.59 6.225 15.025 6.225s10.875-2.075 15.025-6.225c8.295-8.295 8.295-21.745 0-30.04L527.019 176.922 527.019 176.922z"/>
@@ -153,16 +174,40 @@ function page_end(): void
   var target = sq.closest('.search') || sq;
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 })();
+// 分享海报按需加载：首次点击 [data-poster] 时注入 share.js 并打开
+(function () {
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-poster]');
+    if (!btn || window.TangutPoster) return;
+    e.preventDefault();
+    var s = document.createElement('script');
+    s.src = '/assets/share.js?v=1';
+    s.onload = function () { window.TangutPoster.open(JSON.parse(btn.dataset.poster)); };
+    document.body.appendChild(s);
+  }, { passive: false });
+})();
 </script>
 </body>
 </html>
 <?php
 }
 
-/** 候选卡片（服务端渲染） */
-function render_candidate(array $c): void
+/** 候选卡片（服务端渲染）。$hanzi 为被查汉字，非空时输出分享海报按钮。 */
+function render_candidate(array $c, string $hanzi = ''): void
 {
     $tier = (string) ($c['tier'] ?? 'none');
+    $poster = '';
+    if ($hanzi !== '') {
+        $poster = json_encode([
+            'hanzi'  => $hanzi,
+            'tangut' => (string) ($c['tangut'] ?? ''),
+            'phon'   => (string) ($c['gong'] ?? ''),
+            'gloss'  => mb_substr((string) ($c['gloss_zh'] ?? ''), 0, 22, 'UTF-8'),
+            'tier'   => $tier,
+            'lfw'    => (string) ($c['lfw_id'] ?? ''),
+            'dv'     => data_version(),
+        ], JSON_UNESCAPED_UNICODE);
+    }
     ?><article class="row tier-<?= h($tier) ?>">
   <div class="glyph" lang="txg" aria-label="西夏文 <?= h((string) ($c['tangut'] ?? '')) ?>"><?= h((string) ($c['tangut'] ?? '')) ?></div>
   <div class="cell">
@@ -178,9 +223,172 @@ function render_candidate(array $c): void
       <?php endif; ?>
     </div>
     <p class="gloss">释义：<?= h((string) ($c['gloss_zh'] ?? '')) ?></p>
+    <?php if ($poster !== ''): ?>
+    <div class="row-actions"><button class="btn share" type="button" data-poster='<?= h($poster) ?>'>分享</button></div>
+    <?php endif; ?>
   </div>
 </article>
 <?php
+}
+
+/**
+ * 起名构建器（娱乐参考）：多字查询 → 每字位置一组可选候选卡片 → 「生成海报」。
+ * 无匹配字是常态：无直接候选时以同音/近音借字作为候选项（借字以 homophone 标注）。
+ * 选中项汇总为 combo payload 交给 TangutPoster（share.js），借字在卡片/海报上加「借」标注。
+ */
+function render_name_builder(array $items): void
+{
+    $groups = [];
+    foreach ($items as $it) {
+        $char = (string) ($it['char'] ?? '');
+        $opts = [];
+        foreach (($it['candidates'] ?? []) as $c) {
+            $opts[] = [
+                'hanzi'     => $char,
+                'tangut'    => (string) ($c['tangut'] ?? ''),
+                'phon'      => (string) ($c['gong'] ?? ''),
+                'gloss'     => mb_substr((string) ($c['gloss_zh'] ?? ''), 0, 22, 'UTF-8'),
+                'tier'      => (string) ($c['tier'] ?? 'none'),
+                'lfw'       => (string) ($c['lfw_id'] ?? ''),
+                'homophone' => '',
+            ];
+        }
+        if (!$opts) {
+            foreach (pinyin_fallback($char, 4) as $fb) {
+                $opts[] = [
+                    'hanzi'     => $char,
+                    'tangut'    => $fb['tangut'],
+                    'phon'      => (string) ($fb['gong'] ?? ''),
+                    'gloss'     => mb_substr((string) ($fb['gloss_zh'] ?? ''), 0, 22, 'UTF-8'),
+                    'tier'      => 'P3',
+                    'lfw'       => (string) ($fb['lfw_id'] ?? ''),
+                    'homophone' => (string) ($fb['homophone'] ?? ''),
+                ];
+            }
+        }
+        if ($opts) {
+            $groups[] = ['char' => $char, 'opts' => $opts];
+        }
+    }
+    if (count($groups) < 2) {
+        return;
+    }
+    $dv = data_version();
+    ?><section class="nb" aria-label="起名 · 娱乐参考">
+  <div class="seclabel"><span>起名 · 娱乐参考</span><span class="rule"></span></div>
+  <?php foreach ($groups as $gi => $g):
+    $first = $g['opts'][0] ?? null;
+  ?>
+  <div class="nb-group" data-nb-group="<?= $gi ?>">
+    <div class="nb-char"><?= h($g['char']) ?></div>
+    <div class="nb-preview">
+      <span class="nb-glyph-lg" lang="txg"><?= h(($first['tangut'] ?? '') !== '' ? $first['tangut'] : '○') ?></span>
+      <span class="nb-phon-lg"><?= h(($first['phon'] ?? '') !== '' ? $first['phon'] : '—') ?></span>
+      <?php if ($first && $first['homophone'] !== ''): ?><span class="nb-borrow">借「<?= h($first['homophone']) ?>」</span><?php endif; ?>
+      <?php if ($first && $first['gloss'] !== ''): ?><span class="nb-gloss-lg"><?= h($first['gloss']) ?></span><?php endif; ?>
+    </div>
+    <div class="nb-thumbs" role="radiogroup" aria-label="字「<?= h($g['char']) ?>」的候选">
+      <?php foreach ($g['opts'] as $oi => $o): ?>
+      <button type="button" class="nb-thumb<?= $oi === 0 ? ' selected' : '' ?>" role="radio" aria-checked="<?= $oi === 0 ? 'true' : 'false' ?>" data-nb-val='<?= h(json_encode($o, JSON_UNESCAPED_UNICODE)) ?>'>
+        <span class="nb-glyph-sm" lang="txg"><?= h($o['tangut']) ?></span>
+      </button>
+      <?php endforeach; ?>
+    </div>
+    <button type="button" class="nb-nav prev" data-dir="prev" aria-label="上一个候选">‹</button>
+    <button type="button" class="nb-nav next" data-dir="next" aria-label="下一个候选">›</button>
+  </div>
+  <?php endforeach; ?>
+  <div class="row-actions"><button class="btn share" type="button" id="nbGen">生成海报</button></div>
+</section>
+<script>
+(function () {
+  var sec = document.querySelector('.nb');
+  if (!sec) return;
+  function updatePreview(grp, d) {
+    var pv = grp.querySelector('.nb-preview');
+    if (!pv) return;
+    var gl = pv.querySelector('.nb-glyph-lg');
+    var ph = pv.querySelector('.nb-phon-lg');
+    if (gl) gl.textContent = d.tangut || '○';
+    if (ph) ph.textContent = d.phon || '—';
+    var oldB = pv.querySelector('.nb-borrow');
+    if (oldB) oldB.remove();
+    if (d.homophone) {
+      var b = document.createElement('span');
+      b.className = 'nb-borrow';
+      b.textContent = '借「' + d.homophone + '」';
+      pv.appendChild(b);
+    }
+    var oldG = pv.querySelector('.nb-gloss-lg');
+    if (oldG) oldG.remove();
+    if (d.gloss) {
+      var g = document.createElement('span');
+      g.className = 'nb-gloss-lg';
+      g.textContent = d.gloss;
+      pv.appendChild(g);
+    }
+  }
+  function selectIn(grp, thumb) {
+    var bs = grp.querySelectorAll('.nb-thumb');
+    for (var i = 0; i < bs.length; i++) {
+      bs[i].classList.remove('selected');
+      bs[i].setAttribute('aria-checked', 'false');
+    }
+    thumb.classList.add('selected');
+    thumb.setAttribute('aria-checked', 'true');
+    try { updatePreview(grp, JSON.parse(thumb.dataset.nbVal)); } catch (e) {}
+  }
+  function centerSelect(track) {
+    var opts = track.querySelectorAll('.nb-thumb');
+    if (!opts.length) return;
+    var r = track.getBoundingClientRect(), c = r.left + r.width / 2, best = opts[0], bd = 1e9;
+    for (var i = 0; i < opts.length; i++) {
+      var o = opts[i].getBoundingClientRect(), d = Math.abs((o.left + o.width / 2) - c);
+      if (d < bd) { bd = d; best = opts[i]; }
+    }
+    var grp = track.closest('.nb-group');
+    if (grp) selectIn(grp, best);
+  }
+  function openPoster(payload) {
+    if (window.TangutPoster) { window.TangutPoster.open(payload); return; }
+    var s = document.createElement('script');
+    s.src = '/assets/share.js?v=1';
+    s.onload = function () { window.TangutPoster.open(payload); };
+    document.body.appendChild(s);
+  }
+  sec.addEventListener('click', function (e) {
+    var thumb = e.target.closest('.nb-thumb');
+    if (thumb) { var grp = thumb.closest('.nb-group'); if (grp) selectIn(grp, thumb); return; }
+    var nav = e.target.closest('.nb-nav');
+    if (nav) {
+      var tr = nav.closest('.nb-group').querySelector('.nb-thumbs');
+      if (tr) {
+        var o0 = tr.querySelector('.nb-thumb');
+        var step = (o0 ? o0.getBoundingClientRect().width : 44) + 8;
+        tr.scrollBy({ left: nav.dataset.dir === 'prev' ? -step : step, behavior: 'smooth' });
+      }
+      return;
+    }
+    if (e.target.closest('#nbGen')) {
+      var items = [];
+      var groups = sec.querySelectorAll('.nb-group');
+      for (var g = 0; g < groups.length; g++) {
+        var sel = groups[g].querySelector('.nb-thumb.selected');
+        if (sel) items.push(JSON.parse(sel.dataset.nbVal));
+      }
+      if (items.length) openPoster({ mode: 'combo', items: items, dv: <?= json_encode($dv) ?> });
+    }
+  });
+  var tracks = sec.querySelectorAll('.nb-thumbs');
+  for (var i = 0; i < tracks.length; i++) (function (t) {
+    var tm;
+    t.addEventListener('scroll', function () {
+      clearTimeout(tm);
+      tm = setTimeout(function () { centerSelect(t); }, 50);
+    }, { passive: true });
+  })(tracks[i]);
+})();
+</script><?php
 }
 
 /** 字形 specimen（三档字号） */

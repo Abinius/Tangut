@@ -45,7 +45,6 @@ $lfw = (string) ($detail['lfw_id'] ?? '');
 $unicode = (string) ($detail['unicode'] ?? '');
 $gloss = (string) ($detail['释义'] ?? '');
 $gong = (string) ($detail['GHC'] ?? '');
-$dv = data_version();
 
 // SEO
 $glossShort = mb_substr($gloss, 0, 20, 'UTF-8');

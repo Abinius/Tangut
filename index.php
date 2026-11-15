@@ -106,6 +106,11 @@ if (!preg_match('/\p{Han}/u', $q)) {
 } else {
 $items = lookup_text($q);
 $any = false;
+// 起名构建器（娱乐参考）：纯汉字多字查询才启用，逐字选择候选项后生成图片
+$nameBuilder = preg_match('/^\p{Han}+$/u', $q) && count($items) >= 2;
+if ($nameBuilder) {
+    render_name_builder($items);
+} else {
 foreach ($items as $it):
     $cands = $it['candidates'];
     $top = $cands[0] ?? null;
@@ -116,6 +121,15 @@ foreach ($items as $it):
         $gong = (string) ($top['gong'] ?? '');
         $detail = find_detail($lfw);
         $sj = is_array($detail) ? (string) ($detail['四角号码'] ?? '') : '';
+        $posterRow = json_encode([
+            'hanzi'  => $it['char'],
+            'tangut' => (string) ($top['tangut'] ?? ''),
+            'phon'   => $gong,
+            'gloss'  => mb_substr((string) ($top['gloss_zh'] ?? ''), 0, 22, 'UTF-8'),
+            'tier'   => $t,
+            'lfw'    => $lfw,
+            'dv'     => data_version(),
+        ], JSON_UNESCAPED_UNICODE);
         ?>
   <article class="row tier-<?= h($t) ?>">
     <div class="glyph" lang="txg" aria-label="西夏文 <?= h((string) $top['tangut']) ?>"><?= h((string) $top['tangut']) ?></div>
@@ -128,23 +142,73 @@ foreach ($items as $it):
         <?php if ($sj): ?><a class="chip" href="/sijiao/<?= h(rawurlencode($sj)) ?>/">四角 <?= h($sj) ?> ↗</a><?php endif; ?>
       </div>
       <p class="gloss">释义：<?= h((string) ($top['gloss_zh'] ?? '')) ?></p>
+      <div class="row-actions"><button class="btn share" type="button" data-poster='<?= h($posterRow) ?>'>分享</button></div>
     </div>
   </article>
         <?php
     } else {
+        $posterNone = json_encode([
+            'hanzi'  => $it['char'],
+            'tangut' => '○',
+            'phon'   => '',
+            'gloss'  => '',
+            'tier'   => 'none',
+            'lfw'    => '',
+            'dv'     => data_version(),
+        ], JSON_UNESCAPED_UNICODE);
         ?>
   <article class="row tier-none">
     <div class="glyph" aria-label="无对应">□</div>
     <div class="cell">
       <div class="meta"><span class="tier"><?= h($it['char']) ?> → 无精确对应</span></div>
       <p class="gloss">释义不含该字，或走同音替代/最近义建议</p>
+      <div class="row-actions"><button class="btn share" type="button" data-poster='<?= h($posterNone) ?>'>分享</button></div>
     </div>
   </article>
+  <?php if (!$nameBuilder): ?>
+  <?php foreach (pinyin_fallback($it['char']) as $fb):
+      $posterFb = json_encode([
+          'hanzi'  => $it['char'],
+          'tangut' => $fb['tangut'],
+          'phon'   => $fb['gong'],
+          'gloss'  => mb_substr($fb['gloss_zh'], 0, 22, 'UTF-8'),
+          'tier'   => 'P3',
+          'lfw'    => $fb['lfw_id'],
+          'homophone' => (string) ($fb['homophone'] ?? ''),
+          'dv'     => data_version(),
+      ], JSON_UNESCAPED_UNICODE);
+  ?>
+  <article class="row tier-P3">
+    <div class="glyph" lang="txg" aria-label="西夏文 <?= h($fb['tangut']) ?>"><?= h($fb['tangut']) ?></div>
+    <div class="cell">
+      <div class="meta"><span class="tier"><?= h($fb['label']) ?>替代（娱乐参考）· 借字「<?= h($fb['homophone']) ?>」</span></div>
+      <p class="gloss">「<?= h($it['char']) ?>」无对应西夏字，按<?= h($fb['label']) ?>取「<?= h($fb['homophone']) ?>」的西夏文作参考</p>
+      <div class="row-actions"><button class="btn share" type="button" data-poster='<?= h($posterFb) ?>'>分享</button></div>
+    </div>
+  </article>
+  <?php endforeach; ?>
+  <?php endif; ?>
         <?php
     }
 endforeach;
+if (count($items) >= 2) {
+    $posterCombo = json_encode([
+        'mode' => 'combo',
+        'items' => array_map(static fn($it) => [
+            'hanzi'  => $it['char'],
+            'tangut' => $it['candidates'][0]['tangut'] ?? '○',
+            'phon'   => $it['candidates'][0]['gong'] ?? '—',
+            'gloss'  => mb_substr((string) ($it['candidates'][0]['gloss_zh'] ?? '西夏文无此义项'), 0, 22, 'UTF-8'),
+            'tier'   => $it['candidates'][0]['tier'] ?? 'none',
+            'lfw'    => $it['candidates'][0]['lfw_id'] ?? '—',
+        ], $items),
+        'dv' => data_version(),
+    ], JSON_UNESCAPED_UNICODE);
+    echo '<div class="row-actions combo-cta"><button class="btn share" type="button" data-poster=\'' . h($posterCombo) . '\'>分享组合</button></div>';
+}
 if (!$any) {
     echo '<p class="empty">无精确对应候选</p>';
+}
 }
 }
 }

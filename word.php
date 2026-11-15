@@ -133,7 +133,7 @@ function _word_search_form(string $value): void
 function _render_tangut_chars(string $text): void
 {
     preg_match_all('/./us', $text, $mm);
-    echo '<section class="index" aria-label="西夏文逐字"><p class="status done">逐字展示：</p>';
+    echo '<section class="index wordpage" aria-label="西夏文逐字"><p class="status done">逐字展示：</p>';
     foreach ($mm[0] as $ch) {
         $cp = mb_ord($ch, 'UTF-8');
         if ($cp === false || $cp < 0x17000 || $cp > 0x18AFF) {
@@ -168,7 +168,7 @@ function _render_word_list(array $entries, int $page, int $perPage = 60): void
     $offset = ($page - 1) * $perPage;
     $slice = array_slice($entries, $offset, $perPage);
 
-    echo '<section class="index word-list" aria-label="词组列表">';
+    echo '<section class="index word-list wordpage" aria-label="词组列表">';
     foreach ($slice as $e) {
         $word = (string) ($e['word'] ?? '');
         $glossCn = (string) ($e['gloss_cn'] ?? '');
@@ -176,7 +176,7 @@ function _render_word_list(array $entries, int $page, int $perPage = 60): void
         $gxc = (string) ($e['gxc'] ?? '');
         ?>
   <article class="row tier-P0">
-    <div class="glyph" lang="txg" style="font-size:24px" aria-label="西夏文词组 <?= h($word) ?>"><?= h($word) ?></div>
+    <div class="glyph" lang="txg" aria-label="西夏文词组 <?= h($word) ?>"><?= h($word) ?></div>
     <div class="cell">
       <div class="meta">
         <?php if ($gxc): ?><span class="chip">龚煌城：<?= h($gxc) ?></span><?php endif; ?>
