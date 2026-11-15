@@ -1,4 +1,4 @@
-# Tangut Dictionary · 蕃汉合时掌中珠 · PHP 动态站
+# Tangut Dictionary · 番汉合时掌中珠 · voue.cn
 
 [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php&logoColor=white)](https://www.php.net/)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
@@ -61,11 +61,11 @@ RATE_LIMIT_PER_MIN=60
 
 # 品牌（hero 用）
 BRAND=Tangut Dictionary
-BRAND_TAGLINE=蕃汉合时掌中珠|消失的古文字|煮梦纪
+BRAND_TAGLINE=番汉合时掌中珠|消失的古文字|煮梦纪
 
 # SEO / 分享（<title>/og:title 用 SITE_TITLE）
-SITE_NAME=The Lost Script of Western Xia
-SITE_TITLE=TANGUT — 汉字→西夏文查询
+SITE_NAME=番汉合时掌中珠
+SITE_TITLE=番汉合时掌中珠
 SITE_DESCRIPTION=免费公益工具：输入任意汉字，查看西夏文候选、拟音与义项依据。
 OG_IMAGE=/og-image.png
 
