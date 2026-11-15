@@ -101,6 +101,9 @@ if ($inlineEn !== null) {
         }
     }
 } else {
+if (!preg_match('/\p{Han}/u', $q)) {
+    echo '<p class="empty">未识别的输入</p>';
+} else {
 $items = lookup_text($q);
 $any = false;
 foreach ($items as $it):
@@ -140,8 +143,9 @@ foreach ($items as $it):
         <?php
     }
 endforeach;
-if (!$any && !$items) {
-    echo '<p class="empty">未识别的输入</p>';
+if (!$any) {
+    echo '<p class="empty">无精确对应候选</p>';
+}
 }
 }
 ?>
