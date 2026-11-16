@@ -323,6 +323,23 @@
       }
       .search-bar textarea::placeholder { color: var(--ink-mute); }
       .search-bar textarea:focus { outline: none; }
+      /* 单行搜索框（word/c/x 页）：输入框独立胶囊卡片 + 放大镜在外侧——与最初版分离控件一致 */
+      .search-bar-line {
+        flex-direction: row; align-items: stretch; gap: 12px;
+        padding: 0; border: none; border-radius: 0; background: none;
+        box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+      }
+      .search-bar-line:focus-within { border-color: transparent; box-shadow: none; }
+      .search-bar-line input[type="search"] {
+        flex: 1; min-width: 0; min-height: 46px; padding: 0 22px;
+        border: 1px solid var(--glass-border); border-radius: 999px;
+        background: var(--glass-bg); color: var(--ink);
+        -webkit-backdrop-filter: var(--glass-blur); backdrop-filter: var(--glass-blur);
+        font: inherit; font-size: 15px; font-weight: 300;
+        transition: border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+      }
+      .search-bar-line input[type="search"]::placeholder { color: var(--ink-mute); }
+      .search-bar-line input[type="search"]:focus { outline: none; border-color: var(--acid); box-shadow: 0 0 0 4px rgba(119, 52, 219, 0.22); }
       .search-actions { display: flex; justify-content: flex-end; }
       .btn {
         display: inline-flex; align-items: center; justify-content: center;

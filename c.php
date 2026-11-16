@@ -62,12 +62,10 @@ $canonical = '/c-' . rawurlencode($lfw ?: $unicode) . '/';
 page_start($title, $desc, $canonical, $title, $desc, false, true);
 ?>
 <section class="search">
-  <div class="search-bar">
-    <form method="get" action="/" style="display:flex;flex:1;gap:12px;min-width:0">
-      <input type="search" name="q" value="<?= h($raw) ?>" placeholder="输入汉字 / LFW 编号 / 码位" aria-label="输入汉字、LFW 编号或码位" autocomplete="off">
-      <?php search_btn('查询'); ?>
-    </form>
-  </div>
+  <form class="search-bar search-bar-line" method="get" action="/">
+    <input type="search" name="q" value="<?= h($raw) ?>" placeholder="输入汉字 / LFW 编号 / 码位" aria-label="输入汉字、LFW 编号或码位" autocomplete="off">
+    <?php search_btn('查询'); ?>
+  </form>
 </section>
 <?php
 $sjField = field_value($detail, '四角号码');

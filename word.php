@@ -121,7 +121,7 @@ function _word_search_form(string $value): void
     ?>
     <section class="search">
       <div class="seclabel"><span>搜索词组</span><span class="rule"></span></div>
-      <form class="search-bar" method="get" action="/word/">
+      <form class="search-bar search-bar-line" method="get" action="/word/">
         <input type="search" name="q" value="<?= h($value) ?>" placeholder="词条 / 释义 / LFW 编号 / 码位" aria-label="搜索词组，或输入 LFW 编号/码位查字头" autocomplete="off">
         <?php search_btn('搜索'); ?>
       </form>
