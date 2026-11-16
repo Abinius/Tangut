@@ -240,7 +240,7 @@
       .index { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.9rem; }
       .index:empty { display: none; }
       /* 非 .row 子项跨满整行（状态/空提示/区头/CTA 不进网格格） */
-      .index > .status, .index > .empty, .index > .seclabel, .index > .combo-cta, .index > .row-actions, .index > .backlinks { grid-column: 1 / -1; }
+      .index > .status, .index > .empty, .index > .seclabel, .index > .combo-cta, .index > .row-actions, .index > .backlinks, .index > .nb { grid-column: 1 / -1; }
 
       /* Hero：居中巨字（逐字浮现）+ 宽距小字 + 紫细线 + 元信息横排 */
       .hero {
