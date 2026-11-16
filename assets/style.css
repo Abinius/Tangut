@@ -548,7 +548,7 @@
   .breadcrumb .sep { color: var(--accent); }
   .backlinks {
     margin-top: 1.6rem; font-family: var(--mono); font-size: 12px;
-    letter-spacing: 0.1em; text-transform: uppercase;
+    letter-spacing: 0.1em; text-transform: uppercase; text-align: center;
   }
 
   /* ── 字头详情页（/c-{lfw}/）────────────────────────── */
@@ -734,7 +734,7 @@
   .stroke-count { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); }
 
   .pagination {
-    margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.3rem;
+    margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.3rem; justify-content: center;
     font-family: var(--mono); font-size: 13px;
   }
   .pagination a, .pagination .page-current {
