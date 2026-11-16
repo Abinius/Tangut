@@ -29,8 +29,8 @@ function mockEl(extra) {
   }, extra || {});
 }
 
-const dlg = mockEl({ querySelectorAll: () => [{ dataset: { style: 'acid' }, classList: { toggle() {}, add() {}, remove() {} }, addEventListener() {} }] });
-const els = { posterDlg: dlg, posterImg: mockEl(), posterDl: mockEl(), posterHint: mockEl(), posterClose: mockEl(), posterPrev: mockEl(), posterNext: mockEl() };
+const dlg = mockEl();
+const els = { posterDlg: dlg, posterImg: mockEl(), posterHint: mockEl(), posterClose: mockEl(), posterPrev: mockEl(), posterNext: mockEl() };
 
 global.window = global;
 global.Image = function () { const self = this; this.width = 1280; this.height = 1920; setTimeout(() => { if (self.onload) self.onload(); }, 0); };

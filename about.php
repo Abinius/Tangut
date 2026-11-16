@@ -19,7 +19,6 @@ page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（蕃汉合时掌中珠�
     <div class="seclabel"><span>02 数据来源</span><span class="rule"></span></div>
     <ul>
       <li>字形：<a href="https://github.com/notofonts/tangut" target="_blank" rel="noopener">Noto Serif Tangut</a>（SIL OFL）</li>
-      <li>映射：<a href="https://github.com/tangutdata" target="_blank" rel="noopener">tangutdata</a>（MIT 开放数据）</li>
       <li>拟音：龚煌城体系</li>
     </ul>
     <p>数据版本 <strong><?= h($dv) ?></strong>，全量 <?= (int) site_stats()['hanzi'] ?> 字可查。</p>
@@ -74,14 +73,7 @@ page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（蕃汉合时掌中珠�
     <p>《文海》收约 <strong>3064</strong> 字，《音同》收 <strong>6133</strong> 字，《夏汉字典》收录约 <strong>6074</strong> 字。声韵体系以龚煌城拟音最为通行。</p>
   </section>
 
-  <section>
-    <div class="seclabel"><span>字形 specimen</span><span class="rule"></span></div>
-    <div class="spec">
-      <div class="spec-cell"><span class="label">caption · 22px</span><span class="glyph s1" lang="txg">𘔺</span></div>
-      <div class="spec-cell"><span class="label">display · 48px</span><span class="glyph s2" lang="txg">𘔺</span></div>
-      <div class="spec-cell"><span class="label">hero · 96px</span><span class="glyph s3" lang="txg">𘔺</span></div>
-    </div>
-  </section>
+
 
   <p class="backlinks"><a href="/">回首页查询</a></p>
 </article>

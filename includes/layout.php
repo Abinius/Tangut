@@ -115,17 +115,8 @@ function page_end(): void
   <div class="poster-scroll">
     <div class="poster-frame">
       <img id="posterImg" alt="西夏文分享海报">
-      <span class="poster-hint" id="posterHint">长按图片保存</span>
-    </div>
-    <div class="poster-bar">
-      <div class="poster-styles" role="group" aria-label="海报样式">
-        <button type="button" class="ps-btn active" data-style="acid">Ⅰ</button>
-        <button type="button" class="ps-btn" data-style="chrome">Ⅱ</button>
-        <button type="button" class="ps-btn" data-style="holo">Ⅲ</button>
-      </div>
-      <div class="poster-actions">
-        <a id="posterDl" class="ps-dl" href="#" download="" hidden>下载图片</a>
-      </div>
+      <span class="poster-loading" id="posterLoading" aria-hidden="true">生成中…</span>
+      <span class="poster-hint" id="posterHint">滑动切换 长按保存</span>
     </div>
   </div>
 </dialog>
@@ -276,26 +267,19 @@ function render_name_builder(array $items): void
     $dv = data_version();
     ?><section class="nb" aria-label="起名 · 娱乐参考">
   <div class="seclabel"><span>起名 · 娱乐参考</span><span class="rule"></span></div>
-  <?php foreach ($groups as $gi => $g):
-    $first = $g['opts'][0] ?? null;
-  ?>
+  <?php foreach ($groups as $gi => $g): ?>
   <div class="nb-group" data-nb-group="<?= $gi ?>">
     <div class="nb-char"><?= h($g['char']) ?></div>
-    <div class="nb-preview">
-      <span class="nb-glyph-lg" lang="txg"><?= h(($first['tangut'] ?? '') !== '' ? $first['tangut'] : '○') ?></span>
-      <span class="nb-phon-lg"><?= h(($first['phon'] ?? '') !== '' ? $first['phon'] : '—') ?></span>
-      <?php if ($first && $first['homophone'] !== ''): ?><span class="nb-borrow">借「<?= h($first['homophone']) ?>」</span><?php endif; ?>
-      <?php if ($first && $first['gloss'] !== ''): ?><span class="nb-gloss-lg"><?= h($first['gloss']) ?></span><?php endif; ?>
-    </div>
-    <div class="nb-thumbs" role="radiogroup" aria-label="字「<?= h($g['char']) ?>」的候选">
+    <div class="nb-wheel" role="radiogroup" aria-label="字「<?= h($g['char']) ?>」的候选">
       <?php foreach ($g['opts'] as $oi => $o): ?>
-      <button type="button" class="nb-thumb<?= $oi === 0 ? ' selected' : '' ?>" role="radio" aria-checked="<?= $oi === 0 ? 'true' : 'false' ?>" data-nb-val='<?= h(json_encode($o, JSON_UNESCAPED_UNICODE)) ?>'>
-        <span class="nb-glyph-sm" lang="txg"><?= h($o['tangut']) ?></span>
+      <button type="button" class="nb-card<?= $oi === 0 ? ' selected' : '' ?>" role="radio" aria-checked="<?= $oi === 0 ? 'true' : 'false' ?>" data-nb-val='<?= h(json_encode($o, JSON_UNESCAPED_UNICODE)) ?>'>
+        <span class="nb-glyph-lg" lang="txg"><?= h($o['tangut'] !== '' ? $o['tangut'] : '○') ?></span>
+        <span class="nb-phon-lg"><?= h($o['phon'] !== '' ? $o['phon'] : '—') ?></span>
+        <?php if ($o['homophone'] !== ''): ?><span class="nb-borrow">借「<?= h($o['homophone']) ?>」</span><?php endif; ?>
+        <?php if ($o['gloss'] !== ''): ?><span class="nb-gloss-lg"><?= h($o['gloss']) ?></span><?php endif; ?>
       </button>
       <?php endforeach; ?>
     </div>
-    <button type="button" class="nb-nav prev" data-dir="prev" aria-label="上一个候选">‹</button>
-    <button type="button" class="nb-nav next" data-dir="next" aria-label="下一个候选">›</button>
   </div>
   <?php endforeach; ?>
   <div class="row-actions"><button class="btn share" type="button" id="nbGen">生成海报</button></div>
@@ -304,50 +288,34 @@ function render_name_builder(array $items): void
 (function () {
   var sec = document.querySelector('.nb');
   if (!sec) return;
-  function updatePreview(grp, d) {
-    var pv = grp.querySelector('.nb-preview');
-    if (!pv) return;
-    var gl = pv.querySelector('.nb-glyph-lg');
-    var ph = pv.querySelector('.nb-phon-lg');
-    if (gl) gl.textContent = d.tangut || '○';
-    if (ph) ph.textContent = d.phon || '—';
-    var oldB = pv.querySelector('.nb-borrow');
-    if (oldB) oldB.remove();
-    if (d.homophone) {
-      var b = document.createElement('span');
-      b.className = 'nb-borrow';
-      b.textContent = '借「' + d.homophone + '」';
-      pv.appendChild(b);
+  function selectIn(grp, card) {
+    var cs = grp.querySelectorAll('.nb-card');
+    for (var i = 0; i < cs.length; i++) {
+      cs[i].classList.remove('selected');
+      cs[i].setAttribute('aria-checked', 'false');
     }
-    var oldG = pv.querySelector('.nb-gloss-lg');
-    if (oldG) oldG.remove();
-    if (d.gloss) {
-      var g = document.createElement('span');
-      g.className = 'nb-gloss-lg';
-      g.textContent = d.gloss;
-      pv.appendChild(g);
-    }
+    card.classList.add('selected');
+    card.setAttribute('aria-checked', 'true');
   }
-  function selectIn(grp, thumb) {
-    var bs = grp.querySelectorAll('.nb-thumb');
-    for (var i = 0; i < bs.length; i++) {
-      bs[i].classList.remove('selected');
-      bs[i].setAttribute('aria-checked', 'false');
+  function centerSelect(wheel) {
+    var cards = wheel.querySelectorAll('.nb-card');
+    if (!cards.length) return;
+    var r = wheel.getBoundingClientRect(), c = r.top + r.height / 2, best = cards[0], bd = 1e9;
+    for (var i = 0; i < cards.length; i++) {
+      var o = cards[i].getBoundingClientRect(), d = Math.abs((o.top + o.height / 2) - c);
+      if (d < bd) { bd = d; best = cards[i]; }
     }
-    thumb.classList.add('selected');
-    thumb.setAttribute('aria-checked', 'true');
-    try { updatePreview(grp, JSON.parse(thumb.dataset.nbVal)); } catch (e) {}
-  }
-  function centerSelect(track) {
-    var opts = track.querySelectorAll('.nb-thumb');
-    if (!opts.length) return;
-    var r = track.getBoundingClientRect(), c = r.left + r.width / 2, best = opts[0], bd = 1e9;
-    for (var i = 0; i < opts.length; i++) {
-      var o = opts[i].getBoundingClientRect(), d = Math.abs((o.left + o.width / 2) - c);
-      if (d < bd) { bd = d; best = opts[i]; }
-    }
-    var grp = track.closest('.nb-group');
+    var grp = wheel.closest('.nb-group');
     if (grp) selectIn(grp, best);
+  }
+  function stepCard(wheel, dir) {
+    var cs = Array.prototype.slice.call(wheel.querySelectorAll('.nb-card'));
+    if (!cs.length) return;
+    var sel = wheel.querySelector('.nb-card.selected');
+    var i = sel ? cs.indexOf(sel) : 0, n = i + dir;
+    if (n < 0 || n >= cs.length) return;
+    cs[n].scrollIntoView({ block: 'center', behavior: 'smooth' });
+    selectIn(wheel.closest('.nb-group'), cs[n]);
   }
   function openPoster(payload) {
     if (window.TangutPoster) { window.TangutPoster.open(payload); return; }
@@ -357,36 +325,34 @@ function render_name_builder(array $items): void
     document.body.appendChild(s);
   }
   sec.addEventListener('click', function (e) {
-    var thumb = e.target.closest('.nb-thumb');
-    if (thumb) { var grp = thumb.closest('.nb-group'); if (grp) selectIn(grp, thumb); return; }
-    var nav = e.target.closest('.nb-nav');
-    if (nav) {
-      var tr = nav.closest('.nb-group').querySelector('.nb-thumbs');
-      if (tr) {
-        var o0 = tr.querySelector('.nb-thumb');
-        var step = (o0 ? o0.getBoundingClientRect().width : 44) + 8;
-        tr.scrollBy({ left: nav.dataset.dir === 'prev' ? -step : step, behavior: 'smooth' });
-      }
+    var card = e.target.closest('.nb-card');
+    if (card) {
+      var grp = card.closest('.nb-group');
+      if (grp) { selectIn(grp, card); card.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
       return;
     }
     if (e.target.closest('#nbGen')) {
       var items = [];
       var groups = sec.querySelectorAll('.nb-group');
       for (var g = 0; g < groups.length; g++) {
-        var sel = groups[g].querySelector('.nb-thumb.selected');
+        var sel = groups[g].querySelector('.nb-card.selected');
         if (sel) items.push(JSON.parse(sel.dataset.nbVal));
       }
       if (items.length) openPoster({ mode: 'combo', items: items, dv: <?= json_encode($dv) ?> });
     }
   });
-  var tracks = sec.querySelectorAll('.nb-thumbs');
-  for (var i = 0; i < tracks.length; i++) (function (t) {
+  var wheels = sec.querySelectorAll('.nb-wheel');
+  for (var i = 0; i < wheels.length; i++) (function (w) {
     var tm;
-    t.addEventListener('scroll', function () {
+    w.addEventListener('scroll', function () {
       clearTimeout(tm);
-      tm = setTimeout(function () { centerSelect(t); }, 50);
+      tm = setTimeout(function () { centerSelect(w); }, 50);
     }, { passive: true });
-  })(tracks[i]);
+    w.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown') { e.preventDefault(); stepCard(w, 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); stepCard(w, -1); }
+    });
+  })(wheels[i]);
 })();
 </script><?php
 }

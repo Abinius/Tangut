@@ -6,11 +6,17 @@ require_once __DIR__ . '/includes/layout.php';
 $radicalSvg = require __DIR__ . '/includes/radical_svg.php';
 $radVb = implode(' ', $radicalSvg['viewbox']);
 
-$q = mb_substr(trim((string) ($_GET['q'] ?? '')), 0, 16, 'UTF-8');
+$q = mb_substr(trim((string) ($_GET['q'] ?? '')), 0, 100, 'UTF-8');
 
 // 主搜索框统一分发：汉字→西夏文、字头反查（LFW/码位）、单个西夏文、四角号码、词组（交给各自页面）
 $inlineEn = null;
 if ($q !== '') {
+    // 纯汉字长文（>10 字）→ 翻译功能页（不走海报/起名；非汉字字位在翻译页透传，不参与计数）
+    $hanziCount = preg_match_all('/\p{Han}/u', $q);
+    if ($hanziCount > 10) {
+        header('Location: /translate?q=' . rawurlencode($q));
+        exit;
+    }
     $target = search_target($q);
     // T4：英文单字命中倒排索引 → 内联渲染字头候选，不跳词组页（多词/未命中仍走词组页）
     if ($target !== null && str_starts_with($target, '/word/') && !str_contains($q, ' ')) {
@@ -45,20 +51,16 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/', OG_TITLE !== '' ? OG_TITLE : null,
   <svg class="corner corner-br" width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M0 0L0 26" stroke="#7734db" stroke-width="0.6" opacity="0.45"/><path d="M0 0L26 0" stroke="#7734db" stroke-width="0.6" opacity="0.45"/></svg>
   <span class="glass-orb orb-a" aria-hidden="true"></span>
   <span class="glass-orb orb-b" aria-hidden="true"></span>
-  <h1 class="hero-word" aria-label="<?= h(SITE_NAME) ?>."><?= h(SITE_NAME) ?><span class="dot">.</span></h1>
   <p class="hero-latin"><?= h(OG_TITLE) ?></p>
-
-  
 </section>
 <script>if(window.innerWidth>768&&!/MicroMessenger/i.test(navigator.userAgent)){var s=<?= json_encode(explode('|', BRAND_TAGLINE)) ?>;if(s.length>1)document.title=s.join('|');}</script>
 
 <section class="search">
-  
   <form class="search-bar" method="get" action="/">
-    <input id="q" type="search" name="q" value="<?= h($q) ?>" placeholder="输入汉字 / LFW 编号 / 码位" aria-label="输入汉字、LFW 编号或码位" autocomplete="off" autofocus>
-    <?php search_btn('查询'); ?>
+    <textarea id="q" name="q" rows="2" placeholder="输入汉字 / 英文 / 粘贴西夏字 / 四角号" aria-label="输入汉字、LFW 编号或码位" autocomplete="off" autofocus maxlength="100"><?= h($q) ?></textarea>
+    <div class="search-actions"><?php search_btn('查询'); ?></div>
   </form>
-  <p class="query-hint">支持：汉字（青）· 英文（blue）· 四角号（1141 20）· 直接粘贴西夏字</p>
+  
   <dl class="hero-meta">
  
     <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 5v14M5 12h14"/></svg>全量汉字</dt><dd><?= (int) ($stats['hanzi'] ?? 0) ?></dd></div>
@@ -283,14 +285,6 @@ if (!$any) {
   </div>
 </section>
 
-<section>
-  <div class="seclabel"><span>字形 specimen</span><span class="rule"></span></div>
-  <!-- 设计样张：固定示例字形，不随数据版本变化（仅演示三档字号渲染） -->
-  <div class="spec">
-    <div class="spec-cell"><span class="label">caption · 22px</span><span class="glyph s1">𗘍</span></div>
-    <div class="spec-cell"><span class="label">display · 48px</span><span class="glyph s2">𗘍</span></div>
-    <div class="spec-cell"><span class="label">hero · 96px</span><span class="glyph s3">𗘍</span></div>
-  </div>
-</section>
+
 <?php
 page_end();

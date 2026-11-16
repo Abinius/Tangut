@@ -164,6 +164,12 @@ if (preg_match('#^/api/v1/?(.*)$#', $uri, $m)) {
     return true;
 }
 
+// /translate?q=汉字串 → translate.php（长文逐字互译；搜索框 >10 汉字重定向到此）
+if (preg_match('#^/translate/?$#', $uri)) {
+    require __DIR__ . '/translate.php';
+    return true;
+}
+
 // 其余走首页
 require __DIR__ . '/index.php';
 return true;
