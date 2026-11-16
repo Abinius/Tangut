@@ -57,7 +57,7 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/', OG_TITLE !== '' ? OG_TITLE : null,
 
 <section class="search">
   <form class="search-bar" method="get" action="/">
-    <textarea id="q" name="q" rows="2" placeholder="输入汉字 / 英文 / 粘贴西夏字 / 四角号" aria-label="输入汉字、LFW 编号或码位" autocomplete="off" autofocus maxlength="100"><?= h($q) ?></textarea>
+    <textarea id="q" name="q" rows="2" placeholder="输入汉字 / 英文 / 粘贴西夏字 / 四角号 / 百字内汉夏翻译" aria-label="输入汉字、LFW 编号或码位" autocomplete="off" autofocus maxlength="100"><?= h($q) ?></textarea>
     <div class="search-actions"><?php search_btn('查询'); ?></div>
   </form>
   
