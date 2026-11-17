@@ -22,6 +22,7 @@ page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（番汉合时掌中珠�
       <li>拟音：龚煌城体系</li>
     </ul>
     <p>数据版本 <strong><?= h($dv) ?></strong>，全量 <?= (int) site_stats()['hanzi'] ?> 字可查。</p>
+    <p class="attrib">这些数据来自公开学术资料：tangutdata（MIT）、Noto Serif Tangut（SIL OFL）、龚煌城拟音体系。前人的工作，让一门死去的文字重新可查。</p>
 
     <h3 class="focus-h">维护信息</h3>
     <ul>
