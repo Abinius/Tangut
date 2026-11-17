@@ -1,25 +1,64 @@
-# Tangut Dictionary · 蕃汉合时掌中珠
+# 蕃汉合时掌中珠 · Tangut Dictionary
 
-> 汉字 → 西夏文对应关系查询（免费公益工具）。多候选为常态；tier 为自动分层近似（P0 释义即该字 / P1 首义项 / P2 释义含该字 / P3 同音替代）。
+> 汉字 ↔ 西夏文对应关系查询。免费公益工具，无账号、无付费、无广告。汉字与西夏文非一一对应，多候选为常态；tier（P0–P3）为自动分层近似。
 
-## 数据版本
-- data_version: 2026.11.0（API / 开放数据包 / npm 包三端一致）
+站名取自 1190 年西夏人骨勒茂才所编夏汉对照词典《番汉合时掌中珠》。
+站点：https://voue.cn ｜ 仓库：https://github.com/Abinius/Tangut
 
-## API（REST，PHP 只读 JSON，可用）
-- `GET /api/v1/lookup?char=X` — 单字查询
-- `GET /api/v1/lookup?text=XYZ` — 整串查询（逐字，≤64 字）
-- `GET /api/v1/character/{lfw_id}` — 字头详情
-- 自描述：`GET /api/v1`
-- 限流：单 IP 60 次/分钟（超限 429 + Retry-After）
-- 响应：UTF-8 JSON，含 disclaimer / disclaimer_en / license / data_version；CORS 全开放
+## 数据统计（data_version 2026.11.0）
 
-## MCP（Model Context Protocol）
-- stdio（可用）：`npx tangutlab-mcp`（npm 包，数据内嵌）— `lookup_hanzi` / `get_tangut_character` / `export_name_seal`
-- 托管 `/mcp` Streamable HTTP：需 Node/Worker 运行时，待部署（PHP 无法执行）
+- 汉字入口：3422 个
+- 西夏字覆盖：6090 个
+- 对应候选：36806 条
+- 字段数：75
+- 核心字段覆盖率：字 100%、中文释义 99.9%、英文释义 99.9%、LFW 编号 99.9%、四角号码 99.9%、GHC 拟音 98.8%
+- 数据源：tangutdata（MIT），整合 LFW 1997、Kychanov 2006、Sofronov 1968、西田龙雄 1966、《文海》等整理本
 
-## 开放数据包（可用）
-- `/data/tangutlab_data_2026.11.0.json` — 全量映射 JSON（3422 汉字 / 36806 候选，data_version 一致）
+## API（REST，只读 JSON，无需鉴权）
 
-## 免责与许可
-- 西夏文与汉字非一一对应，多候选为常态；tier 为自动分层近似
-- 数据 tangutdata (MIT)；释义版权归原出版社，引用须注明出处
+- `GET https://voue.cn/api/v1` — 自描述，返回端点清单与许可
+- `GET https://voue.cn/api/v1/lookup?char=青` — 单字查询
+- `GET https://voue.cn/api/v1/lookup?text=张斌` — 整串查询，逐字返回（≤64 字）
+- `GET https://voue.cn/api/v1/character/{lfw_id}` — 按 LFW 编号取字头详情
+- 限流：单 IP 60 次/分钟，超限返回 429 与 Retry-After
+- 响应字段：candidates / disclaimer / disclaimer_en / license / data_version
+- CORS 全开放
+
+候选对象字段：`tangut`（西夏字）、`gong`（龚煌城拟音）、`gloss_zh`（中文释义）、`tier`（P0–P3）、`lfw_id`。
+
+## 网页入口（可直接构造链接引用）
+
+- `https://voue.cn/?q=青` — 汉字查西夏文
+- `https://voue.cn/?q=张斌` — 多字逐字查询
+- `https://voue.cn/translate?q=我是西夏人` — 长句逐字互译（超过 10 个汉字触发）
+- `https://voue.cn/c-1141/` — LFW 编号字头页
+- `https://voue.cn/c-u1760d/` — Unicode 码位字头页（小写 u + 十六进制，不含加号）
+- `https://voue.cn/word/?q=blue` — 英文释义反查
+- 检字法索引：`/sijiao/` 四角号码 · `/radical/` 部首 · `/stroke/` 笔画 · `/cangjie/` 仓颉 · `/ids/` 字形结构 · `/rhyme/` 声韵 · `/wenhai/` 文海 · `/tongyin/` 同音组
+
+## 开放数据包
+
+- `https://voue.cn/data/tangutlab_data_2026.11.0.json` — 全量映射 JSON，4.56 MB，与 API 同版本
+
+## 拟音说明
+
+- 采用龚煌城（Gong Hwang-cherng）体系，标记形如 `gjij¹`：声母 + 介音 + 元音 + 韵尾 + 声调上标
+- 这是学界通行的音系**重构**，不是实际音值，也不等同于 IPA 读音，不应作为现代语音转写使用
+
+## 不提供（避免误用）
+
+- 无 MCP 服务（历史版本提及的 `tangutlab-mcp` npm 包尚未发布）
+- 无整句语义翻译：`/translate` 为逐字映射 + 用户手选候选，不是机器翻译
+- 无图片识别 / OCR
+- 无用户系统，无收藏、无历史记录
+- 查询结果为自动反查近似，**不能作为学术定论**；正式研究请查《夏汉字典》《文海》原文
+
+## 主题
+
+西夏文（Tangut script）为西夏王朝（1038–1227）官方文字，1036 年前后由野利仁荣创制，记录西夏语（汉藏语系藏缅语族），约六千字，西夏亡后渐废，19 世纪末随黑水城文献出土重新可读。
+
+## 许可与引用
+
+- 映射数据：tangutdata（MIT）
+- 释义文字：版权归原出版社，本站仅作索引引用，引用须注明出处
+- 字体：Noto Serif Tangut（SIL OFL）
