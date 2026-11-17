@@ -60,7 +60,7 @@ SITE_URL=https://你的域名
 RATE_LIMIT_PER_MIN=60
 
 # 海报背景（默认池 | 分隔；节日池按目录自动收集 spring|dragon|midautumn；override=none|spring|dragon|midautumn 空=自动按农历）
-POSTER_BG=/assets/bg/bg1.webp|/assets/bg/bg2.webp|/assets/bg/bg3.webp|/assets/bg/bg4.webp|/assets/bg/bg5.webp|/assets/bg/bg6.webp
+POSTER_BG=/assets/bg/bg1.webp|/assets/bg/bg2.webp|/assets/bg/bg3.webp|/assets/bg/bg4.webp|/assets/bg/bg5.webp|/assets/bg/bg6.webp|/assets/bg/bg7.webp|/assets/bg/bg8.webp|/assets/bg/bg9.webp|/assets/bg/bg10.webp|/assets/bg/bg11.webp|/assets/bg/bg12.webp|/assets/bg/bg13.webp|/assets/bg/bg14.webp|/assets/bg/bg15.webp|/assets/bg/bg16.webp|/assets/bg/bg17.webp|/assets/bg/bg18.webp|/assets/bg/bg19.webp|/assets/bg/bg20.webp|/assets/bg/bg21.webp|/assets/bg/bg22.webp|/assets/bg/bg23.webp|/assets/bg/bg24.webp|/assets/bg/bg25.webp|/assets/bg/bg26.webp
 POSTER_BG_FESTIVAL_DIR=/assets/bg/festival
 POSTER_FESTIVAL_OVERRIDE=
 

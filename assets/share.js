@@ -2,7 +2,7 @@
   'use strict';
   var W = 720, H = 1080, DPR = 2;
   // 随机照片背景（成片已压成 webp，2:3 与海报同比例）；懒加载 + 按 URL 缓存，每次 open 随机换图
-  var BG = ['/assets/bg/bg1.webp','/assets/bg/bg2.webp','/assets/bg/bg3.webp','/assets/bg/bg4.webp','/assets/bg/bg5.webp','/assets/bg/bg6.webp'];
+  var BG = ['/assets/bg/bg1.webp','/assets/bg/bg2.webp','/assets/bg/bg3.webp','/assets/bg/bg4.webp','/assets/bg/bg5.webp','/assets/bg/bg6.webp','/assets/bg/bg7.webp','/assets/bg/bg8.webp','/assets/bg/bg9.webp','/assets/bg/bg10.webp','/assets/bg/bg11.webp','/assets/bg/bg12.webp','/assets/bg/bg13.webp','/assets/bg/bg14.webp','/assets/bg/bg15.webp','/assets/bg/bg16.webp','/assets/bg/bg17.webp','/assets/bg/bg18.webp','/assets/bg/bg19.webp','/assets/bg/bg20.webp','/assets/bg/bg21.webp','/assets/bg/bg22.webp','/assets/bg/bg23.webp','/assets/bg/bg24.webp','/assets/bg/bg25.webp','/assets/bg/bg26.webp'];
   var bgImg = null, bgCache = {};
   // 背景池：优先 PHP 注入的 window.__POSTER_BG（{default:[..],festival:{spring:[..],..},active}；active 命中→节日池，否则默认池）；均无则回退硬编码 BG
   function pool(){var P=window.__POSTER_BG||null;if(P){if(P.active&&P.festival&&P.festival[P.active]&&P.festival[P.active].length)return P.festival[P.active];if(P['default']&&P['default'].length)return P['default'];}return BG;}
