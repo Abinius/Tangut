@@ -99,7 +99,11 @@ if (!isset($groups[$decoded])) {
 $g = $groups[$decoded];
 $entries = $g['entries'];
 $total = (int) $g['count'];
-$title = $decoded . ' · ' . $cfg['title'] . ' · ' . SITE_NAME;
+$title = $cfg['title'] . ' · ' . SITE_NAME;
+// 标题值若含西夏字（如 IDS 结构串）会在标签页渲染成豆腐块，省略之
+if (!preg_match('/[\x{17000}-\x{18AFF}]/u', $decoded)) {
+    $title = $decoded . ' · ' . $title;
+}
 $desc = "{$cfg['value_label']}「{$decoded}」，共 {$total} 字。";
 page_start($title, $desc, $route . $value . '/');
 ?>

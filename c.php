@@ -56,7 +56,7 @@ if ($gong) {
     $desc .= "，龚煌城拟音 {$gong}";
 }
 $desc .= "。LFW {$lfw}，{$unicode}，75 字段全量详情。";
-$title = "{$char} · LFW {$lfw} · 西夏文字头 · " . SITE_NAME;
+$title = "LFW {$lfw} · 西夏文字头 · " . SITE_NAME;
 $canonical = '/c-' . rawurlencode($lfw ?: $unicode) . '/';
 
 page_start($title, $desc, $canonical, $title, $desc, false, true);

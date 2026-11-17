@@ -119,7 +119,7 @@ if (!isset($radicals[$cpKey])) {
 $r = $radicals[$cpKey];
 $entries = $r['entries'];
 $total = $r['count'];
-$title = $r['char'] . ' 部 · ' . $sysLabel . ' · ' . SITE_NAME;
+$title = '部首 ' . $cpClean . ' · ' . $sysLabel . ' · ' . SITE_NAME;
 $desc = "{$sysLabel}「{$r['char']}」部，共 {$total} 字。";
 $canonical = '/radical/' . $system . '/' . $cpClean . '/';
 page_start($title, $desc, '/radical/' . $system . '/' . $cpClean . '/');
