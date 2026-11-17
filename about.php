@@ -22,6 +22,12 @@ page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（番汉合时掌中珠�
       <li>拟音：龚煌城体系</li>
     </ul>
     <p>数据版本 <strong><?= h($dv) ?></strong>，全量 <?= (int) site_stats()['hanzi'] ?> 字可查。</p>
+
+    <h3 class="focus-h">维护信息</h3>
+    <ul>
+      <li>维护者：<?= h(MAINTAINER) ?> · <a href="<?= h(MAINT_REPO) ?>" target="_blank" rel="noopener">GitHub 仓库</a></li>
+      <li>纠错 / 反馈：<a href="<?= h(MAINT_ISSUES) ?>" target="_blank" rel="noopener">提交 Issue</a>（数据、拟音或页面问题均可）</li>
+    </ul>
   </section>
 
   <section>

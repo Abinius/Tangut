@@ -146,6 +146,9 @@ define('DATA_SOURCE_FONT_URL', cfg('DATA_SOURCE_FONT_URL', 'https://github.com/n
 define('BIBLIO_WENHAI', cfg('BIBLIO_WENHAI', '3064'));
 define('BIBLIO_YINTONG', cfg('BIBLIO_YINTONG', '6133'));
 define('BIBLIO_XIAHAN', cfg('BIBLIO_XIAHAN', '6074'));
+define('MAINTAINER', cfg('MAINTAINER', 'Abinius'));
+define('MAINT_REPO', cfg('MAINT_REPO', 'https://github.com/Abinius/Tangut'));
+define('MAINT_ISSUES', cfg('MAINT_ISSUES', 'https://github.com/Abinius/Tangut/issues'));
 
 const FESTIVAL_KEYS = ['spring', 'dragon', 'midautumn'];
 
