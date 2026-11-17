@@ -54,6 +54,7 @@ function page_start(string $title, string $desc, string $canonical, ?string $ogT
 <link rel="preload" href="<?= h(TANGUT_FIX_FONT) ?>" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="<?= h(TANGUT_IDSOPS_FONT) ?>" as="font" type="font/woff2" crossorigin>
 <?php endif; ?>
+<script>window.__POSTER_BG=<?= json_encode(poster_bg_pool(), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) ?>;</script>
 </head>
 <body>
 <header class="site-header">

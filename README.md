@@ -59,6 +59,11 @@ DATA_VERSION=2026.11.0
 SITE_URL=https://你的域名
 RATE_LIMIT_PER_MIN=60
 
+# 海报背景（默认池 | 分隔；节日池按目录自动收集 spring|dragon|midautumn；override=none|spring|dragon|midautumn 空=自动按农历）
+POSTER_BG=/assets/bg/bg1.webp|/assets/bg/bg2.webp|/assets/bg/bg3.webp|/assets/bg/bg4.webp|/assets/bg/bg5.webp|/assets/bg/bg6.webp
+POSTER_BG_FESTIVAL_DIR=/assets/bg/festival
+POSTER_FESTIVAL_OVERRIDE=
+
 # 品牌（hero 用）
 BRAND=Tangut Dictionary
 BRAND_TAGLINE=番汉合时掌中珠|消失的古文字|煮梦纪

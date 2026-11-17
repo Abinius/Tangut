@@ -146,3 +146,81 @@ define('DATA_SOURCE_FONT_URL', cfg('DATA_SOURCE_FONT_URL', 'https://github.com/n
 define('BIBLIO_WENHAI', cfg('BIBLIO_WENHAI', '3064'));
 define('BIBLIO_YINTONG', cfg('BIBLIO_YINTONG', '6133'));
 define('BIBLIO_XIAHAN', cfg('BIBLIO_XIAHAN', '6074'));
+
+const FESTIVAL_KEYS = ['spring', 'dragon', 'midautumn'];
+
+/**
+ * 当前激活的节日主题键（spring|dragon|midautumn），无则 null。
+ * 优先 POSTER_FESTIVAL_OVERRIDE（none=强制默认池；空=自动）；自动按预置农历日期表 ±3 天窗口判断。
+ */
+function festival_active(?int $now = null): ?string
+{
+    if ($now === null) {
+        $now = time();
+    }
+    $ov = strtolower(trim(cfg('POSTER_FESTIVAL_OVERRIDE', '')));
+    if ($ov === 'none') {
+        return null;
+    }
+    if (in_array($ov, FESTIVAL_KEYS, true)) {
+        return $ov;
+    }
+    // 预置农历节日公历日期表（年 => 节日键 => 公历日期）；表外年份自动回退默认池
+    $table = [
+        2026 => ['spring' => '2026-02-17', 'dragon' => '2026-06-19', 'midautumn' => '2026-09-25'],
+        2027 => ['spring' => '2027-02-06', 'dragon' => '2027-06-09', 'midautumn' => '2027-09-15'],
+        2028 => ['spring' => '2028-01-26', 'dragon' => '2028-05-28', 'midautumn' => '2028-10-03'],
+        2029 => ['spring' => '2029-02-13', 'dragon' => '2029-06-16', 'midautumn' => '2029-09-22'],
+        2030 => ['spring' => '2030-02-03', 'dragon' => '2030-06-05', 'midautumn' => '2030-09-11'],
+    ];
+    $y = (int) date('Y', $now);
+    if (!isset($table[$y])) {
+        return null;
+    }
+    $today = (int) strtotime('today', $now);
+    // 重叠时优先级：春节 > 中秋 > 端午
+    foreach (['spring', 'midautumn', 'dragon'] as $k) {
+        $d = $table[$y][$k] ?? '';
+        if ($d === '') {
+            continue;
+        }
+        $fd = strtotime($d);
+        if ($fd === false) {
+            continue;
+        }
+        if ($today >= $fd - 3 * 86400 && $today <= $fd + 3 * 86400) {
+            return $k;
+        }
+    }
+    return null;
+}
+
+/**
+ * 海报背景池：['default'=>[url...], 'festival'=>[key=>[url...]], 'active'=>?string]。
+ * default 来自 POSTER_BG（| 分隔）；festival 按 POSTER_BG_FESTIVAL_DIR 下 spring|dragon|midautumn 子目录自动收集 *.webp；
+ * 未配置返回空，share.js 回退硬编码池。按请求静态缓存。
+ */
+function poster_bg_pool(): array
+{
+    static $c = null;
+    if ($c !== null) {
+        return $c;
+    }
+    $default = array_values(array_filter(array_map('trim', explode('|', cfg('POSTER_BG', '')))));
+    $festival = [];
+    $base = rtrim(cfg('POSTER_BG_FESTIVAL_DIR', ''), '/');
+    if ($base !== '' && $base[0] === '/') {
+        $fs = dirname(__DIR__) . $base;
+        foreach (FESTIVAL_KEYS as $k) {
+            $dir = $fs . '/' . $k;
+            $files = is_dir($dir) ? glob($dir . '/*.webp') : [];
+            if ($files) {
+                $festival[$k] = array_values(array_map(
+                    static fn(string $f): string => $base . '/' . $k . '/' . basename($f),
+                    $files
+                ));
+            }
+        }
+    }
+    return $c = ['default' => $default, 'festival' => $festival, 'active' => festival_active()];
+}
