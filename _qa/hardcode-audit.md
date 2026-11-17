@@ -42,10 +42,10 @@ var BG = ['/assets/bg/bg1.webp', … ,'/assets/bg/bg6.webp'];
 ### A3. share.js 页脚文案（P2）
 `assets/share.js:28`（`footer()`）：
 ```js
-x.fillText('骨勒茂才《蕃汉合时掌中珠》', W/2, H-136);
+x.fillText('骨勒茂才《番汉合时掌中珠》', W/2, H-136);
 x.fillText('voue.cn', W/2, H-68);
 ```
-**问题**：书名 `骨勒茂才《蕃汉合时掌中珠》` 与域名 `voue.cn` 写死在 JS；域名改版/书名措辞调整需改代码。
+**问题**：书名 `骨勒茂才《番汉合时掌中珠》` 与域名 `voue.cn` 写死在 JS；域名改版/书名措辞调整需改代码。
 **建议**：随 A2 一起，由 PHP 注入 `window.__POSTER_BRAND={book, site}`（书名可用 `BRAND_TAGLINE` 或新键 `POSTER_BOOK`，站点用 `SITE_URL` host）。**工作量**：~0.5h。
 
 ### A4. about.php 书目统计（P2）
