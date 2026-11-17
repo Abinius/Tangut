@@ -347,20 +347,31 @@ function site_stats(): array
     $p = shard_dir() . '/stats.json';
     $d = is_file($p) ? json_decode((string) file_get_contents($p), true) : null;
     if (is_array($d) && isset($d['hanzi'])) {
-        return $s = $d;
-    }
-    if ($d === null && is_file($p)) {
-        error_log("tangut: invalid JSON in {$p}: " . json_last_error_msg());
-    }
-    $m = manifest();
-    $total = 0;
-    foreach (($m['shards'] ?? []) as $key) {
-        $sd = shard((string) $key);
-        foreach (($sd['entries'] ?? []) as $cands) {
-            $total += count($cands);
+        $s = $d;
+    } else {
+        if ($d === null && is_file($p)) {
+            error_log("tangut: invalid JSON in {$p}: " . json_last_error_msg());
         }
+        $m = manifest();
+        $total = 0;
+        foreach (($m['shards'] ?? []) as $key) {
+            $sd = shard((string) $key);
+            foreach (($sd['entries'] ?? []) as $cands) {
+                $total += count($cands);
+            }
+        }
+        $s = ['hanzi' => (int) ($m['total_hanzi'] ?? 0), 'candidates' => $total, 'data_version' => data_version()];
     }
-    return $s = ['hanzi' => (int) ($m['total_hanzi'] ?? 0), 'candidates' => $total, 'data_version' => data_version()];
+    // 从索引文件补全分项统计（stats.json 仅含 hanzi/candidates）
+    $wi = read_json(shard_dir() . '/index_word.json');
+    $wh = read_json(shard_dir() . '/index_wenhai.json');
+    $ty = read_json(shard_dir() . '/index_tongyin_full.json');
+    $sj = read_json(shard_dir() . '/index_sijiao.json');
+    $s['total_words'] = (int) ($wi['total_words'] ?? 0);
+    $s['wenhai_total_refs'] = (int) ($wh['total_refs'] ?? 0);
+    $s['tongyin_total_groups'] = (int) ($ty['total_groups'] ?? 0);
+    $s['sijiao_groups'] = (int) ($sj['group_count'] ?? 0);
+    return $s;
 }
 
 /** tier 中文标签 */

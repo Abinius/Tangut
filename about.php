@@ -18,7 +18,7 @@ page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（蕃汉合时掌中珠�
   <section>
     <div class="seclabel"><span>02 数据来源</span><span class="rule"></span></div>
     <ul>
-      <li>字形：<a href="https://github.com/notofonts/tangut" target="_blank" rel="noopener">Noto Serif Tangut</a>（SIL OFL）</li>
+      <li>字形：<a href="<?= h(DATA_SOURCE_FONT_URL) ?>" target="_blank" rel="noopener">Noto Serif Tangut</a>（SIL OFL）</li>
       <li>拟音：龚煌城体系</li>
     </ul>
     <p>数据版本 <strong><?= h($dv) ?></strong>，全量 <?= (int) site_stats()['hanzi'] ?> 字可查。</p>
@@ -70,7 +70,7 @@ page_start('关于 · ' . SITE_NAME, 'Tangut Dictionary（蕃汉合时掌中珠�
     </div>
 
     <h3 class="focus-h">字数与声韵</h3>
-    <p>《文海》收约 <strong>3064</strong> 字，《音同》收 <strong>6133</strong> 字，《夏汉字典》收录约 <strong>6074</strong> 字。声韵体系以龚煌城拟音最为通行。</p>
+    <p>《文海》收约 <strong><?= h(BIBLIO_WENHAI) ?></strong> 字，《音同》收 <strong><?= h(BIBLIO_YINTONG) ?></strong> 字，《夏汉字典》收录约 <strong><?= h(BIBLIO_XIAHAN) ?></strong> 字。声韵体系以龚煌城拟音最为通行。</p>
   </section>
 
 

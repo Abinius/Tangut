@@ -141,3 +141,8 @@ define('COLOPHON_PAPER', cfg('COLOPHON_PAPER', 'WARM WHITE #FAFAF8'));
 define('COLOPHON_TYPE', cfg('COLOPHON_TYPE', 'LIGHT GROTESK + NOTO SERIF TANGUT'));
 define('OG_TITLE', cfg('OG_TITLE', SITE_TITLE));
 define('OG_DESCRIPTION', cfg('OG_DESCRIPTION', SITE_DESCRIPTION));
+define('ASSET_VER', cfg('ASSET_VER', '1'));
+define('DATA_SOURCE_FONT_URL', cfg('DATA_SOURCE_FONT_URL', 'https://github.com/notofonts/tangut'));
+define('BIBLIO_WENHAI', cfg('BIBLIO_WENHAI', '3064'));
+define('BIBLIO_YINTONG', cfg('BIBLIO_YINTONG', '6133'));
+define('BIBLIO_XIAHAN', cfg('BIBLIO_XIAHAN', '6074'));

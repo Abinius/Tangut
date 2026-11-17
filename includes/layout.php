@@ -170,7 +170,7 @@ function page_end(): void
     if (!btn || window.TangutPoster) return;
     e.preventDefault();
     var s = document.createElement('script');
-    s.src = '/assets/share.js?v=1';
+    s.src = '/assets/share.js?v=<?= ASSET_VER ?>';
     s.onload = function () { window.TangutPoster.open(JSON.parse(btn.dataset.poster)); };
     document.body.appendChild(s);
   }, { passive: false });
@@ -318,7 +318,7 @@ function render_name_builder(array $items): void
   function openPoster(payload) {
     if (window.TangutPoster) { window.TangutPoster.open(payload); return; }
     var s = document.createElement('script');
-    s.src = '/assets/share.js?v=1';
+    s.src = '/assets/share.js?v=<?= ASSET_VER ?>';
     s.onload = function () { window.TangutPoster.open(payload); };
     document.body.appendChild(s);
   }

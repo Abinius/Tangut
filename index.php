@@ -260,7 +260,7 @@ if (!$any) {
     <a class="lookup-card" href="/sijiao/">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h4M5 5v4M15 5h4M19 5v4M5 15v4h4M15 15h4v4"/></svg>
       <span class="lookup-label">四角号码</span>
-      <span class="lookup-desc">2687 组</span>
+      <span class="lookup-desc"><?= (int) ($stats['sijiao_groups'] ?? 0) ?> 组</span>
     </a>
     <a class="lookup-card" href="/rhyme/">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3M8 7v10M13 4v16M18 8v8M21 12h-2"/></svg>
@@ -270,17 +270,17 @@ if (!$any) {
     <a class="lookup-card" href="/word/">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="5" rx="1.5"/><rect x="4" y="13" width="16" height="5" rx="1.5"/></svg>
       <span class="lookup-label">词组查询</span>
-      <span class="lookup-desc">18292 条词组</span>
+      <span class="lookup-desc"><?= (int) ($stats['total_words'] ?? 0) ?> 条词组</span>
     </a>
     <a class="lookup-card" href="/wenhai/">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
       <span class="lookup-label">文海文献</span>
-      <span class="lookup-desc">3064 条目 · 反切</span>
+      <span class="lookup-desc"><?= (int) ($stats['wenhai_total_refs'] ?? 0) ?> 条目 · 反切</span>
     </a>
     <a class="lookup-card" href="/tongyin/">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h5v16H6zM13 4h5v16h-5z"/></svg>
       <span class="lookup-label">同音文献</span>
-      <span class="lookup-desc">1320 组 · 新旧版对照</span>
+      <span class="lookup-desc"><?= (int) ($stats['tongyin_total_groups'] ?? 0) ?> 组 · 新旧版对照</span>
     </a>
   </div>
 </section>
