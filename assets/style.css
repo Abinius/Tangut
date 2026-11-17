@@ -417,8 +417,9 @@
       .tier-P0 .tier::before { background: var(--accent); }
       .chip {
         padding: 0.28rem 0.75rem; font-family: var(--mono); font-size: 10.5px;
-        letter-spacing: 0.05em; color: var(--ink-mute); white-space: nowrap;
+        letter-spacing: 0.05em; color: var(--ink-mute);
         border: 1px solid var(--hairline-soft); border-radius: 9999px;
+        white-space: normal; overflow-wrap: break-word; min-width: 0; max-width: 100%;
       }
       .gloss { margin: 0.75rem 0 0; font-size: 1rem; font-weight: 300; line-height: 1.8; color: var(--ink); text-align: center; }
 
