@@ -1,4 +1,4 @@
-# Tangut Dictionary · 蕃汉合时掌中珠
+# Tangut Dictionary · 番汉合时掌中珠
 User-agent: *
 Allow: /
 
