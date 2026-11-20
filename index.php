@@ -57,7 +57,7 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/', OG_TITLE !== '' ? OG_TITLE : null,
 
 <section class="search">
   <form class="search-bar" method="get" action="/">
-    <textarea id="q" name="q" rows="2" placeholder="汉字｜英文｜西夏字｜四角号｜短句互译" aria-label="输入汉字、LFW 编号或码位" autocomplete="off" autofocus maxlength="100"><?= h($q) ?></textarea>
+    <textarea id="q" name="q" rows="2" placeholder="汉字｜英文｜西夏字｜四角号｜短句互译" aria-label="输入汉字、英文、西夏字、四角号码或短句互译" autocomplete="off" autofocus maxlength="100"><?= h($q) ?></textarea>
     <div class="search-actions"><?php search_btn('查询'); ?></div>
   </form>
   
@@ -65,7 +65,6 @@ page_start(SITE_TITLE, SITE_DESCRIPTION, '/', OG_TITLE !== '' ? OG_TITLE : null,
  
     <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M12 5v14M5 12h14"/></svg>全量汉字</dt><dd><?= (int) ($stats['hanzi'] ?? 0) ?></dd></div>
     <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4-8 4-8-4zM4 12l8 4 8-4M4 16l8 4 8-4"/></svg>候选项</dt><dd><?= (int) ($stats['candidates'] ?? 0) ?></dd></div>
-    <div><dt><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19h4v-4h4v-4h4V7h4"/></svg>分层</dt><dd>P0–P3 近似</dd></div>
   </dl>
 </section>
 
@@ -224,7 +223,6 @@ if (!$any) {
   <div class="retrieve-card">
     <div class="retrieve-head">
       <h2 class="retrieve-title">部首检字</h2>
-      <p class="retrieve-sub">四套部首体系 · SVG 矢量字形</p>
     </div>
     <div class="retrieve-glyphs" aria-label="西夏文部首矢量字形样例">
       <?php foreach ($radicalSvg['glyphs'] as $g):

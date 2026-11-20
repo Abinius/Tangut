@@ -1,7 +1,7 @@
 {
  "base": "http://127.0.0.1:8080",
  "routes_checked": 9521,
- "links_extra_refs": 19164,
+ "links_extra_refs": 19163,
  "font_stack": {
   "core": 3414,
   "rest": 2648,
@@ -36,18 +36,18 @@
   "broken_refs": [],
   "unresolved_refs": [],
   "external_refs": {
-   "count": 9524,
+   "count": 9526,
    "sample": [
     "https://beian.miit.gov.cn/",
+    "https://github.com/Abinius/Tangut",
+    "https://github.com/Abinius/Tangut/issues",
     "https://github.com/notofonts/tangut",
-    "https://github.com/tangutdata",
     "https://voue.cn/",
     "https://voue.cn/about",
     "https://voue.cn/c-0001/",
     "https://voue.cn/c-0002/",
     "https://voue.cn/c-0003/",
-    "https://voue.cn/c-0004/",
-    "https://voue.cn/c-0005/"
+    "https://voue.cn/c-0004/"
    ]
   }
  }

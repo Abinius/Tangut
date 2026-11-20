@@ -794,10 +794,6 @@
     font-family: var(--grotesk); font-weight: 250; letter-spacing: -0.02em;
     font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.14; margin: 0; color: var(--ink);
   }
-  .retrieve-sub {
-    font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--ink-mute); margin: 0.5rem 0 0; font-weight: 400;
-  }
   /* SVG 部首字形行：等宽格，字形为当前色填充 */
   .retrieve-glyphs {
     display: flex; flex-wrap: wrap; justify-content: center;
@@ -1147,7 +1143,6 @@
   .tr-pass { cursor: default; justify-content: flex-start; padding-top: 0.15rem; }
   .tr-pass .tr-glyph-src { font-size: 0.8rem; opacity: 0.7; }
   @media (max-width: 600px) { .tr-result { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0.35rem 0.15rem; } }
-  .tr-hint { margin-top: 1rem; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--ink-mute); letter-spacing: 0.06em; }
   .tr-copy-row { display: flex; justify-content: center; margin-top: 0.9rem; }
   .tr-copy { font-family: var(--mono); font-size: 12px; color: var(--accent-deep); background: transparent; border: 1px solid var(--hairline-acid); border-radius: 9999px; padding: 0.35rem 0.9rem; cursor: pointer; letter-spacing: 0.04em; transition: background-color var(--fast) var(--ease), border-color var(--fast) var(--ease); }
   .tr-copy:hover { background: rgba(119, 52, 219, 0.08); border-color: var(--accent); }

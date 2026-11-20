@@ -133,7 +133,7 @@ function _word_search_form(string $value): void
 function _render_tangut_chars(string $text): void
 {
     preg_match_all('/./us', $text, $mm);
-    echo '<section class="index wordpage" aria-label="西夏文逐字"><p class="status done">逐字展示：</p>';
+    echo '<section class="index wordpage" aria-label="西夏文逐字"><div class="seclabel"><span>逐字展示</span><span class="rule"></span></div>';
     foreach ($mm[0] as $ch) {
         $cp = mb_ord($ch, 'UTF-8');
         if ($cp === false || $cp < 0x17000 || $cp > 0x18AFF) {

@@ -43,7 +43,6 @@ page_start($title, $desc, $canonical);
     </button>
     <?php endforeach; ?>
   </div>
-  <p class="tr-hint">点击任一西夏文查看候选</p>
   <div class="tr-copy-row"><button type="button" class="tr-copy" id="trCopy">复制译文</button></div>
   <?php endif; ?>
 </section>
